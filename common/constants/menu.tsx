@@ -1,13 +1,13 @@
 import {
-  BiHomeCircle as HomeIcon,
-  BiUser as AboutIcon,
-  BiCollection as ProjectIcon,
-  BiCategory as DashboardIcon,
-  BiBook as ContactIcon,
-} from "react-icons/bi";
-import { PiChatTeardropDotsBold as ChatRoomIcon } from "react-icons/pi";
-import { PiCertificate as AchievementIcon } from "react-icons/pi";
-import { VscHubot as SmartChatIcon } from "react-icons/vsc";
+  Home,
+  User,
+  Award,
+  FolderKanban,
+  LayoutDashboard,
+  MessageCircle,
+  Mail,
+  Bot,
+} from "lucide-react";
 
 import { MenuItemProps } from "../types/menu";
 
@@ -17,7 +17,7 @@ export const MENU_ITEMS: MenuItemProps[] = [
   {
     title: "Home",
     href: "/",
-    icon: <HomeIcon size={iconSize} />,
+    icon: <Home size={iconSize} strokeWidth={2} />,
     isShow: true,
     isExternal: false,
     eventName: "Pages: Home",
@@ -25,7 +25,7 @@ export const MENU_ITEMS: MenuItemProps[] = [
   {
     title: "About",
     href: "/about",
-    icon: <AboutIcon size={iconSize} />,
+    icon: <User size={iconSize} strokeWidth={2} />,
     isShow: true,
     isExternal: false,
     eventName: "Pages: About",
@@ -33,7 +33,7 @@ export const MENU_ITEMS: MenuItemProps[] = [
   {
     title: "Achievements",
     href: "/achievements",
-    icon: <AchievementIcon size={iconSize} />,
+    icon: <Award size={iconSize} strokeWidth={2} />,
     isShow: true,
     isExternal: false,
     eventName: "Pages: Achievements",
@@ -41,7 +41,7 @@ export const MENU_ITEMS: MenuItemProps[] = [
   {
     title: "Projects",
     href: "/projects",
-    icon: <ProjectIcon size={iconSize} />,
+    icon: <FolderKanban size={iconSize} strokeWidth={2} />,
     isShow: true,
     isExternal: false,
     eventName: "Pages: Projects",
@@ -49,7 +49,7 @@ export const MENU_ITEMS: MenuItemProps[] = [
   {
     title: "Dashboard",
     href: "/dashboard",
-    icon: <DashboardIcon size={iconSize} />,
+    icon: <LayoutDashboard size={iconSize} strokeWidth={2} />,
     isShow: true,
     isExternal: false,
     eventName: "Pages: Dashboard",
@@ -57,7 +57,7 @@ export const MENU_ITEMS: MenuItemProps[] = [
   {
     title: "Chat Room",
     href: "/chat",
-    icon: <ChatRoomIcon size={iconSize} />,
+    icon: <MessageCircle size={iconSize} strokeWidth={2} />,
     isShow: true,
     isExternal: false,
     eventName: "Pages: Chat Room",
@@ -65,7 +65,7 @@ export const MENU_ITEMS: MenuItemProps[] = [
   {
     title: "Contact",
     href: "/contact",
-    icon: <ContactIcon size={iconSize} />,
+    icon: <Mail size={iconSize} strokeWidth={2} />,
     isShow: true,
     isExternal: false,
     eventName: "Pages: Contact",
@@ -73,10 +73,11 @@ export const MENU_ITEMS: MenuItemProps[] = [
   {
     title: "Smart Talk",
     href: "/smart-talk",
-    icon: <SmartChatIcon size={iconSize} />,
-    isShow: true,
+    icon: <Bot size={iconSize} strokeWidth={2} />,
+    isShow: false,
     isExternal: false,
     eventName: "Pages: Dashboard",
     isExclusive: true,
   },
 ];
+

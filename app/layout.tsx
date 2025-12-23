@@ -11,7 +11,7 @@ import Layouts from "@/common/components/layouts";
 import ThemeProviderContext from "@/common/stores/theme";
 import NextAuthProvider from "@/SessionProvider";
 import { METADATA } from "@/common/constants/metadata";
-import { onestSans } from "@/common/styles/fonts";
+import { plusJakartaSans, manrope, dmSans } from "@/common/styles/fonts";
 import { authOptions } from "@/common/libs/auth";
 
 export const metadata: Metadata = {
@@ -57,9 +57,9 @@ const RootLayout = async ({
         // data-domains="satriabahari.site"
         // data-website-id="8e2c9f27-a12b-48ca-8130-808ebe377aca"
       ></Script>
-      <body className={onestSans.className}>
+      <body className={`${plusJakartaSans.variable} ${manrope.variable} ${dmSans.variable} font-sans antialiased`}>
         <NextTopLoader
-          color="#4ade80"
+          color="#3b82f6"
           initialPosition={0.08}
           crawlSpeed={200}
           height={3}
@@ -67,7 +67,7 @@ const RootLayout = async ({
           showSpinner={false}
           easing="ease"
           speed={200}
-          shadow="0 0 10px #4ade80,0 0 5px #86efac"
+          shadow="0 0 10px #3b82f6,0 0 5px #60a5fa"
         />
         <NextIntlClientProvider messages={messages}>
           <NextAuthProvider session={session}>
