@@ -9,7 +9,7 @@ export const getAchievementsData = async ({
   category,
   search,
 }: GetAchievementsDataProps) => {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   let query = supabase.from("achievements").select();
 

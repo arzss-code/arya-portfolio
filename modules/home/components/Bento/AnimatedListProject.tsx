@@ -13,17 +13,17 @@ const AnimatedListProject = () => {
     data
       ?.filter((item: ProjectItem) => item?.is_show)
       .sort((a: ProjectItem, b: ProjectItem) => b.id - a.id)
-      .map((item: ProjectItem) => ({
-        image: item.image.startsWith("/") ? item.image : `/${item.image}`,
-        slug: `/projects/${item.slug}`,
-      })) ?? [];
+      .map((item: ProjectItem) => {
+        const imageUrl = item.image ? (item.image.startsWith("/") ? item.image : `/${item.image}`) : "";
+        return {
+          image: imageUrl,
+          href: `/projects/${item.slug}`,
+        };
+      }) ?? [];
 
   return (
     <AnimatedList
-      items={projects.map((item: ProjectItem) => ({
-        image: item.image.startsWith("/") ? item.image : `/${item.image}`,
-        href: item.slug,
-      }))}
+      items={projects}
       itemImage={true}
       showGradients={false}
       displayScrollbar={false}

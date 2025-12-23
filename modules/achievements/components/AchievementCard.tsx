@@ -16,12 +16,33 @@ const AchievementCard = ({
   image,
   url_credential,
 }: AchievementItem) => {
-  const issueDate = format(parseISO(issue_date), "MMMM yyyy");
+  // Handle null/undefined/invalid date
+  const issueDate = issue_date 
+    ? (() => {
+        try {
+          return format(parseISO(issue_date), "MMMM yyyy");
+        } catch {
+          return "Unknown date";
+        }
+      })()
+    : "Unknown date";
 
   const t = useTranslations("AchievementsPage");
 
+  // Use wrapper based on whether url_credential exists
+  const CardWrapper = ({ children }: { children: React.ReactNode }) => {
+    if (url_credential) {
+      return (
+        <Link href={url_credential} className="flex h-full" target="_blank">
+          {children}
+        </Link>
+      );
+    }
+    return <div className="flex h-full">{children}</div>;
+  };
+
   return (
-    <Link href={url_credential} className="flex h-full" target="_blank">
+    <CardWrapper>
       <SpotlightCard className="group flex h-full flex-col overflow-hidden">
         <div className="relative">
           <Image
@@ -54,7 +75,7 @@ const AchievementCard = ({
           </div>
         </div>
       </SpotlightCard>
-    </Link>
+    </CardWrapper>
   );
 };
 

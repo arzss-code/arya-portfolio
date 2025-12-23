@@ -12,6 +12,8 @@ const Image = (props: ImageProps) => {
   const { alt, src, className, rounded, ...rest } = props;
   const [isLoading, setLoading] = useState(true);
 
+  if (!src) return null; // Handle missing or empty src
+
   return (
     <div
       className={clsx(

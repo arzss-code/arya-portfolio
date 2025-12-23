@@ -6,7 +6,7 @@ export const DELETE = async (
   req: Request,
   { params }: { params: Promise<{ slug: string }> },
 ) => {
-  const supabase = createClient();
+  const supabase = await createClient();
   try {
     const { slug: id } = await params;
     await supabase.from("messages").delete().eq("id", id);
