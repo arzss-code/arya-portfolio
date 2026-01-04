@@ -4,9 +4,7 @@ import dynamic from "next/dynamic";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { useEffect } from "react";
-import { usePathname } from "next/navigation";
 
-import ChatButton from "../../../modules/chat/components/ChatButton";
 
 import Header from "./Header";
 
@@ -17,9 +15,6 @@ interface LayoutsProps {
 }
 
 const Layouts = ({ children }: LayoutsProps) => {
-  const pathname = usePathname();
-
-  const isShowChatButton = pathname !== "/chat";
 
   useEffect(() => {
     AOS.init({
@@ -37,7 +32,6 @@ const Layouts = ({ children }: LayoutsProps) => {
         </main>
       </div>
       <Notif />
-      {isShowChatButton && <ChatButton />}
     </div>
   );
 };

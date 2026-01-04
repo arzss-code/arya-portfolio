@@ -39,7 +39,9 @@ const Overview = ({ data }: OverviewProps) => {
       <OverviewItem label={t("visitors")} value={visitorsData} />
       <OverviewItem label={t("visits")} value={visitsData} />
       <OverviewItem label={t("countries")} value={countriesData} />
-      <OverviewItem label={t("events")} value={eventsData} />
+      <div className="col-span-2 sm:col-span-1">
+        <OverviewItem label={t("events")} value={eventsData} />
+      </div>
     </div>
   );
 };

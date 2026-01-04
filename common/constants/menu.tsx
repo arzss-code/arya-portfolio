@@ -4,7 +4,7 @@ import {
   Award,
   FolderKanban,
   LayoutDashboard,
-  MessageCircle,
+
   Mail,
   Bot,
 } from "lucide-react";
@@ -54,14 +54,7 @@ export const MENU_ITEMS: MenuItemProps[] = [
     isExternal: false,
     eventName: "Pages: Dashboard",
   },
-  {
-    title: "Chat Room",
-    href: "/chat",
-    icon: <MessageCircle size={iconSize} strokeWidth={2} />,
-    isShow: true,
-    isExternal: false,
-    eventName: "Pages: Chat Room",
-  },
+
   {
     title: "Contact",
     href: "/contact",

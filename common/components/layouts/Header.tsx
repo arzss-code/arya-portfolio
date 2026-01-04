@@ -1,12 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useSelectedLayoutSegment } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import clsx from "clsx";
-import { BadgeCheck, Menu, X, ChevronDown } from "lucide-react";
+import { BadgeCheck, Menu, X } from "lucide-react";
 import NextImage from "next/image";
 
 import { MENU_ITEMS } from "@/common/constants/menu";
@@ -19,8 +19,7 @@ import IntlToggle from "./IntlToggle";
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [showMoreMenu, setShowMoreMenu] = useState(false);
-  const moreMenuRef = useRef<HTMLDivElement>(null);
+
   const { isOpen, toggleMenu, hideMenu } = useMenu();
   const selectedLayoutSegment = useSelectedLayoutSegment();
   const pathname = selectedLayoutSegment ? `/${selectedLayoutSegment}` : "/";
@@ -28,9 +27,7 @@ const Header = () => {
 
   const filteredMenu = MENU_ITEMS?.filter((item) => item?.isShow);
   
-  // Split menu: main items (first 5) and more items (rest)
-  const mainMenuItems = filteredMenu.slice(0, 5);
-  const moreMenuItems = filteredMenu.slice(5);
+
 
   useEffect(() => {
     const handleScroll = () => {
@@ -52,17 +49,7 @@ const Header = () => {
     };
   }, [isOpen]);
 
-  // Close more menu when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (moreMenuRef.current && !moreMenuRef.current.contains(event.target as Node)) {
-        setShowMoreMenu(false);
-      }
-    };
 
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
 
   const NavItem = ({ item, compact = false }: { item: MenuItemProps; compact?: boolean }) => {
     const isActive = pathname === item.href;
@@ -70,7 +57,7 @@ const Header = () => {
     return (
       <Link
         href={item.href}
-        onClick={() => setShowMoreMenu(false)}
+
         className={clsx(
           "relative flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300",
           compact ? "w-full" : "",
@@ -110,7 +97,7 @@ const Header = () => {
             <Link href="/" className="flex items-center gap-3 group shrink-0">
               <div className="relative w-10 h-10 sm:w-11 sm:h-11 shrink-0">
                 <NextImage
-                  src="/images/satria-3.jpg"
+                  src="/images/Profil-Arya-1.png"
                   alt="Arya"
                   fill
                   className="rounded-full object-cover border-2 border-blue-500/20 group-hover:border-blue-500/40 transition-all duration-300 shadow-lg"
@@ -123,61 +110,15 @@ const Header = () => {
                   <span className="font-bold text-neutral-900 dark:text-white text-base">
                     Arya
                   </span>
-                  <Tooltip title="Verified">
-                    <BadgeCheck size={16} className="text-blue-500 fill-blue-500" />
-                  </Tooltip>
                 </div>
-                <span className="text-xs text-neutral-500 dark:text-neutral-500 hidden sm:block">
-                  Developer
-                </span>
               </div>
             </Link>
 
             {/* Desktop Navigation - Center */}
             <nav className="hidden lg:flex items-center gap-1 bg-neutral-100/50 dark:bg-neutral-800/30 backdrop-blur-sm rounded-xl p-1 border border-neutral-200/50 dark:border-neutral-700/30">
-              {mainMenuItems.map((item: MenuItemProps) => (
+              {filteredMenu.map((item: MenuItemProps) => (
                 <NavItem key={item.href} item={item} />
               ))}
-              
-              {/* More Menu Dropdown */}
-              {moreMenuItems.length > 0 && (
-                <div ref={moreMenuRef} className="relative">
-                  <button
-                    onClick={() => setShowMoreMenu(!showMoreMenu)}
-                    className={clsx(
-                      "flex items-center gap-1 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300",
-                      showMoreMenu
-                        ? "text-blue-600 dark:text-blue-400 bg-blue-500/10"
-                        : "text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white hover:bg-neutral-100/50 dark:hover:bg-neutral-800/50"
-                    )}
-                  >
-                    <span>More</span>
-                    <ChevronDown 
-                      size={14} 
-                      className={clsx(
-                        "transition-transform duration-300",
-                        showMoreMenu && "rotate-180"
-                      )} 
-                    />
-                  </button>
-                  
-                  <AnimatePresence>
-                    {showMoreMenu && (
-                      <motion.div
-                        initial={{ opacity: 0, y: 8, scale: 0.95 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, y: 8, scale: 0.95 }}
-                        transition={{ duration: 0.2 }}
-                        className="absolute top-full right-0 mt-2 w-48 py-2 bg-white/90 dark:bg-neutral-900/90 backdrop-blur-xl rounded-xl border border-neutral-200/50 dark:border-neutral-700/50 shadow-xl shadow-black/10"
-                      >
-                        {moreMenuItems.map((item: MenuItemProps) => (
-                          <NavItem key={item.href} item={item} compact />
-                        ))}
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-              )}
             </nav>
 
             {/* Right Side Actions */}
@@ -245,7 +186,7 @@ const Header = () => {
               <div className="flex items-center gap-4 pb-6 mb-6 border-b border-neutral-200/50 dark:border-neutral-700/50">
                 <div className="relative w-16 h-16">
                   <NextImage
-                    src="/images/satria-3.jpg"
+                    src="/images/Profil-Arya-1.png"
                     alt="Arya"
                     fill
                     className="rounded-2xl object-cover border-2 border-blue-500/30 shadow-xl"

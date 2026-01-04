@@ -1,16 +1,16 @@
 export const METADATA = {
-  creator: "Satria Bahari",
+  creator: "Atsiila Arya Nabiih",
   description: "Personal website, portfolio, blog",
-  keyword: "satria, satria bahari",
+  keyword: "arya, atsiila arya nabiih, ui/ux designer, frontend developer",
   authors: {
-    name: "Satria Bahari",
+    name: "Atsiila Arya Nabiih",
     url: process.env.DOMAIN,
   },
   openGraph: {
     url: process.env.DOMAIN,
-    siteName: "Satria Bahari",
+    siteName: "Atsiila Arya Nabiih",
     locale: "id-ID",
   },
-  exTitle: "| Satria Bahari",
-  profile: "/images/satria.jpg",
+  exTitle: "| Atsiila Arya Nabiih",
+  profile: "/images/Profil-Arya-1.png",
 };

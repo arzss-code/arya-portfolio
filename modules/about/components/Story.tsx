@@ -13,12 +13,6 @@ const Story = () => {
           {t(`resume.paragraf_${paragraph.index}`)}
         </div>
       ))}
-      <Image
-        src="/images/signature.png"
-        alt="signature"
-        width={100}
-        height={100}
-      />
     </section>
   );
 };

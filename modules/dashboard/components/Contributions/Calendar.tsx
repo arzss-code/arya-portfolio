@@ -67,21 +67,25 @@ const Calendar = ({ data }: CalendarProps) => {
   return (
     <>
       <div className="relative flex flex-col">
-        <ul className="flex justify-end gap-[3px] overflow-hidden text-xs dark:text-neutral-400 md:justify-start">
+        <ul className="flex justify-end gap-[3px] overflow-x-auto w-full text-xs dark:text-neutral-400 md:justify-start">
           {months.map((month) => (
             <li
               key={month.firstDay}
               className={clsx(`${month.totalWeeks < 2 ? "invisible" : ""}`)}
-              style={{ minWidth: 14.3 * month.totalWeeks }}
+              style={{
+                minWidth: 14.3 * month.totalWeeks,
+                flexGrow: month.totalWeeks,
+                flexBasis: 0,
+              }}
             >
               {month.name}
             </li>
           ))}
         </ul>
 
-        <div className="flex justify-start gap-[2.9px] overflow-hidden">
+        <div className="flex justify-start gap-[2.9px] overflow-x-auto w-full">
           {weeks?.map((week) => (
-            <div key={week.firstDay}>
+            <div key={week.firstDay} className="flex-1 min-w-[13px]">
               {week.contributionDays.map((contribution) => {
                 const backgroundColor =
                   contribution.contributionCount > 0 && contribution.color;
@@ -102,7 +106,7 @@ const Calendar = ({ data }: CalendarProps) => {
                         transition: { delay: getRandomDelayAnimate },
                       },
                     }}
-                    className="my-[2px] block h-[12px] w-[12px] rounded-sm bg-neutral-300 dark:bg-neutral-800"
+                    className="my-[2px] block h-auto aspect-square w-full rounded-sm bg-neutral-300 dark:bg-neutral-800"
                     style={backgroundColor ? { backgroundColor } : undefined}
                     onMouseEnter={() =>
                       setSelectContribution({
