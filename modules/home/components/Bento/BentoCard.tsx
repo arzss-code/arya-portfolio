@@ -15,7 +15,7 @@ const BentoCard = ({
 }: BentoItemProps) => {
   return (
     <SpotlightCard
-      className={`!p-0 md:col-span-${colSpan ?? 1}  ${colSpan === 2 ? "grid grid-cols-2 gap-2" : "flex flex-col"} ${className}`}
+      className={`!p-0 md:col-span-${colSpan ?? 1}  ${colSpan === 2 ? "grid grid-cols-2 gap-2" : "flex flex-col"} transition-all duration-300 hover:scale-[1.02] ${className}`}
     >
       <div
         className={`flex flex-col p-6 ${colSpan === 2 ? "item-start" : "items-center text-center"}`}

@@ -11,6 +11,15 @@
     "bento": {
       "title": "Bagian Unggulan",
       "sub_title": "Jelajahi semua yang telah saya buat, kontribusikan, dan capai."
+    },
+    "services": {
+      "title": "Mari Bekerja Sama",
+      "sub_title": "Saya selalu terbuka untuk peluang baru dan kolaborasi.",
+      "cta": {
+        "title": "Tersedia untuk Freelance",
+        "sub_title": "Punya proyek? Mari kita diskusikan.",
+        "button": "Hubungi Saya"
+      }
     }
   },
   "AboutPage": {

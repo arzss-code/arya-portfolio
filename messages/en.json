@@ -11,6 +11,15 @@
     "bento": {
       "title": "Featured Sections",
       "sub_title": "Explore everything I’ve crafted, contributed, and accomplished."
+    },
+    "services": {
+      "title": "Let's Work Together",
+      "sub_title": "I'm always open to new opportunities and collaborations.",
+      "cta": {
+        "title": "Available for Freelance",
+        "sub_title": "Have a project in mind? Let's discuss it.",
+        "button": "Contact Me"
+      }
     }
   },
   "AboutPage": {
