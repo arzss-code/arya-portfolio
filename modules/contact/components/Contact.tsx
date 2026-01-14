@@ -5,11 +5,14 @@ import ContactForm from "./ContactForm";
 
 const Contact = () => {
   return (
-    <>
-      <ContactList />
-      <Breakline className="my-6" />
-      <ContactForm />
-    </>
+    <div className="mt-8 flex flex-col gap-10 lg:flex-row lg:items-stretch">
+      <div className="flex-1 lg:max-w-[48%]">
+        <ContactList />
+      </div>
+      <div className="flex-1 lg:max-w-[52%]">
+        <ContactForm />
+      </div>
+    </div>
   );
 };
 

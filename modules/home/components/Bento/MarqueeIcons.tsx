@@ -11,7 +11,7 @@ const MarqueeIcons = () => {
       .map(([name, value]) => [name, { icon: value.icon, color: value.color }]);
 
   return (
-    <div className="flex flex-col overflow-x-hidden">
+    <div className="flex flex-col gap-4 overflow-x-hidden py-4">
       {Array.from({ length: 2 }, (_, index) => {
         const slider = [...stacksInArray].sort(() => Math.random() - 0.5);
         return (
@@ -19,9 +19,11 @@ const MarqueeIcons = () => {
             key={index}
             direction={index % 2 === 0 ? "left" : "right"}
           >
-            {slider.map(([name, { icon, color }], index) => (
-              <SkillCard key={index} name={name} icon={icon} color={color} />
-            ))}
+            <div className="flex gap-4 px-2">
+              {slider.map(([name, { icon, color }], idx) => (
+                <SkillCard key={idx} name={name} icon={icon} color={color} />
+              ))}
+            </div>
           </MarqueeElement>
         );
       })}

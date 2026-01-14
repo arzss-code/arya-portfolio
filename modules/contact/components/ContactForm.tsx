@@ -4,6 +4,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslations } from "next-intl";
+import { motion, AnimatePresence } from "framer-motion";
+import { FiSend, FiCheckCircle } from "react-icons/fi";
 
 import InputField from "@/common/components/elements/InputField";
 
@@ -21,7 +23,6 @@ const ContactForm = () => {
     formState: { errors },
   } = useForm<FormEmail>();
   const [isLoading, setIsLoading] = useState(false);
-  const [buttonText, setButtonText] = useState("Send Email");
   const [isSuccess, setIsSuccess] = useState(false);
 
   const t = useTranslations("ContactPage");
@@ -30,33 +31,46 @@ const ContactForm = () => {
     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
   useEffect(() => {
-    setButtonText(isLoading ? "Sending your message..." : "Send Email");
-    if (!isLoading && isSuccess) setButtonText("Your email sent successfully");
-    const timeout = setTimeout(() => {
-      setButtonText("Send Email");
-    }, 5000);
-    return () => clearTimeout(timeout);
-  }, [isLoading, isSuccess]);
+    if (isSuccess) {
+      const timeout = setTimeout(() => {
+        setIsSuccess(false);
+      }, 5000);
+      return () => clearTimeout(timeout);
+    }
+  }, [isSuccess]);
 
   const handleFormSubmit = async (payload: FormEmail) => {
     setIsLoading(true);
     try {
       const response = await axios.post("/api/email", payload);
-      if (response.status === 200) setIsSuccess(true);
-      reset();
-      setIsLoading(false);
+      if (response.status === 200) {
+        setIsSuccess(true);
+        reset();
+      }
     } catch (error) {
       console.log(error);
+    } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <div className="space-y-4">
-      <h2>{t("form.title")}</h2>
+    <motion.div
+      initial={{ opacity: 0, scale: 0.95 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.5 }}
+      className="glass-card flex flex-col space-y-6 !rounded-3xl p-6 md:p-8"
+    >
+      <div className="space-y-2">
+        <h2 className="text-2xl font-bold">{t("form.title")}</h2>
+        <p className="text-sm text-neutral-600 dark:text-neutral-400">
+          Have a project in mind? Let's talk about it.
+        </p>
+      </div>
+
       <form
         onSubmit={handleSubmit(handleFormSubmit)}
-        className="space-y-4 transition-all duration-300"
+        className="space-y-4"
       >
         <div className="flex w-full flex-col space-y-4 md:flex-row md:space-x-4 md:space-y-0">
           <InputField
@@ -80,20 +94,62 @@ const ContactForm = () => {
         </div>
         <InputField
           name="message"
+          rows={5}
           rule={{ required: true }}
           register={register}
           error={errors}
           isTextArea
         />
+        
         <button
-          disabled={isLoading}
+          disabled={isLoading || isSuccess}
           type="submit"
-          className="w-full rounded-lg bg-neutral-600 px-4 py-2 text-neutral-50 shadow-md transition-all duration-300 hover:bg-neutral-700 hover:shadow-lg dark:bg-neutral-800 hover:dark:bg-neutral-700"
+          className={`relative w-full overflow-hidden rounded-xl px-6 py-3.5 font-bold text-white transition-all duration-300 
+            ${isSuccess 
+              ? "bg-green-500 shadow-green-500/30" 
+              : "bg-blue-600 shadow-blue-600/30 hover:bg-blue-700 hover:shadow-blue-700/40"
+            } 
+            disabled:cursor-not-allowed disabled:opacity-70`}
         >
-          {buttonText}
+          <AnimatePresence mode="wait">
+            {isLoading ? (
+              <motion.div
+                key="loading"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                className="flex items-center justify-center gap-2"
+              >
+                <div className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />
+                <span>Sending...</span>
+              </motion.div>
+            ) : isSuccess ? (
+              <motion.div
+                key="success"
+                initial={{ opacity: 0, scale: 0.5 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.5 }}
+                className="flex items-center justify-center gap-2"
+              >
+                <FiCheckCircle size={20} />
+                <span>Message Sent!</span>
+              </motion.div>
+            ) : (
+              <motion.div
+                key="default"
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 10 }}
+                className="flex items-center justify-center gap-2"
+              >
+                <FiSend size={18} />
+                <span>Send Message</span>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </button>
       </form>
-    </div>
+    </motion.div>
   );
 };
 
