@@ -9,6 +9,7 @@ import { HiChevronRight as ChevronIcon } from "react-icons/hi";
 import { AnimatePresence, motion } from "framer-motion";
 import { useLocale } from "next-intl";
 import { differenceInMonths, differenceInYears, format } from "date-fns";
+import { id, enUS } from "date-fns/locale";
 
 import SpotlightCard from "@/common/components/elements/SpotlightCard";
 import { CareerProps } from "@/common/types/careers";
@@ -29,28 +30,53 @@ const CareerCard = ({
   const [isShowResponsibility, setIsShowResponsibility] = useState(false);
 
   const locale = useLocale();
+  const dateLocale = locale === "id" ? id : enUS;
 
   const startDate = new Date(start_date);
   const endDate = end_date ? new Date(end_date) : new Date();
 
+  // Handle present end_date appropriately for months
+  const isPresent = !end_date;
   const durationYears = differenceInYears(endDate, startDate);
-  const durationMonths = differenceInMonths(endDate, startDate) % 12;
+  
+  // Calculate remaining months precisely
+  const totalMonths = differenceInMonths(endDate, startDate);
+  const durationMonths = totalMonths % 12;
 
   const yearText =
     locale == "en" ? `year${durationYears > 1 ? "s" : ""}` : "tahun";
+  const monthText = locale == "en" ? `Month${durationMonths > 1 ? "s" : ""}` : "Bulan";
 
   let durationText = "";
   if (durationYears > 0) {
-    durationText += `${durationYears} ${yearText}`;
+    durationText += `${durationYears} ${yearText} `;
   }
   if (durationMonths > 0 || durationYears === 0) {
-    durationText += `${durationMonths} Month${durationMonths > 1 ? "s" : ""}`;
+    durationText += `${durationMonths} ${monthText}`;
   }
 
   const hideText = locale == "en" ? "Hide" : "Sembunyikan";
   const showText = locale == "en" ? "Show" : "Tampilkan";
   const responsibilityText =
     locale == "en" ? "responsibilities" : "tanggung jawab";
+
+  const getTranslatedType = (type: string, locale: string) => {
+    if (locale === "id") {
+      if (type.toLowerCase() === "organization") return "Organisasi";
+      if (type.toLowerCase() === "internship") return "Magang";
+      if (type.toLowerCase() === "full-time") return "Purna Waktu";
+    }
+    return type;
+  };
+
+  const getTranslatedLocationType = (locType: string, locale: string) => {
+    if (locale === "id") {
+      if (locType.toLowerCase() === "onsite") return "Di Tempat";
+      if (locType.toLowerCase() === "hybrid") return "Hybrid";
+      if (locType.toLowerCase() === "remote") return "Jarak Jauh";
+    }
+    return locType;
+  };
 
   return (
     <SpotlightCard className="flex items-start gap-5 p-6">
@@ -60,7 +86,7 @@ const CareerCard = ({
           height={60}
           src={logo}
           alt={company}
-          className="rounded-lg border-[1.5px] border-neutral-800 bg-neutral-100 dark:border-neutral-300"
+          className="aspect-square rounded-lg object-contain bg-neutral-100"
         />
       ) : (
         <CompanyIcon size={65} />
@@ -83,8 +109,8 @@ const CareerCard = ({
 
           <div className="flex flex-col gap-2 text-[13px] md:flex-row">
             <div className="flex gap-1 text-neutral-600 dark:text-neutral-400">
-              <span>{format(startDate, "MMM yyyy")}</span> -{" "}
-              <span>{end_date ? format(endDate, "MMM yyyy") : "Present"}</span>
+              <span>{format(startDate, "MMM yyyy", { locale: dateLocale })}</span> -{" "}
+              <span>{end_date ? format(endDate, "MMM yyyy", { locale: dateLocale }) : (locale === "id" ? "Saat ini" : "Present")}</span>
             </div>
 
             <span className="hidden text-neutral-300 dark:text-neutral-700 md:block">
@@ -96,14 +122,14 @@ const CareerCard = ({
               •
             </span>
             <span className="text-neutral-600 dark:text-neutral-400">
-              {type}
+              {getTranslatedType(type, locale)}
             </span>
 
             <span className="hidden text-neutral-300 dark:text-neutral-700 md:block">
               •
             </span>
             <span className="text-neutral-600 dark:text-neutral-400">
-              {location_type}
+              {getTranslatedLocationType(location_type, locale)}
             </span>
           </div>
 

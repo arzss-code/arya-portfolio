@@ -9,7 +9,7 @@ const images = [
 
 const StackImagesPersonal = () => {
   return (
-    <div className="flex items-center justify-center pb-2">
+    <div className="flex h-full w-full items-center justify-center py-8">
       <Stack
         randomRotation={true}
         sensitivity={100}

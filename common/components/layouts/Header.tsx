@@ -97,7 +97,7 @@ const Header = () => {
             <Link href="/" className="flex items-center gap-3 group shrink-0">
               <div className="relative w-10 h-10 sm:w-11 sm:h-11 shrink-0">
                 <NextImage
-                  src="/images/Profil-Arya-1.png"
+                  src="/images/icon.png"
                   alt="Arya"
                   fill
                   className="rounded-full object-cover border-2 border-blue-500/20 group-hover:border-blue-500/40 transition-all duration-300 shadow-lg"
@@ -139,7 +139,7 @@ const Header = () => {
               {/* Mobile Menu Button */}
               <button
                 onClick={toggleMenu}
-                className="lg:hidden p-2.5 rounded-xl bg-neutral-100/80 dark:bg-neutral-800/80 backdrop-blur-md border border-neutral-200/50 dark:border-neutral-700/50 shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105 active:scale-95"
+                className="lg:hidden h-10 w-10 flex items-center justify-center rounded-xl bg-neutral-100/80 dark:bg-neutral-800/80 backdrop-blur-md border border-neutral-200/50 dark:border-neutral-700/50 shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105 active:scale-95"
                 aria-label="Toggle menu"
               >
                 <motion.div
@@ -158,117 +158,55 @@ const Header = () => {
         </div>
       </header>
 
-      {/* Mobile Menu Overlay - FULL SCREEN */}
+      {/* Mobile Menu Overlay - Dropdown Style */}
       <AnimatePresence>
         {isOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-40 lg:hidden"
-          >
-            {/* Full Screen Background */}
-            <div 
-              className="absolute inset-0 bg-white/95 dark:bg-neutral-900/95 backdrop-blur-2xl"
+          <>
+            {/* Backdrop to close menu */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="fixed inset-0 z-40 bg-black/20 dark:bg-black/40 backdrop-blur-sm lg:hidden"
               onClick={hideMenu}
             />
 
-            {/* Full Screen Menu Content */}
+            {/* Dropdown Menu Content */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 20 }}
-              transition={{ delay: 0.1, duration: 0.3 }}
-              className="relative h-full flex flex-col pt-20 pb-8 px-6"
+              initial={{ opacity: 0, y: -10, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -10, scale: 0.95 }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
+              className="fixed top-20 right-4 left-4 sm:left-auto sm:w-80 z-50 lg:hidden"
             >
-              {/* Profile Section */}
-              <div className="flex items-center gap-4 pb-6 mb-6 border-b border-neutral-200/50 dark:border-neutral-700/50">
-                <div className="relative w-16 h-16">
-                  <NextImage
-                    src="/images/Profil-Arya-1.png"
-                    alt="Arya"
-                    fill
-                    className="rounded-2xl object-cover border-2 border-blue-500/30 shadow-xl"
-                  />
-                  <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-green-500 rounded-full border-3 border-white dark:border-neutral-900 flex items-center justify-center">
-                    <div className="w-2 h-2 bg-white rounded-full animate-pulse" />
-                  </div>
-                </div>
-                <div className="flex-1">
-                  <div className="flex items-center gap-2">
-                    <span className="font-bold text-xl text-neutral-900 dark:text-white">
-                      Arya
-                    </span>
-                    <BadgeCheck size={18} className="text-blue-500 fill-blue-500" />
-                  </div>
-                  <span className="text-sm text-neutral-500 dark:text-neutral-400">
-                    @atsiilaarya
-                  </span>
-                  <p className="text-xs text-neutral-400 dark:text-neutral-500 mt-1">
-                    Full Stack Developer
-                  </p>
-                </div>
-              </div>
-
-              {/* Mobile Navigation Links - Scrollable */}
-              <nav className="flex-1 overflow-y-auto space-y-2">
-                {filteredMenu.map((item: MenuItemProps, index: number) => {
-                  const isActive = pathname === item.href;
-                  return (
-                    <motion.div
-                      key={item.href}
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.15 + index * 0.05 }}
-                    >
+              <div className="bg-white/90 dark:bg-neutral-900/90 backdrop-blur-2xl rounded-2xl border border-neutral-200/50 dark:border-neutral-700/50 shadow-2xl p-3 overflow-hidden">
+                <nav className="flex flex-col gap-1 max-h-[60vh] overflow-y-auto">
+                  {filteredMenu.map((item: MenuItemProps, index: number) => {
+                    const isActive = pathname === item.href;
+                    return (
                       <Link
+                        key={item.href}
                         href={item.href}
                         onClick={hideMenu}
                         className={clsx(
-                          "flex items-center gap-4 px-5 py-4 rounded-2xl text-lg font-medium transition-all duration-200",
+                          "flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200",
                           isActive
-                            ? "bg-blue-500 text-white shadow-lg shadow-blue-500/30"
-                            : "text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800/50 active:scale-[0.98]"
+                            ? "bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400"
+                            : "text-neutral-600 dark:text-neutral-400 hover:bg-neutral-100/80 dark:hover:bg-neutral-800/80 hover:text-neutral-900 dark:hover:text-white"
                         )}
                       >
-                        <span className={clsx(
-                          "p-3 rounded-xl transition-colors",
-                          isActive 
-                            ? "bg-white/20 text-white" 
-                            : "bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-400"
-                        )}>
+                        <span className={isActive ? "text-blue-600 dark:text-blue-400" : ""}>
                           {item.icon}
                         </span>
                         <span className="flex-1">{t(item.title)}</span>
-                        {isActive && (
-                          <motion.div 
-                            layoutId="mobile-nav-indicator"
-                            className="w-2 h-2 rounded-full bg-white"
-                          />
-                        )}
                       </Link>
-                    </motion.div>
-                  );
-                })}
-              </nav>
-
-              {/* Mobile Footer */}
-              <motion.div 
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.4 }}
-                className="pt-6 mt-6 border-t border-neutral-200/50 dark:border-neutral-700/50 text-center"
-              >
-                <p className="text-sm text-neutral-500">
-                  © 2024 Arya
-                </p>
-                <p className="text-xs text-neutral-400 mt-1">
-                  Made with 💙 in Indonesia
-                </p>
-              </motion.div>
+                    );
+                  })}
+                </nav>
+              </div>
             </motion.div>
-          </motion.div>
+          </>
         )}
       </AnimatePresence>
 

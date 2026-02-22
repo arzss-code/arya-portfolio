@@ -19,7 +19,7 @@ const BentoCard = ({
 }: BentoItemProps) => {
   const content = (
     <SpotlightCard
-      className={`glass-card-hover group relative flex h-full flex-col overflow-hidden !rounded-[2.5rem] border border-white/10 dark:border-white/5 ${className} !bg-opacity-40 transition-all duration-500`}
+      className={`glass-card-hover group relative flex h-full flex-col overflow-hidden !rounded-[2.5rem] border border-neutral-200/50 dark:border-white/5 bg-white/40 dark:bg-transparent ${className} transition-all duration-500`}
     >
       <div
         className={`relative z-10 flex flex-col p-6 sm:p-8 ${
@@ -29,7 +29,7 @@ const BentoCard = ({
         <div className="flex flex-col gap-4">
           <div className="flex items-center gap-4">
             {icon && (
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/20 dark:bg-white/10 text-neutral-900 dark:text-white shadow-inner backdrop-blur-md border border-neutral-200/50 dark:border-white/20 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-6">
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/60 dark:bg-white/10 text-neutral-900 dark:text-white shadow-inner backdrop-blur-md border border-neutral-200/80 dark:border-white/20 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-6">
                 {href && href !== "/" ? (
                   <Link href={href} className="flex h-full w-full items-center justify-center relative z-20">
                     {icon}
@@ -40,7 +40,7 @@ const BentoCard = ({
               </div>
             )}
             {href && href !== "/" && (
-              <Link href={href} className="flex h-8 w-8 items-center justify-center rounded-full bg-neutral-900/5 dark:bg-white/10 text-neutral-900 dark:text-white opacity-0 transition-all duration-300 group-hover:opacity-100 hover:scale-110 relative z-20">
+              <Link href={href} className="flex h-8 w-8 items-center justify-center rounded-full bg-neutral-900/10 dark:bg-white/10 text-neutral-900 dark:text-white opacity-0 transition-all duration-300 group-hover:opacity-100 hover:scale-110 relative z-20">
                 <ArrowIcon size={20} />
               </Link>
             )}
@@ -64,7 +64,7 @@ const BentoCard = ({
       </div>
 
       <div className="relative mt-auto w-full overflow-hidden px-5 pb-5">
-        <div className="rounded-[1.5rem] bg-white/5 backdrop-blur-sm border border-white/10 overflow-hidden">
+        <div className="rounded-[1.5rem] bg-neutral-50/50 dark:bg-white/5 backdrop-blur-sm border border-neutral-200/50 dark:border-white/10 overflow-hidden">
           {visual}
         </div>
       </div>

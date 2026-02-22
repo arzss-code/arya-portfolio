@@ -4,7 +4,7 @@ export const EDUCATION: EducationProps[] = [
   {
     school: "Politeknik Negeri Semarang",
     major: "Computer Engineering Technology (BASc)",
-    logo: "/images/education/polines.png",
+    logo: "/images/education/logo-polines.png",
     location: "Semarang, Indonesia 🇮🇩",
     degree: "Bachelor of Applied Science",
     start_year: 2023,

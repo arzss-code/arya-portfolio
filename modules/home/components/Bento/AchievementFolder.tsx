@@ -28,7 +28,7 @@ const AchievementFolder = () => {
     )) ?? [];
 
   return (
-    <div className="mb-4 mt-8 flex w-full items-center justify-center">
+    <div className="flex h-full w-full items-center justify-center mb-4 mt-12">
       <Folder
         size={0.8}
         color="#facc15"

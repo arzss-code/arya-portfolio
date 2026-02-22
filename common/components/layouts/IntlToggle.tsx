@@ -11,8 +11,8 @@ const IntlToggle = () => {
   const currentLocale = useLocale();
 
   const locales = [
-    { value: "en" as Locale, label: "EN" },
     { value: "id" as Locale, label: "ID" },
+    { value: "en" as Locale, label: "EN" },
   ];
 
   const [isPending, startTransition] = useTransition();
