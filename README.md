@@ -9,8 +9,6 @@
 
 <br/>
 
-<img width="1525" height="1221" alt="Screenshot 2025-08-07 115929" src="https://github.com/user-attachments/assets/fcf5a30b-0ad8-4a57-b1bf-e846e4ed416c" />
-
 ## 📘 Introduction
 
 This is my personal website built from scratch since February 2024 using modern technologies such as Next.js and TypeScript.
