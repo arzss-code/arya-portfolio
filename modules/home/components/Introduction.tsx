@@ -26,7 +26,7 @@ const Introduction = () => {
             <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500"></span>
           </div>
           <span className="text-xs font-semibold tracking-wide text-green-600 dark:text-green-400">
-            Available for hire
+            {t("available")}
           </span>
         </motion.div>
 
@@ -38,7 +38,13 @@ const Introduction = () => {
             className="text-4xl font-extrabold tracking-tight text-neutral-900 dark:text-neutral-50 md:text-5xl lg:text-5xl"
           >
             <h1>
-              Hi, I&apos;m <span className="bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">{METADATA.creator}</span>
+              {t.rich("intro", {
+                name: (chunks) => (
+                  <span className="bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">
+                    {chunks}
+                  </span>
+                ),
+              })}
             </h1>
           </motion.div>
 
@@ -87,12 +93,12 @@ const Introduction = () => {
           <div className="flex flex-wrap items-center gap-4 pt-2">
             <Link href="/contact" passHref>
               <Button icon={<ContactIcon size={18} />} className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-700 text-white shadow-lg shadow-blue-500/20">
-                Contact Me
+                {t("contact_btn")}
               </Button>
             </Link>
             <Link href="/resume" passHref>
               <Button icon={<DownloadIcon size={18} />} className="bg-neutral-100 hover:bg-neutral-200 text-neutral-900 dark:bg-neutral-800 dark:hover:bg-neutral-700 dark:text-neutral-50 border border-neutral-200 dark:border-neutral-700">
-                Download CV
+                {t("download_btn")}
               </Button>
             </Link>
           </div>

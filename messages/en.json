@@ -1,8 +1,11 @@
 {
   "HomePage": {
-    "intro": "Hi, I'm Atsiila Arya Nabiih",
+    "intro": "Hi, I'm <name>Atsiila Arya Nabiih</name>",
     "location": "Based in Semarang, Central Java, Indonesia 🇮🇩",
     "location_type": "Hybrid",
+    "available": "Available for freelance",
+    "contact_btn": "Contact Me",
+    "download_btn": "Download CV",
     "resume": "A creative and detail-oriented UI/UX Designer passionate about crafting intuitive and visually engaging digital experiences. I enjoy transforming complex problems into simple, user-friendly solutions through thoughtful design, collaboration, and experimentation.",
     "skills": {
       "title": "Skills",

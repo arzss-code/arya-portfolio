@@ -30,21 +30,33 @@ const BentoCard = ({
           <div className="flex items-center gap-4">
             {icon && (
               <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/20 dark:bg-white/10 text-neutral-900 dark:text-white shadow-inner backdrop-blur-md border border-neutral-200/50 dark:border-white/20 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-6">
-                {icon}
+                {href && href !== "/" ? (
+                  <Link href={href} className="flex h-full w-full items-center justify-center relative z-20">
+                    {icon}
+                  </Link>
+                ) : (
+                  icon
+                )}
               </div>
             )}
             {href && href !== "/" && (
-              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-neutral-900/5 dark:bg-white/10 text-neutral-900 dark:text-white opacity-0 transition-all duration-300 group-hover:opacity-100">
+              <Link href={href} className="flex h-8 w-8 items-center justify-center rounded-full bg-neutral-900/5 dark:bg-white/10 text-neutral-900 dark:text-white opacity-0 transition-all duration-300 group-hover:opacity-100 hover:scale-110 relative z-20">
                 <ArrowIcon size={20} />
-              </div>
+              </Link>
             )}
           </div>
           
           <div className="space-y-1.5">
             <h3 className="text-xl font-bold tracking-tight text-neutral-900 dark:text-white">
-              {title}
+              {href && href !== "/" ? (
+                <Link href={href} className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors w-max relative z-20">
+                  {title}
+                </Link>
+              ) : (
+                title
+              )}
             </h3>
-            <p className="text-sm font-medium leading-relaxed text-neutral-700 dark:text-white/70">
+            <p className="text-sm font-medium leading-relaxed text-neutral-700 dark:text-white/70 relative z-10 pointer-events-none">
               {description}
             </p>
           </div>
@@ -60,17 +72,6 @@ const BentoCard = ({
   );
 
   const spanClass = colSpan === 2 ? "md:col-span-2" : "md:col-span-1";
-
-  if (href && href !== "/") {
-    return (
-      <Link
-        href={href}
-        className={`${spanClass} h-full block`}
-      >
-        {content}
-      </Link>
-    );
-  }
 
   return (
     <div className={`${spanClass} h-full`}>
