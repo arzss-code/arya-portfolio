@@ -15,10 +15,10 @@ export const UMAMI_ACCOUNT = {
   is_active: true,
   websites: [
     {
-      domain: "atsiilaarya.my.id",
-      website_id: process.env.UMAMI_WEBSITE_ID_MYID,
+      domain: "atsiilaarya.web.id",
+      website_id: process.env.UMAMI_WEBSITE_ID_WEBID,
       umami_url:
-        "https://cloud.umami.is/share/ASyIGkz9iQwviSiq/www.atsiilaarya.my.id",
+        "https://cloud.umami.is/share/ASyIGkz9iQwviSiq/www.atsiilaarya.web.id",
     },
   ],
 };
