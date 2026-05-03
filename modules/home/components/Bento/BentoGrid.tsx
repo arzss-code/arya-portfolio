@@ -15,7 +15,7 @@ import SectionSubHeading from "@/common/components/elements/SectionSubHeading";
 
 import MarqueeIcons from "./MarqueeIcons";
 import AchievementFolder from "./AchievementFolder";
-import AnimatedListProject from "./AnimatedListProject";
+import ProjectsCarousel from "./ProjectsCarousel";
 import StackImagesPersonal from "./StackImagesPersonal";
 import TrueFocusService from "./TrueFocusService";
 import BentoCard from "./BentoCard";
@@ -41,7 +41,7 @@ const BentoGrid = () => {
       description: t("projects.description"),
       label: "Projects",
       icon: <ProjectIcon size={size} />,
-      visual: <AnimatedListProject />,
+      visual: <ProjectsCarousel />,
       href: "/projects",
       colSpan: 2 as const,
       isShow: true,

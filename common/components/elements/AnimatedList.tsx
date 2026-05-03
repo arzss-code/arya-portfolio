@@ -145,10 +145,10 @@ const AnimatedList: React.FC<AnimatedListProps> = ({
   }, [selectedIndex, keyboardNav]);
 
   return (
-    <div className={`relative w-fit ${className}`}>
+    <div className={`relative w-full ${className}`}>
       <div
         ref={listRef}
-        className={`max-h-[300px] overflow-y-auto p-4 ${
+        className={`max-h-[300px] overflow-y-auto p-3 ${
           displayScrollbar
             ? "[&::-webkit-scrollbar-thumb]:rounded-[4px] [&::-webkit-scrollbar-thumb]:bg-[#222] [&::-webkit-scrollbar-track]:bg-[#060010] [&::-webkit-scrollbar]:w-[8px]"
             : "scrollbar-hide"
@@ -171,14 +171,14 @@ const AnimatedList: React.FC<AnimatedListProps> = ({
             }}
           >
             {itemImage && item.image ? (
-              <Link href={item.href ?? href}>
-                <div className="rounded-xl bg-neutral-300 p-[3px] dark:bg-neutral-800">
+              <Link href={item.href ?? href} className="block w-full">
+                <div className="w-full overflow-hidden rounded-xl bg-neutral-200 dark:bg-neutral-800 ring-1 ring-neutral-200 dark:ring-white/10 hover:ring-blue-400/50 transition-all duration-300">
                   <Image
                     src={item.image}
-                    width={150}
-                    height={50}
+                    width={500}
+                    height={280}
                     alt={item.text ?? `Image ${index}`}
-                    className="rounded-lg shadow-xl"
+                    className="w-full h-auto object-cover rounded-xl shadow-md hover:scale-[1.02] transition-transform duration-300"
                   />
                 </div>
               </Link>
