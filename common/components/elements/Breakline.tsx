@@ -1,4 +1,4 @@
-import clsx from "clsx";
+import cn from "@/common/libs/clsxm";
 
 interface BreaklineProps {
   className?: string;
@@ -8,8 +8,8 @@ interface BreaklineProps {
 const Breakline = ({ className = "", ...others }: BreaklineProps) => {
   return (
     <div
-      className={clsx(
-        "my-4 border-t border-neutral-300 dark:border-neutral-700",
+      className={cn(
+        "my-12 border-t border-neutral-300 dark:border-neutral-700",
         className,
       )}
       {...others}

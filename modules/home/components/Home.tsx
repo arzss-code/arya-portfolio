@@ -19,7 +19,7 @@ const Home = () => {
     <>
       <Introduction />
 
-      <Breakline className="my-12" />
+      <Breakline />
 
       <motion.div
         variants={sectionVariants}
@@ -31,7 +31,7 @@ const Home = () => {
         <SkillList />
       </motion.div>
 
-      <Breakline className="my-12" />
+      <Breakline />
 
       <motion.div
         variants={sectionVariants}
@@ -43,7 +43,7 @@ const Home = () => {
         <BentoGrid />
       </motion.div>
 
-      <Breakline className="my-20" />
+      <Breakline />
 
       <motion.div
         variants={sectionVariants}
