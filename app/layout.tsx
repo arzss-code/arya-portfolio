@@ -3,7 +3,7 @@ import Script from "next/script";
 import { getServerSession } from "next-auth";
 import { Analytics } from "@vercel/analytics/react";
 import { NextIntlClientProvider } from "next-intl";
-import { getMessages } from "next-intl/server";
+import { getMessages, getLocale } from "next-intl/server";
 import type { Metadata } from "next";
 import "./globals.css";
 
@@ -38,12 +38,10 @@ export const metadata: Metadata = {
 
 const RootLayout = async ({
   children,
-  params,
 }: Readonly<{
   children: React.ReactNode;
-  params: Promise<{ locale: string }>;
 }>) => {
-  const { locale } = await params;
+  const locale = await getLocale();
   const messages = await getMessages();
   const session = await getServerSession(authOptions);
 
