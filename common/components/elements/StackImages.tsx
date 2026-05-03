@@ -1,7 +1,5 @@
-"use client";
-
 import { motion, useMotionValue, useTransform } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import Image from "./Image";
 
@@ -62,6 +60,11 @@ export default function Stack({
   sendToBackOnClick = false,
 }: StackProps) {
   const [cards, setCards] = useState(cardsData);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   // Pre-compute random rotations once on the client to avoid SSR hydration mismatch
   const [randomRotations] = useState<number[]>(() =>
@@ -77,6 +80,8 @@ export default function Stack({
       return newCards;
     });
   };
+
+  if (!isMounted) return null;
 
   return (
     <div
@@ -128,3 +133,4 @@ export default function Stack({
     </div>
   );
 }
+

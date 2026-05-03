@@ -43,7 +43,7 @@ const Home = () => {
         <BentoGrid />
       </motion.div>
 
-      <Breakline className="my-12" />
+      <Breakline className="my-20" />
 
       <motion.div
         variants={sectionVariants}
