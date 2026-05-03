@@ -94,9 +94,12 @@ const ProjectsCarousel = () => {
     <div className="relative flex w-full flex-col items-center gap-4 py-4">
       {/* Carousel stage */}
       <div
-        className="relative flex h-[160px] w-full items-center justify-center overflow-hidden"
+        className="relative flex w-full items-center justify-center overflow-hidden py-8"
         style={{ perspective: "900px" }}
       >
+        {/* Hidden spacer to maintain responsive height */}
+        <div className="aspect-video w-[60%]" aria-hidden="true" />
+
         {projects.map((project, index) => {
           const pos = getCardPosition(index);
           return (
@@ -120,13 +123,13 @@ const ProjectsCarousel = () => {
                 onClick={(e) => pos !== "center" && e.preventDefault()}
                 className="block"
               >
-                <div className="group relative overflow-hidden rounded-2xl shadow-xl ring-1 ring-white/10">
+                <div className="group relative aspect-video overflow-hidden rounded-2xl shadow-xl ring-1 ring-white/10">
                   <Image
                     src={project.image}
                     alt={project.title}
                     width={360}
                     height={200}
-                    className="h-[140px] w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                   {/* Gradient overlay with title */}
                   <div className="absolute inset-0 flex items-end rounded-2xl bg-gradient-to-t from-black/80 via-black/20 to-transparent p-3 opacity-0 transition-opacity duration-300 group-hover:opacity-100">

@@ -6,7 +6,7 @@ const ProjectSkeleton = () => {
   return (
     <SkeletonLoader>
       <Card>
-        <Skeleton className="h-44 w-full rounded-xl" />
+        <Skeleton className="aspect-video w-full rounded-xl" />
         <div className="flex flex-col gap-2 p-4">
           <Skeleton className="h-6" />
           <div className="flex flex-col">

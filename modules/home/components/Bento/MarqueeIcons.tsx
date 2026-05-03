@@ -11,7 +11,7 @@ const MarqueeIcons = () => {
       .map(([name, value]) => [name, { icon: value.icon, color: value.color }]);
 
   return (
-    <div className="flex flex-col gap-4 overflow-x-hidden py-4">
+    <div className="flex flex-col gap-4 overflow-x-hidden py-10">
       {Array.from({ length: 2 }, (_, index) => {
         const slider = [...stacksInArray].sort(() => Math.random() - 0.5);
         return (

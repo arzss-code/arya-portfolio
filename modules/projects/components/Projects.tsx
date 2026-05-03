@@ -38,7 +38,7 @@ const Projects = () => {
 
   if (isLoading) {
     return (
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         {[...Array(4)].map((_, i) => (
           <ProjectSkeleton key={i} />
         ))}
@@ -47,7 +47,7 @@ const Projects = () => {
   }
 
   return (
-    <section className="grid grid-cols-1 gap-6 md:grid-cols-2">
+    <section className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
       {filteredProjects?.map((project, index) => (
         <motion.div
           key={index}

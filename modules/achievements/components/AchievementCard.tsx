@@ -48,9 +48,9 @@ const AchievementCard = ({
           <Image
             src={image}
             alt={name}
-            width={500}
-            height={200}
-            className="min-h-[180px] w-full rounded-t-xl object-cover md:h-[170px]"
+            width={480}
+            height={270}
+            className="aspect-video w-full rounded-t-xl object-cover"
           />
           <div className="absolute left-0 top-0 flex h-full w-full items-center justify-center gap-1 rounded-t-lg bg-black text-sm font-medium opacity-0 transition-opacity duration-300 group-hover:opacity-80 dark:text-neutral-50">
             <span>{t("show_credential")}</span>

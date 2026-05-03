@@ -20,6 +20,8 @@ const Image = (props: ImageProps) => {
         "overflow-hidden",
         isLoading ? "animate-pulse" : "",
         rounded,
+        className?.includes("h-full") && "h-full",
+        className?.includes("w-full") && "w-full",
       )}
     >
       <NextImage

@@ -21,16 +21,16 @@ const AchievementFolder = () => {
         key={item.id}
         src={item.image}
         alt={item.name}
-        width={200}
-        height={100}
+        width={320}
+        height={180}
         className="h-full w-full rounded-md object-cover"
       />
     )) ?? [];
 
   return (
-    <div className="flex h-full w-full items-center justify-center mb-4 mt-12">
+    <div className="flex h-full w-full items-center justify-center mb-8 mt-18">
       <Folder
-        size={0.8}
+        size={1}
         color="#facc15"
         items={items}
       />

@@ -9,12 +9,12 @@ const images = [
 
 const StackImagesPersonal = () => {
   return (
-    <div className="flex h-full w-full items-center justify-center py-8">
+    <div className="flex h-full w-full items-center justify-center py-12">
       <Stack
         randomRotation={true}
         sensitivity={100}
         sendToBackOnClick={true}
-        cardDimensions={{ width: 100, height: 150 }}
+        cardDimensions={{ width: 150, height: 200 }}
         cardsData={images}
       />
     </div>
