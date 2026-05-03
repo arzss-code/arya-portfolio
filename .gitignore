@@ -36,6 +36,9 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+projects.csv
+achievements.csv
+
 profile-arya.md
 PANDUAN_MENGISI_DATA.md
 PANDUAN_DEPLOY_VERCEL.md
