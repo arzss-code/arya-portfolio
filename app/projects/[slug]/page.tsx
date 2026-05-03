@@ -38,11 +38,9 @@ export const generateMetadata = async ({
 };
 
 const getProjectDetail = async (slug: string): Promise<ProjectItem> => {
-  const projects = await getProjectsDataBySlug(slug);
-  const contents = loadMdxFiles();
-  const content = contents.find((item) => item.slug === slug);
-  const response = { ...projects, content: content?.content };
-  const data = JSON.parse(JSON.stringify(response));
+  const project = await getProjectsDataBySlug(slug);
+  // Menggunakan content langsung dari Supabase (project.content)
+  const data = JSON.parse(JSON.stringify(project));
   return data;
 };
 
