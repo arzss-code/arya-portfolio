@@ -63,6 +63,11 @@ export default function Stack({
 }: StackProps) {
   const [cards, setCards] = useState(cardsData);
 
+  // Pre-compute random rotations once on the client to avoid SSR hydration mismatch
+  const [randomRotations] = useState<number[]>(() =>
+    cardsData.map(() => (randomRotation ? Math.random() * 10 - 5 : 0))
+  );
+
   const sendToBack = (id: number) => {
     setCards((prev) => {
       const newCards = [...prev];
@@ -83,7 +88,7 @@ export default function Stack({
       }}
     >
       {cards.map((card, index) => {
-        const randomRotate = randomRotation ? Math.random() * 10 - 5 : 0;
+        const randomRotate = randomRotations[index] ?? 0;
 
         return (
           <CardRotate
