@@ -7,41 +7,50 @@ import Breakline from "@/common/components/elements/Breakline";
 import Introduction from "./Introduction";
 import SkillList from "./SkillList";
 import BentoGrid from "./Bento/BentoGrid";
-import Services from "./Services"; // Added Services as it might be missing or I should check if it was there.
+import Services from "./Services";
+
+const sectionVariants = {
+  hidden: { opacity: 0, y: 40 },
+  visible: { opacity: 1, y: 0 },
+};
 
 const Home = () => {
   return (
     <>
       <Introduction />
-      <Breakline className="my-8" />
-      
+
+      <Breakline className="my-12" />
+
       <motion.div
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        viewport={{ once: true }}
+        variants={sectionVariants}
+        initial="hidden"
+        whileInView="visible"
+        transition={{ duration: 0.55, ease: "easeOut" }}
+        viewport={{ once: true, margin: "-80px" }}
       >
         <SkillList />
       </motion.div>
 
-      <Breakline className="my-8" />
+      <Breakline className="my-12" />
 
       <motion.div
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        viewport={{ once: true }}
+        variants={sectionVariants}
+        initial="hidden"
+        whileInView="visible"
+        transition={{ duration: 0.55, ease: "easeOut" }}
+        viewport={{ once: true, margin: "-80px" }}
       >
         <BentoGrid />
       </motion.div>
 
-      <Breakline className="my-8" />
+      <Breakline className="my-12" />
 
       <motion.div
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        viewport={{ once: true }}
+        variants={sectionVariants}
+        initial="hidden"
+        whileInView="visible"
+        transition={{ duration: 0.55, ease: "easeOut" }}
+        viewport={{ once: true, margin: "-80px" }}
       >
         <Services />
       </motion.div>

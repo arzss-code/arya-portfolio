@@ -6,6 +6,11 @@
     "available": "Tersedia untuk freelance",
     "contact_btn": "Hubungi Saya",
     "download_btn": "Unduh CV",
+    "stats": {
+      "projects": "Proyek",
+      "awards": "Penghargaan",
+      "experience": "Thn Pengalaman"
+    },
     "resume": "Seorang UI/UX Designer yang kreatif dan berorientasi pada detail dengan hasrat untuk menciptakan pengalaman digital yang intuitif dan menarik secara visual. Saya menikmati mengubah masalah kompleks menjadi solusi sederhana yang ramah pengguna melalui desain, kolaborasi, dan eksperimen.",
     "skills": {
       "title": "Keahlian",

@@ -6,6 +6,11 @@
     "available": "Available for freelance",
     "contact_btn": "Contact Me",
     "download_btn": "Download CV",
+    "stats": {
+      "projects": "Projects",
+      "awards": "Awards",
+      "experience": "Yrs Exp"
+    },
     "resume": "A creative and detail-oriented UI/UX Designer passionate about crafting intuitive and visually engaging digital experiences. I enjoy transforming complex problems into simple, user-friendly solutions through thoughtful design, collaboration, and experimentation.",
     "skills": {
       "title": "Skills",

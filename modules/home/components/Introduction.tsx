@@ -1,4 +1,5 @@
-import Image from "next/image";
+"use client";
+
 import { useTranslations } from "next-intl";
 import { TypeAnimation } from "react-type-animation";
 import { motion } from "framer-motion";
@@ -12,9 +13,18 @@ import TiltedCard from "@/common/components/elements/TiltedCard";
 const Introduction = () => {
   const t = useTranslations("HomePage");
 
+  const stats = [
+    { value: "7+", label: t("stats.projects") },
+    { value: "3+", label: t("stats.awards") },
+    { value: "2+", label: t("stats.experience") },
+  ];
+
   return (
-    <section className="flex flex-col-reverse items-start justify-between gap-10 md:flex-row md:items-center">
-      <div className="space-y-6 flex-1">
+    <section className="flex flex-col-reverse items-start justify-between gap-12 md:flex-row md:items-center">
+      {/* ── Left: Text content ── */}
+      <div className="flex-1 space-y-8">
+
+        {/* Availability badge */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -30,6 +40,7 @@ const Introduction = () => {
           </span>
         </motion.div>
 
+        {/* Name + type animation */}
         <div className="space-y-3">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -49,10 +60,10 @@ const Introduction = () => {
           </motion.div>
 
           <motion.div
-             initial={{ opacity: 0, y: 20 }}
-             animate={{ opacity: 1, y: 0 }}
-             transition={{ duration: 0.5, delay: 0.2 }}
-             className="text-xl font-semibold text-neutral-600 dark:text-neutral-400 md:text-2xl"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="text-xl font-semibold text-neutral-600 dark:text-neutral-400 md:text-2xl"
           >
             <TypeAnimation
               sequence={[
@@ -60,7 +71,7 @@ const Introduction = () => {
                 2000,
                 "Frontend Developer",
                 2000,
-                "Cybersecurity Enthusiast",
+                "AI/ML Enthusiast",
                 2000,
               ]}
               wrapper="span"
@@ -70,11 +81,12 @@ const Introduction = () => {
           </motion.div>
         </div>
 
+        {/* Location + bio */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.3 }}
-          className="space-y-6"
+          className="space-y-4"
         >
           <ul className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm font-medium text-neutral-600 dark:text-neutral-400">
             <li className="flex items-center gap-2">
@@ -89,42 +101,77 @@ const Introduction = () => {
           <p className="max-w-xl leading-relaxed text-neutral-700 dark:text-neutral-300">
             {t("resume")}
           </p>
-          
-          <div className="flex flex-wrap items-center gap-4 pt-2">
-            <Link href="/contact" passHref>
-              <Button icon={<ContactIcon size={18} />} className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-700 text-white shadow-lg shadow-blue-500/20">
-                {t("contact_btn")}
-              </Button>
-            </Link>
-            <Link href="/resume" passHref>
-              <Button icon={<DownloadIcon size={18} />} className="bg-neutral-100 hover:bg-neutral-200 text-neutral-900 dark:bg-neutral-800 dark:hover:bg-neutral-700 dark:text-neutral-50 border border-neutral-200 dark:border-neutral-700">
-                {t("download_btn")}
-              </Button>
-            </Link>
-          </div>
+        </motion.div>
+
+        {/* CTA Buttons */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+          className="flex flex-wrap items-center gap-4"
+        >
+          <Link href="/contact" passHref>
+            <Button icon={<ContactIcon size={18} />} className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-700 text-white shadow-lg shadow-blue-500/20">
+              {t("contact_btn")}
+            </Button>
+          </Link>
+          <Link href="/resume" passHref>
+            <Button icon={<DownloadIcon size={18} />} className="bg-neutral-100 hover:bg-neutral-200 text-neutral-900 dark:bg-neutral-800 dark:hover:bg-neutral-700 dark:text-neutral-50 border border-neutral-200 dark:border-neutral-700">
+              {t("download_btn")}
+            </Button>
+          </Link>
         </motion.div>
       </div>
 
+      {/* ── Right: Profile photo + stats ── */}
       <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.8, type: "spring", stiffness: 100 }}
-        className="relative mx-auto flex items-center justify-center w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96"
+        className="flex flex-col items-center gap-6 mx-auto"
       >
-        <TiltedCard
-          imageSrc={METADATA.profile}
-          altText={METADATA.creator}
-          captionText={METADATA.creator}
-          containerHeight="100%"
-          containerWidth="100%"
-          imageHeight="100%"
-          imageWidth="100%"
-          rotateAmplitude={12}
-          scaleOnHover={1.05}
-          showMobileWarning={false}
-          showTooltip={true}
-          displayOverlayContent={true}
-        />
+        {/* Profile card */}
+        <div className="relative flex items-center justify-center w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96">
+          <TiltedCard
+            imageSrc={METADATA.profile}
+            altText={METADATA.creator}
+            captionText={METADATA.creator}
+            containerHeight="100%"
+            containerWidth="100%"
+            imageHeight="100%"
+            imageWidth="100%"
+            rotateAmplitude={12}
+            scaleOnHover={1.05}
+            showMobileWarning={false}
+            showTooltip={true}
+            displayOverlayContent={true}
+          />
+        </div>
+
+        {/* Stats row */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.55 }}
+          className="grid grid-cols-3 gap-3 w-full"
+        >
+          {stats.map((stat, i) => (
+            <motion.div
+              key={stat.label}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6 + i * 0.08 }}
+              className="flex flex-col items-center rounded-2xl border border-neutral-200/60 bg-white/50 px-3 py-2.5 text-center shadow-sm backdrop-blur-sm dark:border-white/10 dark:bg-white/5"
+            >
+              <span className="text-lg font-extrabold leading-none text-neutral-900 dark:text-white">
+                {stat.value}
+              </span>
+              <span className="mt-0.5 text-[10px] font-medium tracking-wide text-neutral-500 dark:text-neutral-400">
+                {stat.label}
+              </span>
+            </motion.div>
+          ))}
+        </motion.div>
       </motion.div>
     </section>
   );
