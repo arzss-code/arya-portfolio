@@ -10,6 +10,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "**",
       },
+      {
+        protocol: "https",
+        hostname: "cqkstplcbucaqdbvmucx.supabase.co",
+      },
     ],
     qualities: [75, 85, 90, 100],
   },
