@@ -10,6 +10,7 @@ export interface CareerProps {
   industry: string;
   link: string | null;
   responsibilities?: string[];
+  responsibilities_id?: string[];
   indexCareer?: number;
   isShow?: boolean;
 }

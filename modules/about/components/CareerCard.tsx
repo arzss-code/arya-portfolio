@@ -25,6 +25,7 @@ const CareerCard = ({
   type,
   location_type,
   responsibilities,
+  responsibilities_id,
   indexCareer,
 }: CareerProps) => {
   const [isShowResponsibility, setIsShowResponsibility] = useState(false);
@@ -160,7 +161,7 @@ const CareerCard = ({
                     exit={{ y: -20, opacity: 0 }}
                     transition={{ duration: 0.3, ease: "easeInOut" }}
                   >
-                    {responsibilities?.map((responsibility, index) => (
+                    {(locale === "id" && responsibilities_id ? responsibilities_id : responsibilities)?.map((responsibility, index) => (
                       <motion.li key={index} layout>
                         {responsibility}
                       </motion.li>

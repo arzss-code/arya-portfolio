@@ -64,7 +64,7 @@ const ContactForm = () => {
       <div className="space-y-2">
         <h2 className="text-2xl font-bold">{t("form.title")}</h2>
         <p className="text-sm text-neutral-600 dark:text-neutral-400">
-          Have a project in mind? Let's talk about it.
+          {t("form.sub_title")}
         </p>
       </div>
 
@@ -75,17 +75,19 @@ const ContactForm = () => {
         <div className="flex w-full flex-col space-y-4 md:flex-row md:space-x-4 md:space-y-0">
           <InputField
             name="name"
-            rule={{ required: true }}
+            placeholder={t("form.input_name")}
+            rule={{ required: t("form.error_name") }}
             register={register}
             error={errors}
           />
           <InputField
             name="email"
+            placeholder={t("form.input_email")}
             rule={{
-              required: true,
+              required: t("form.error_email_required"),
               pattern: {
                 value: regexEmail,
-                message: "please enter a valid email",
+                message: t("form.error_email_invalid"),
               },
             }}
             register={register}
@@ -94,8 +96,9 @@ const ContactForm = () => {
         </div>
         <InputField
           name="message"
+          placeholder={t("form.input_message")}
           rows={5}
-          rule={{ required: true }}
+          rule={{ required: t("form.error_message") }}
           register={register}
           error={errors}
           isTextArea
@@ -121,7 +124,7 @@ const ContactForm = () => {
                 className="flex items-center justify-center gap-2"
               >
                 <div className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />
-                <span>Sending...</span>
+                <span>{t("form.sending")}</span>
               </motion.div>
             ) : isSuccess ? (
               <motion.div
@@ -132,7 +135,7 @@ const ContactForm = () => {
                 className="flex items-center justify-center gap-2"
               >
                 <FiCheckCircle size={20} />
-                <span>Message Sent!</span>
+                <span>{t("form.success")}</span>
               </motion.div>
             ) : (
               <motion.div
@@ -143,7 +146,7 @@ const ContactForm = () => {
                 className="flex items-center justify-center gap-2"
               >
                 <FiSend size={18} />
-                <span>Send Message</span>
+                <span>{t("form.button")}</span>
               </motion.div>
             )}
           </AnimatePresence>

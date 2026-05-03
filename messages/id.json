@@ -13,7 +13,27 @@
     },
     "bento": {
       "title": "Bagian Unggulan",
-      "sub_title": "Jelajahi semua yang telah saya buat, kontribusikan, dan capai."
+      "sub_title": "Jelajahi semua yang telah saya buat, kontribusikan, dan capai.",
+      "about": {
+        "title": "Tentang Saya",
+        "description": "Siapa saya dan apa yang saya lakukan."
+      },
+      "projects": {
+        "title": "Pameran Proyek",
+        "description": "Pilihan aplikasi nyata yang dibangun untuk memecahkan masalah nyata."
+      },
+      "skills": {
+        "title": "Keahlian & Alat",
+        "description": "Mencakup teknologi mobile, web, AI, dan UI/UX."
+      },
+      "achievements": {
+        "title": "Pencapaian",
+        "description": "Pencapaian dari program, proyek, dan komunitas."
+      },
+      "services": {
+        "title": "Layanan",
+        "description": "Solusi menyeluruh di bidang web, mobile, AI, dan desain."
+      }
     },
     "services": {
       "title": "Mari Bekerja Sama",
@@ -123,10 +143,17 @@
     },
     "form": {
       "title": "Atau kirim saya pesan",
+      "sub_title": "Punya proyek? Mari bicarakan.",
       "input_name": "Nama",
       "input_email": "Email",
       "input_message": "Pesan",
-      "button": "Kirim Email"
+      "error_name": "*nama wajib diisi",
+      "error_email_required": "*email wajib diisi",
+      "error_email_invalid": "mohon masukkan email yang valid",
+      "error_message": "*pesan wajib diisi",
+      "sending": "Mengirim...",
+      "success": "Pesan Terkirim!",
+      "button": "Kirim Pesan"
     }
   },
   "SmartTalkPage": {

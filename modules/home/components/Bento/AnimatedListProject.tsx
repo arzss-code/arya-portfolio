@@ -14,7 +14,8 @@ const AnimatedListProject = () => {
       ?.filter((item: ProjectItem) => item?.is_show)
       .sort((a: ProjectItem, b: ProjectItem) => b.id - a.id)
       .map((item: ProjectItem) => {
-        const imageUrl = item.image ? (item.image.startsWith("/") ? item.image : `/${item.image}`) : "";
+        // Supabase URLs already start with https://, don't prefix with /
+        const imageUrl = item.image ?? "";
         return {
           image: imageUrl,
           href: `/projects/${item.slug}`,

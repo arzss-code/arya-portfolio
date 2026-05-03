@@ -13,7 +13,27 @@
     },
     "bento": {
       "title": "Featured Sections",
-      "sub_title": "Explore everything I’ve crafted, contributed, and accomplished."
+      "sub_title": "Explore everything I’ve crafted, contributed, and accomplished.",
+      "about": {
+        "title": "About Me",
+        "description": "Who I am and what I do."
+      },
+      "projects": {
+        "title": "Projects Showcase",
+        "description": "A selection of real apps built to solve real problems."
+      },
+      "skills": {
+        "title": "Skills & Tools",
+        "description": "Covering mobile, web, AI, and UI/UX technologies."
+      },
+      "achievements": {
+        "title": "Achievements",
+        "description": "Milestones from programs, projects, and communities."
+      },
+      "services": {
+        "title": "Services",
+        "description": "End-to-end solutions in web, mobile, AI, and design."
+      }
     },
     "services": {
       "title": "Let's Work Together",
@@ -123,10 +143,17 @@
     },
     "form": {
       "title": "Or send me a message",
+      "sub_title": "Have a project in mind? Let's talk about it.",
       "input_name": "Name",
       "input_email": "Email",
       "input_message": "Message",
-      "button": "Send Email"
+      "error_name": "*name is required",
+      "error_email_required": "*email is required",
+      "error_email_invalid": "please enter a valid email",
+      "error_message": "*message is required",
+      "sending": "Sending...",
+      "success": "Message Sent!",
+      "button": "Send Message"
     }
   },
   "SmartTalkPage": {

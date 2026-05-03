@@ -46,7 +46,7 @@ const InputField = <TFormValue extends FieldValues>({
       )}{" "}
       {error[name]?.type === "required" && (
         <p role="alert" className="text-[10px] text-red-400">
-          *{name} is required
+          {error[name]?.message ? String(error[name]?.message) : `*${name} is required`}
         </p>
       )}
       {error[name]?.type === "pattern" && (

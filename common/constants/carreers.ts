@@ -17,6 +17,11 @@ export const CAREERS: CareerProps[] = [
       "Served as trainer and mentor for UI/UX fundamentals and Figma prototyping.",
       "Assisted internal teams in understanding user flows and improving usability.",
     ],
+    responsibilities_id: [
+      "Mengoordinasikan sesi pelatihan UI/UX dan workshop desain.",
+      "Menjadi pengajar dan mentor untuk materi dasar UI/UX dan pembuatan prototipe di Figma.",
+      "Membantu tim internal dalam memahami alur pengguna dan meningkatkan kegunaan aplikasi.",
+    ],
     isShow: true,
   },
   {
@@ -33,6 +38,10 @@ export const CAREERS: CareerProps[] = [
     responsibilities: [
       "Designed posters, dashboards, and event graphics.",
       "Collaborated across departments to maintain visual consistency.",
+    ],
+    responsibilities_id: [
+      "Mendesain poster, dasbor, dan grafis untuk keperluan acara.",
+      "Berkolaborasi lintas departemen untuk menjaga konsistensi visual desain.",
     ],
     isShow: true,
   },
@@ -52,6 +61,11 @@ export const CAREERS: CareerProps[] = [
       "Managed radio playlists and assisted on-air broadcasting.",
       "Supported marketing campaigns and audience engagement.",
     ],
+    responsibilities_id: [
+      "Mendesain poster promosi dan konten video untuk media sosial.",
+      "Mengelola playlist radio dan membantu penyiaran siaran langsung (on-air).",
+      "Mendukung jalannya kampanye pemasaran dan interaksi dengan audiens.",
+    ],
     isShow: true,
   },
   {
@@ -69,6 +83,11 @@ export const CAREERS: CareerProps[] = [
       "Designed brochures, banners, business cards, and printed media.",
       "Communicated directly with clients to gather design requirements.",
       "Coordinated with production team and issued work orders (SPK).",
+    ],
+    responsibilities_id: [
+      "Mendesain brosur, spanduk, kartu nama, dan berbagai media cetak.",
+      "Berkomunikasi langsung dengan klien untuk mengumpulkan kebutuhan desain.",
+      "Berkoordinasi dengan tim produksi dan menerbitkan Surat Perintah Kerja (SPK).",
     ],
     isShow: true,
   },
