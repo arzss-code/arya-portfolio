@@ -115,11 +115,15 @@ const Introduction = () => {
               {t("contact_btn")}
             </Button>
           </Link>
-          <Link href="/resume" passHref>
-            <Button icon={<DownloadIcon size={18} />} className="bg-neutral-100 hover:bg-neutral-200 text-neutral-900 dark:bg-neutral-800 dark:hover:bg-neutral-700 dark:text-neutral-50 border border-neutral-200 dark:border-neutral-700">
-              {t("download_btn")}
-            </Button>
-          </Link>
+          <a
+            href="
+            /CV_Atsiila_Arya_Nabiih.pdf"
+            download
+            className="inline-flex items-center gap-2 rounded-lg bg-neutral-100 px-4 py-2 text-neutral-900 transition-all duration-300 hover:bg-neutral-200 dark:bg-neutral-800 dark:hover:bg-neutral-700 dark:text-neutral-50 border border-neutral-200 dark:border-neutral-700"
+          >
+            <DownloadIcon size={18} />
+            {t("download_btn")}
+          </a>
         </motion.div>
       </div>
 

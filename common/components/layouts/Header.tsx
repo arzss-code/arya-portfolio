@@ -130,7 +130,7 @@ const Header = () => {
               </div>
 
               {/* Desktop: Theme & Language Toggle */}
-              <div className="hidden lg:flex items-center gap-2 bg-neutral-100/50 dark:bg-neutral-800/30 backdrop-blur-sm rounded-xl p-1 border border-neutral-200/50 dark:border-neutral-700/30">
+              <div className="hidden lg:flex items-center gap-2 rounded-xl p-1">
                 <IntlToggle />
                 <div className="w-px h-6 bg-neutral-300/50 dark:bg-neutral-600/50" />
                 <ThemeToggle />

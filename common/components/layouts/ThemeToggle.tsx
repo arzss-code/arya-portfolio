@@ -33,7 +33,7 @@ const ThemeToggle = () => {
   return (
     <>
       {/* Desktop - Switch Style */}
-      <div className="relative hidden items-center rounded-full border border-neutral-200/50 dark:border-neutral-700/50 bg-white/60 dark:bg-neutral-800/60 backdrop-blur-xl p-1 shadow-sm lg:flex">
+      <div className="relative hidden items-center rounded-full border border-neutral-200/50 dark:border-neutral-700/30 bg-neutral-100/50 dark:bg-neutral-800/30 backdrop-blur-xl p-1 shadow-sm lg:flex">
         {/* Sliding Background */}
         <motion.div
           className="absolute h-9 w-10 rounded-full bg-blue-500 shadow-md shadow-blue-500/25"

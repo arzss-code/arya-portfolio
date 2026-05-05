@@ -5,7 +5,7 @@ import { LuDownload as DownloadIcon } from "react-icons/lu";
 const Resume = () => {
   const t = useTranslations("AboutPage");
 
-  const RESUME_URL = "/";
+  const RESUME_URL = "/CV_Atsiila_Arya_Nabiih.pdf";
 
   return (
     <Link
