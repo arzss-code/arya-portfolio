@@ -23,7 +23,6 @@ const Introduction = () => {
     <section className="flex flex-col-reverse items-start justify-between gap-12 md:flex-row md:items-center">
       {/* ── Left: Text content ── */}
       <div className="flex-1 space-y-8">
-
         {/* Availability badge */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -111,7 +110,10 @@ const Introduction = () => {
           className="flex flex-wrap items-center gap-4"
         >
           <Link href="/contact" passHref>
-            <Button icon={<ContactIcon size={18} />} className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-700 text-white shadow-lg shadow-blue-500/20">
+            <Button
+              icon={<ContactIcon size={18} />}
+              className="bg-blue-600 text-white shadow-lg shadow-blue-500/20 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-700"
+            >
               {t("contact_btn")}
             </Button>
           </Link>
@@ -119,7 +121,7 @@ const Introduction = () => {
             href="
             /CV_Atsiila_Arya_Nabiih.pdf"
             download
-            className="inline-flex items-center gap-2 rounded-lg bg-neutral-100 px-4 py-2 text-neutral-900 transition-all duration-300 hover:bg-neutral-200 dark:bg-neutral-800 dark:hover:bg-neutral-700 dark:text-neutral-50 border border-neutral-200 dark:border-neutral-700"
+            className="inline-flex items-center gap-2 rounded-lg border border-neutral-200 bg-neutral-100 px-4 py-2 text-neutral-900 transition-all duration-300 hover:bg-neutral-200 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-50 dark:hover:bg-neutral-700"
           >
             <DownloadIcon size={18} />
             {t("download_btn")}
@@ -132,10 +134,10 @@ const Introduction = () => {
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.8, type: "spring", stiffness: 100 }}
-        className="flex flex-col items-center gap-6 mx-auto"
+        className="mx-auto flex flex-col items-center gap-6"
       >
         {/* Profile card */}
-        <div className="relative flex items-center justify-center w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96">
+        <div className="relative flex h-64 w-64 items-center justify-center md:h-80 md:w-80 lg:h-96 lg:w-96">
           <TiltedCard
             imageSrc={METADATA.profile}
             altText={METADATA.creator}
@@ -157,7 +159,7 @@ const Introduction = () => {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.55 }}
-          className="grid grid-cols-3 gap-3 w-full"
+          className="grid w-full grid-cols-3 gap-3"
         >
           {stats.map((stat, i) => (
             <motion.div

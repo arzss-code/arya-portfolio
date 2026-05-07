@@ -23,13 +23,11 @@ const Services = () => {
         <SectionSubHeading>{t("sub_title")}</SectionSubHeading>
       </div>
 
-      <SpotlightCard
-        className="glass-card-hover group relative flex h-full flex-col overflow-hidden !rounded-[2.5rem] border border-white/10 dark:border-white/5 !bg-opacity-40 transition-all duration-500 p-6 sm:p-8"
-      >
-        <div className="relative z-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+      <SpotlightCard className="glass-card-hover group relative flex h-full flex-col overflow-hidden !rounded-[2.5rem] border border-white/10 !bg-opacity-40 p-4 transition-all duration-500 dark:border-white/5 sm:p-8">
+        <div className="relative z-10 flex flex-col items-center gap-4 text-center sm:gap-6 md:flex-row md:items-center md:justify-between md:text-left">
           <div className="flex flex-col gap-4">
             <div className="flex items-center gap-4">
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/20 dark:bg-white/10 text-neutral-900 dark:text-white shadow-inner backdrop-blur-md border border-neutral-200/50 dark:border-white/20 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-6">
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-neutral-200/50 bg-white/20 text-neutral-900 shadow-inner backdrop-blur-md transition-transform duration-300 dark:border-white/20 dark:bg-white/10 dark:text-white">
                 <motion.div
                   initial={{ scale: 0.5 }}
                   animate={{ scale: 1 }}
@@ -44,7 +42,7 @@ const Services = () => {
                   <CTAIcon size={24} />
                 </motion.div>
               </div>
-              <h3 className="text-xl font-bold tracking-tight text-neutral-900 dark:text-white">
+              <h3 className="text-lg font-bold tracking-tight text-neutral-900 dark:text-white md:text-xl">
                 {t("cta.title")}
               </h3>
             </div>
@@ -53,7 +51,7 @@ const Services = () => {
             </p>
           </div>
           <Button
-            className="transition duration-300 hover:scale-105 active:scale-95 sm:w-fit w-full bg-blue-600 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-700 text-white"
+            className="mt-4 w-full bg-blue-600 text-white transition duration-300 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-700 sm:w-fit md:mt-0"
             onClick={() => router.push("/contact")}
           >
             {t("cta.button")}
