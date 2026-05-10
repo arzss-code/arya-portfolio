@@ -15,15 +15,15 @@ const Image = (props: ImageProps) => {
   if (!src) return null; // Handle missing or empty src
 
   return (
-    <div
-      className={clsx(
-        "overflow-hidden",
-        isLoading ? "animate-pulse" : "",
-        rounded,
-        className?.includes("h-full") && "h-full",
-        className?.includes("w-full") && "w-full",
-      )}
-    >
+     <div
+       className={clsx(
+         "overflow-hidden relative",
+         isLoading ? "animate-pulse" : "",
+         rounded,
+         className?.includes("h-full") && "h-full",
+         className?.includes("w-full") && "w-full",
+       )}
+     >
       <NextImage
         className={clsx(
           "duration-700 ease-in-out",
