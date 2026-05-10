@@ -98,7 +98,7 @@ const Header = () => {
               <div className="relative w-10 h-10 sm:w-11 sm:h-11 shrink-0">
                 <NextImage
                   src="/images/icon.webp"
-                  alt="Arya"
+                  alt="Icon logo Atsiila Arya Nabiih"
                   fill
                   className="rounded-full object-cover border-2 border-blue-500/20 group-hover:border-blue-500/40 transition-all duration-300 shadow-lg"
                 />
