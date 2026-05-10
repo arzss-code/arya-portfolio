@@ -175,6 +175,7 @@ const ProjectsCarousel = () => {
                 setDirection(i > activeIndex ? 1 : -1);
                 setActiveIndex(i);
               }}
+              aria-label={`Go to slide ${i + 1}`}
               className={`h-1.5 rounded-full transition-all duration-300 ${
                 i === activeIndex
                   ? "w-5 bg-blue-500"
@@ -188,12 +189,14 @@ const ProjectsCarousel = () => {
         <div className="flex gap-1.5">
           <button
             onClick={goPrev}
+            aria-label="Previous slide"
             className="flex h-7 w-7 items-center justify-center rounded-full bg-white/10 text-neutral-700 backdrop-blur-sm transition-all duration-200 hover:scale-110 hover:bg-white/20 dark:text-neutral-300"
           >
             <HiChevronLeft size={16} />
           </button>
           <button
             onClick={goNext}
+            aria-label="Next slide"
             className="flex h-7 w-7 items-center justify-center rounded-full bg-white/10 text-neutral-700 backdrop-blur-sm transition-all duration-200 hover:scale-110 hover:bg-white/20 dark:text-neutral-300"
           >
             <HiChevronRight size={16} />

@@ -50,7 +50,7 @@ const Introduction = () => {
             <h1>
               {t.rich("intro", {
                 name: (chunks) => (
-                  <span className="bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">
+                  <span className="bg-gradient-to-r from-blue-400 to-blue-500 bg-clip-text text-transparent">
                     {chunks}
                   </span>
                 ),

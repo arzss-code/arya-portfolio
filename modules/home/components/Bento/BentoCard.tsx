@@ -31,7 +31,7 @@ const BentoCard = ({
             {icon && (
               <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/60 dark:bg-white/10 text-neutral-900 dark:text-white shadow-inner backdrop-blur-md border border-neutral-200/80 dark:border-white/20 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-6">
                 {href && href !== "/" ? (
-                  <Link href={href} className="flex h-full w-full items-center justify-center relative z-20">
+                  <Link href={href} className="flex h-full w-full items-center justify-center relative z-20" aria-label={title}>
                     {icon}
                   </Link>
                 ) : (
@@ -40,7 +40,7 @@ const BentoCard = ({
               </div>
             )}
             {href && href !== "/" && (
-              <Link href={href} className="flex h-8 w-8 items-center justify-center rounded-full bg-neutral-900/10 dark:bg-white/10 text-neutral-900 dark:text-white opacity-0 transition-all duration-300 group-hover:opacity-100 hover:scale-110 relative z-20">
+              <Link href={href} className="flex h-8 w-8 items-center justify-center rounded-full bg-neutral-900/10 dark:bg-white/10 text-neutral-900 dark:text-white opacity-0 transition-all duration-300 group-hover:opacity-100 hover:scale-110 relative z-20" aria-label={`View ${title}`}>
                 <ArrowIcon size={20} />
               </Link>
             )}
