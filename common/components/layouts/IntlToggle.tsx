@@ -60,6 +60,7 @@ const IntlToggle = () => {
             whileHover={{ scale: isPending ? 1 : 1.05 }}
             whileTap={{ scale: isPending ? 1 : 0.95 }}
             disabled={isPending}
+            aria-label={`Switch to ${locale.label} language`}
           >
             <motion.span
               className="text-xs font-bold leading-none"
@@ -83,6 +84,7 @@ const IntlToggle = () => {
           handleLocaleChange(locales[(currentIndex + 1) % locales.length].value)
         }
         disabled={isPending}
+        aria-label={`Switch language, currently ${currentLocale.toUpperCase()}`}
       >
         <motion.span
           key={currentLocale}

@@ -51,7 +51,7 @@ const Services = () => {
             </p>
           </div>
           <Button
-            className="mt-4 w-full bg-blue-600 text-white transition duration-300 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-700 sm:w-fit md:mt-0"
+            className="mt-4 w-full bg-blue-500 text-white transition duration-300 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700 sm:w-fit md:mt-0"
             onClick={() => router.push("/contact")}
           >
             {t("cta.button")}

@@ -104,6 +104,12 @@ export default function Stack({
             <motion.div
               className="overflow-hidden rounded-2xl border-4 border-neutral-300 dark:border-neutral-700"
               onClick={() => sendToBackOnClick && sendToBack(card.id)}
+              onKeyDown={(e) => {
+                if ((e.key === "Enter" || e.key === " ") && sendToBackOnClick) {
+                  e.preventDefault();
+                  sendToBack(card.id);
+                }
+              }}
               animate={{
                 rotateZ: (cards.length - index - 1) * 4 + randomRotate,
                 scale: 1 + index * 0.06 - cards.length * 0.06,
@@ -119,6 +125,9 @@ export default function Stack({
                 width: cardDimensions.width,
                 height: cardDimensions.height,
               }}
+              role="button"
+              aria-label={`Image card ${index + 1} of ${cards.length}. Click to bring to front.`}
+              tabIndex={0}
             >
               <Image
                 src={card.img}

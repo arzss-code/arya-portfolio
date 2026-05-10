@@ -112,7 +112,7 @@ const Introduction = () => {
           <Link href="/contact" passHref>
             <Button
               icon={<ContactIcon size={18} />}
-              className="bg-blue-600 text-white shadow-lg shadow-blue-500/20 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-700"
+              className="bg-blue-500 text-white shadow-lg shadow-blue-500/20 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700"
             >
               {t("contact_btn")}
             </Button>
