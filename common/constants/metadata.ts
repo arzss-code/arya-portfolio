@@ -1,7 +1,7 @@
 export const METADATA = {
   creator: "Atsiila Arya Nabiih",
   description: "Personal website, portfolio, blog",
-  keyword: "arya, atsiila arya nabiih, ui/ux designer, frontend developer",
+  keyword: "arya, atsiila arya nabiih, ui/ux designer, frontend developer, ai/ml enthusiast, personal website, portfolio",
   authors: {
     name: "Atsiila Arya Nabiih",
     url: process.env.DOMAIN,
