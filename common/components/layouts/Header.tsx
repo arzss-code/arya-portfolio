@@ -100,14 +100,13 @@ const Header = () => {
                   src="/images/icon.webp"
                   alt="Icon logo Atsiila Arya Nabiih"
                   fill
-                  className="rounded-full object-cover border-2 border-blue-500/20 group-hover:border-blue-500/40 transition-all duration-300 shadow-lg"
+                  className="rounded-full object-cover border-2 border-blue-500/20 group-hover:border-blue-500/40 transition-all duration-300"
                 />
-                <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-green-500 rounded-full border-2 border-white dark:border-neutral-900" />
               </div>
               {/* Name - Always visible including mobile */}
               <div className="flex flex-col">
                 <div className="flex items-center gap-1">
-                  <span className="font-bold text-neutral-900 dark:text-white text-base">
+                  <span className="font-bold text-neutral-900 dark:text-white text-lg">
                     Arya
                   </span>
                 </div>
