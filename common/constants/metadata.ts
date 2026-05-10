@@ -12,5 +12,5 @@ export const METADATA = {
     locale: "id-ID",
   },
   exTitle: "| Atsiila Arya Nabiih",
-  profile: "/images/Profil-Arya-1.png",
+  profile: "/images/Profil-Arya-1.webp",
 };

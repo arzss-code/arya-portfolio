@@ -97,7 +97,7 @@ const Header = () => {
             <Link href="/" className="flex items-center gap-3 group shrink-0">
               <div className="relative w-10 h-10 sm:w-11 sm:h-11 shrink-0">
                 <NextImage
-                  src="/images/icon.png"
+                  src="/images/icon.webp"
                   alt="Arya"
                   fill
                   className="rounded-full object-cover border-2 border-blue-500/20 group-hover:border-blue-500/40 transition-all duration-300 shadow-lg"

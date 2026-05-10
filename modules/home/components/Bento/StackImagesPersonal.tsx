@@ -1,9 +1,9 @@
 import Stack from "@/common/components/elements/StackImages";
 
 const images = [
-  { id: 1, img: "/images/arya-1.jpeg" },
-  { id: 2, img: "/images/arya-2.jpeg" },
-  { id: 3, img: "/images/arya-3.jpg" },
+  { id: 1, img: "/images/arya-1.webp" },
+  { id: 2, img: "/images/arya-2.webp" },
+  { id: 3, img: "/images/arya-3.webp" },
   { id: 4, img: "/images/arya-4.webp" },
 ];
 
