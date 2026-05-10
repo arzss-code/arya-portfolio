@@ -1,21 +1,24 @@
 import { Metadata } from "next";
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 
 import Container from "@/common/components/elements/Container";
 import PageHeading from "@/common/components/elements/PageHeading";
 import Contact from "@/modules/contact";
 import { METADATA } from "@/common/constants/metadata";
 
-export const metadata: Metadata = {
-  title: `Contact ${METADATA.exTitle}`,
-  description: `Contact ${METADATA.creator}`,
-  alternates: {
-    canonical: `${process.env.DOMAIN}/contact`,
-  },
-};
+export async function generateMetadata() {
+  const t = await getTranslations("ContactPage");
+  return {
+    title: `${t("title")} ${METADATA.exTitle}`,
+    description: t("description"),
+    alternates: {
+      canonical: `${process.env.DOMAIN}/contact`,
+    },
+  };
+}
 
-const ContactPage = () => {
-  const t = useTranslations("ContactPage");
+const ContactPage = async () => {
+  const t = await getTranslations("ContactPage");
 
   return (
     <Container data-aos="fade-up">
