@@ -2,35 +2,20 @@ import { type NextRequest, NextResponse } from "next/server";
 
 import { getAchievementsData } from "@/services/achievements";
 
+export const dynamic = "force-dynamic";
+
 export const GET = async (req: NextRequest) => {
   try {
     const searchParams = req.nextUrl.searchParams;
-    const queryCategory = searchParams.get("category");
-    const querySearch = searchParams.get("search");
+    const category = searchParams.get("category") || undefined;
+    const search = searchParams.get("search") || undefined;
 
-    if (queryCategory && querySearch) {
-      const data = await getAchievementsData({
-        category: queryCategory,
-        search: querySearch,
-      });
-      return NextResponse.json(data, { status: 200 });
-    }
-
-    if (queryCategory && queryCategory.trim()) {
-      const data = await getAchievementsData({ category: queryCategory });
-      return NextResponse.json(data, { status: 200 });
-    }
-
-    if (querySearch) {
-      const data = await getAchievementsData({ search: querySearch });
-      return NextResponse.json(data, { status: 200 });
-    }
-
-    const data = await getAchievementsData({});
+    const data = await getAchievementsData({ category, search });
     return NextResponse.json(data, { status: 200 });
   } catch (error) {
+    console.error("[API /achievements] Error:", error);
     return NextResponse.json(
-      { message: "Internal Server Error" },
+      { message: error instanceof Error ? error.message : "Internal Server Error" },
       { status: 500 },
     );
   }

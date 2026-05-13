@@ -11,10 +11,14 @@ export const getAchievementsData = async ({
 }: GetAchievementsDataProps) => {
   const supabase = await createClient();
 
-  let query = supabase.from("achievements").select();
+  let query = supabase
+    .from("achievements")
+    .select(
+      "id, credential_id, slug, name, issuing_organization, category, url_credential, issue_date, expiration_date, image, is_show",
+    );
 
   if (category) {
-    query = query.eq("category", category);
+    query = query.ilike("category", category);
   }
 
   if (search) {
@@ -24,8 +28,9 @@ export const getAchievementsData = async ({
   const { data, error } = await query;
 
   if (error) {
+    console.error("[Achievements] Supabase error:", error.message);
     throw new Error(error.message);
   }
 
-  return data;
+  return data ?? [];
 };

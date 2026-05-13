@@ -1,7 +1,7 @@
 "use client";
 
 import useSWR from "swr";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
@@ -11,6 +11,7 @@ import { AchievementItem } from "@/common/types/achievements";
 import { fetcher } from "@/services/fetcher";
 
 import AchievementCard from "./AchievementCard";
+import AchievementDetailModal from "./AchievementDetailModal";
 import AchievementSkeleton from "./AchievementSkeleton";
 import FilterHeader from "./FilterHeader";
 
@@ -18,35 +19,62 @@ const Achievements = () => {
   const t = useTranslations("AchievementsPage");
 
   const params = useSearchParams();
-  const [filter, setFilter] = useState({
-    category: params.get("category") || "",
-    search: params.get("search") || "",
-  });
-  const category = params.get("category");
-  const search = params.get("search");
+  const [selectedAchievement, setSelectedAchievement] =
+    useState<AchievementItem | null>(null);
+  const category = params.get("category")?.toLowerCase() || "";
+  const search = params.get("search")?.toLowerCase() || "";
 
-  let apiUrl = "/api/achievements";
+  const { data, isLoading, error } = useSWR<AchievementItem[]>(
+    "/api/achievements",
+    fetcher,
+    {
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
+      dedupingInterval: 60000,
+    },
+  );
 
-  const queryParams = new URLSearchParams();
-  if (category) queryParams.append("category", category);
-  if (search) queryParams.append("search", search);
+  const categoryOptions = useMemo(() => {
+    const values = (data ?? [])
+      .filter((item: AchievementItem) => item?.is_show)
+      .map((item: AchievementItem) => item?.category?.trim())
+      .filter((value): value is string => !!value);
 
-  if (queryParams.toString()) {
-    apiUrl += `?${queryParams.toString()}`;
-  }
+    const unique = new Map<string, string>();
+    values.forEach((value) => {
+      const key = value.toLowerCase();
+      if (!unique.has(key)) unique.set(key, value);
+    });
 
-  const { data, isLoading, error } = useSWR(apiUrl, fetcher);
+    return Array.from(unique.values()).sort((a, b) => a.localeCompare(b));
+  }, [data]);
 
-  const filteredAchievements: AchievementItem[] = data
-    ?.filter(
+  const filteredAchievements: AchievementItem[] = (data ?? [])
+    .filter((item: AchievementItem) => item?.is_show)
+    .filter(
       (item: AchievementItem) =>
-        item?.is_show && (!category || item?.category === category),
+        !category || item?.category?.toLowerCase() === category,
     )
+    .filter((item: AchievementItem) => {
+      if (!search) return true;
+      const nameMatch = item?.name?.toLowerCase().includes(search);
+      const credentialMatch = item?.credential_id
+        ?.toLowerCase()
+        .includes(search);
+      return nameMatch || credentialMatch;
+    })
     .sort((a: AchievementItem, b: AchievementItem) => b.id - a.id);
+
+  const hasData = filteredAchievements.length > 0;
 
   return (
     <section className="space-y-4">
-      <FilterHeader totalData={data?.length} />
+      {!isLoading && !error && hasData && (
+        <FilterHeader
+          totalData={filteredAchievements.length}
+          categories={categoryOptions}
+        />
+      )}
 
       {isLoading && (
         <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
@@ -58,7 +86,7 @@ const Achievements = () => {
 
       {error && <EmptyState message={t("error")} />}
 
-      {filteredAchievements?.length === 0 && (
+      {!isLoading && !error && !hasData && (
         <EmptyState message={t("no_data")} />
       )}
 
@@ -71,11 +99,21 @@ const Achievements = () => {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.3, delay: index * 0.1 }}
             >
-              <AchievementCard key={index} {...item} />
+              <AchievementCard
+                key={index}
+                {...item}
+                onClick={() => setSelectedAchievement(item)}
+              />
             </motion.div>
           ))}
         </div>
       )}
+
+      <AchievementDetailModal
+        isOpen={!!selectedAchievement}
+        onClose={() => setSelectedAchievement(null)}
+        achievement={selectedAchievement}
+      />
     </section>
   );
 };

@@ -8,7 +8,11 @@ import { AchievementItem } from "@/common/types/achievements";
 import { fetcher } from "@/services/fetcher";
 
 const AchievementFolder = () => {
-  const { data } = useSWR("/api/achievements", fetcher);
+  const { data } = useSWR("/api/achievements", fetcher, {
+    revalidateOnFocus: false,
+    revalidateOnReconnect: false,
+    dedupingInterval: 60000,
+  });
 
   const filteredAchievements = data
     ?.filter((item: AchievementItem) => item?.is_show)
@@ -28,12 +32,8 @@ const AchievementFolder = () => {
     )) ?? [];
 
   return (
-    <div className="flex h-full w-full items-center justify-center mb-8 mt-18">
-      <Folder
-        size={1}
-        color="#facc15"
-        items={items}
-      />
+    <div className="mb-8 mt-18 flex h-full w-full items-center justify-center">
+      <Folder size={1} color="#facc15" items={items} />
     </div>
   );
 };

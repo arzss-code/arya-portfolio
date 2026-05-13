@@ -13,7 +13,11 @@ interface dataComboBox {
   value: string;
 }
 
-const data: dataComboBox[] = [
+interface ComboBoxFilterProps {
+  categories?: string[];
+}
+
+const defaultData: dataComboBox[] = [
   {
     label: "Certificate",
     value: "certificate",
@@ -24,7 +28,10 @@ const data: dataComboBox[] = [
   },
 ];
 
-const ComboBoxFilter = () => {
+const formatLabel = (value: string) =>
+  value.replace(/[-_]+/g, " ").replace(/\b\w/g, (char) => char.toUpperCase());
+
+const ComboBoxFilter = ({ categories }: ComboBoxFilterProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [inputValueSearch, setInputValueSearch] = useState("");
   const [selectValue, setSelectValue] = useState("");
@@ -35,7 +42,24 @@ const ComboBoxFilter = () => {
   const router = useRouter();
   const comboBoxRef = useRef<HTMLDivElement>(null);
 
-  const filteredData = data?.filter((item) =>
+  const normalizedCategories = (categories ?? [])
+    .map((value) => value.trim())
+    .filter(Boolean);
+
+  const uniqueCategories = Array.from(
+    new Map(
+      normalizedCategories.map((value) => [value.toLowerCase(), value]),
+    ).values(),
+  );
+
+  const data: dataComboBox[] = uniqueCategories.length
+    ? uniqueCategories.map((value) => ({
+        label: formatLabel(value),
+        value,
+      }))
+    : defaultData;
+
+  const filteredData = data.filter((item) =>
     item.label.toLowerCase().includes(inputValueSearch.toLowerCase()),
   );
 
@@ -70,12 +94,20 @@ const ComboBoxFilter = () => {
   }, [categoryParams]);
 
   useEffect(() => {
-    if (selectValue === "") {
-      router.push(`/achievements`);
+    const params = new URLSearchParams(searchParams.toString());
+    const currentCategory = params.get("category") || "";
+
+    if (currentCategory === selectValue) return;
+
+    if (selectValue) {
+      params.set("category", selectValue);
     } else {
-      router.push(`/achievements?category=${encodeURIComponent(selectValue)}`);
+      params.delete("category");
     }
-  }, [router, selectValue]);
+
+    const query = params.toString();
+    router.push(query ? `/achievements?${query}` : "/achievements");
+  }, [router, searchParams, selectValue]);
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
@@ -94,7 +126,8 @@ const ComboBoxFilter = () => {
       >
         <span className="text-sm ">
           {selectValue
-            ? data.find((item) => item.value === selectValue)?.label
+            ? data.find((item) => item.value === selectValue)?.label ||
+              formatLabel(selectValue)
             : `Filter achievements...`}
         </span>
         <ArrowIcon
