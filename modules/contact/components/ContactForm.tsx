@@ -59,7 +59,7 @@ const ContactForm = () => {
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.5 }}
-      className="glass-card flex flex-col space-y-6 !rounded-3xl p-6 md:p-8"
+      className="glass-card flex flex-col space-y-6 !rounded-3xl p-6 md:p-8 border border-neutral-200/50 dark:border-neutral-800/50"
     >
       <div className="space-y-2">
         <h2 className="text-2xl font-bold">{t("form.title")}</h2>

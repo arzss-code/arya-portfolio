@@ -29,10 +29,12 @@ const ProjectDetail = ({
             {stacks.map((stack: string, index: number) => {
               const stackData = STACKS[stack];
 
+              if (!stackData) return null;
+
               return (
                 <Tooltip title={stack} key={index}>
-                  <div className={`${stackData.color}`}>
-                    {STACKS[stack].icon}
+                  <div className={`transition-transform duration-200 hover:scale-110 ${stackData.color}`}>
+                    {stackData.icon}
                   </div>
                 </Tooltip>
               );

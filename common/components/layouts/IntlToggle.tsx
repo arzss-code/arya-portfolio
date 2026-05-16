@@ -33,7 +33,7 @@ const IntlToggle = () => {
     <>
       {/* Desktop - Switch Style */}
       <div
-        className={`relative hidden items-center rounded-full border border-neutral-200/50 dark:border-neutral-700/30 bg-neutral-100/50 dark:bg-neutral-800/30 backdrop-blur-xl p-1 shadow-sm lg:flex ${
+        className={`relative hidden items-center rounded-full border border-neutral-200/50 dark:border-neutral-700/30 bg-neutral-100/50 dark:bg-neutral-800/30 backdrop-blur-xl p-1 lg:flex ${
           isPending ? "pointer-events-none opacity-70" : ""
         }`}
       >
@@ -77,7 +77,7 @@ const IntlToggle = () => {
 
       {/* Mobile - Button Style */}
       <button
-        className={`h-10 w-10 flex items-center justify-center rounded-xl border border-neutral-200/50 dark:border-neutral-700/50 bg-white/60 dark:bg-neutral-800/60 backdrop-blur-xl shadow-sm transition-all duration-200 active:scale-95 lg:hidden ${
+        className={`h-10 w-10 flex items-center justify-center rounded-xl border border-neutral-200/50 dark:border-neutral-700/50 bg-white/60 dark:bg-neutral-800/60 backdrop-blur-xl transition-all duration-200 active:scale-95 lg:hidden ${
           isPending ? "pointer-events-none opacity-70" : ""
         }`}
         onClick={() =>

@@ -128,7 +128,7 @@ export const STACKS: SkillProps = {
   Flutter: {
     icon: <SiFlutter size={iconSize} />,
     background: "bg-cyan-400",
-    color: "text-cyan-50",
+    color: "text-sky-500 dark:text-cyan-300",
     isActive: true,
   },
   "React Table": {
@@ -176,7 +176,7 @@ export const STACKS: SkillProps = {
   "Next.js": {
     icon: <SiNextdotjs size={iconSize} />,
     background: "bg-neutral-800",
-    color: "text-neutral-50",
+    color: "text-neutral-800 dark:text-neutral-50",
     isActive: true,
   },
   "Node.js": {
@@ -188,7 +188,7 @@ export const STACKS: SkillProps = {
   "Express.js": {
     icon: <SiExpress size={iconSize} />,
     background: "bg-neutral-800",
-    color: "text-neutral-800",
+    color: "text-neutral-700 dark:text-neutral-200",
     isActive: false,
   },
   "Nest.js": {
@@ -259,8 +259,8 @@ export const STACKS: SkillProps = {
   },
   Supabase: {
     icon: <SiSupabase size={iconSize} />,
-    background: "bg-blue-500",
-    color: "text-blue-500",
+    background: "bg-green-500",
+    color: "text-green-500",
     isActive: true,
   },
   Jest: {
@@ -296,13 +296,13 @@ export const STACKS: SkillProps = {
   bun: {
     icon: <SiBun size={iconSize} />,
     background: "bg-orange-200",
-    color: "text-yellow-50",
+    color: "text-amber-600 dark:text-yellow-300",
     isActive: true,
   },
   Github: {
     icon: <SiGithub size={iconSize} />,
     background: "bg-slate-800",
-    color: "text-neutral-50",
+    color: "text-neutral-800 dark:text-neutral-50",
     isActive: true,
   },
 };

@@ -18,14 +18,12 @@ const ProjectCard = ({
 }: ProjectItem) => {
   const t = useTranslations("ProjectsPage");
 
-  const trimmedContent =
-    description.slice(0, 85) + (description.length > 85 ? "..." : "");
 
   return (
-    <Link href={`/projects/${slug}`}>
-      <SpotlightCard className="group relative cursor-pointer">
+    <Link href={`/projects/${slug}`} className="flex h-full flex-col">
+      <SpotlightCard className="group relative flex h-full cursor-pointer flex-col hover:shadow-sm">
         {is_featured && (
-          <div className="absolute right-0 top-0 z-10 flex items-center gap-x-1 rounded-bl-lg rounded-tr-lg bg-cyan-500 px-2 py-1 text-sm font-medium text-neutral-900">
+          <div className="absolute right-0 top-0 z-10 flex items-center gap-x-1 rounded-bl-lg rounded-tr-lg bg-blue-500 px-2 py-1 text-sm font-medium text-neutral-50">
             <PinIcon size={15} />
             <span>Featured</span>
           </div>
@@ -43,27 +41,35 @@ const ProjectCard = ({
             <ViewIcon size={20} />
           </div>
         </div>
-        <div className="space-y-2 p-5">
-          <h3 className="cursor-pointer text-lg text-neutral-700 transition-all duration-300 dark:text-neutral-300">
-            {title}
-          </h3>
-          <p className="text-sm leading-relaxed text-neutral-500 dark:text-neutral-400">
-            {trimmedContent}
-          </p>
-          <div className="flex flex-wrap items-center gap-3 pt-2">
-            {stacks.map((stack: string, index: number) => {
-              const stackData = STACKS[stack];
+        <div className="flex flex-1 flex-col gap-3 p-5">
+          <div className="space-y-1.5">
+            <h3 className="cursor-pointer text-lg font-semibold leading-snug tracking-tight text-neutral-800 transition-all duration-300 group-hover:text-blue-500 dark:text-neutral-200 dark:group-hover:text-blue-400">
+              {title}
+            </h3>
+            <p className="line-clamp-3 text-sm leading-relaxed text-neutral-500 dark:text-neutral-400">
+              {description}
+            </p>
+          </div>
+          <div className="mt-auto border-t border-neutral-100 pt-3 dark:border-neutral-800">
+            <div className="flex flex-wrap items-center gap-2.5">
+              {stacks.map((stack: string, index: number) => {
+                const stackData = STACKS[stack];
 
-              if (!stackData) {
-                return null;
-              }
+                if (!stackData) {
+                  return null;
+                }
 
-              return (
-                <div key={index} className={`${stackData.color}`}>
-                  {stackData.icon}
-                </div>
-              );
-            })}
+                return (
+                  <div
+                    key={index}
+                    title={stack}
+                    className={`transition-transform duration-200 hover:scale-110 ${stackData.color}`}
+                  >
+                    {stackData.icon}
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
       </SpotlightCard>
