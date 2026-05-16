@@ -90,18 +90,18 @@ const AchievementDetailModal = ({ isOpen, onClose, achievement }: Props) => {
             </button>
 
             {/* Left: Certificate image — A4 Landscape ratio 297:210 */}
-            <div className="w-full shrink-0 overflow-y-auto bg-neutral-50/60 p-3 md:w-2/3 md:bg-transparent md:p-0">
+            <div className="flex-1 min-h-0 w-full overflow-y-auto bg-neutral-100 p-2 md:w-2/3 md:flex-none md:p-2">
               <Image
                 src={achievement.image}
                 alt={achievement.name}
                 width={900}
                 height={637}
-                className="block max-h-[58vh] w-full rounded-lg object-contain md:max-h-none md:rounded-none"
+                className="block w-full rounded-lg object-contain md:rounded-none"
               />
             </div>
 
             {/* Right: Details */}
-            <div className="flex w-full flex-1 flex-col justify-between gap-4 p-4 sm:p-6 md:w-1/3">
+            <div className="flex w-full shrink-0 flex-col justify-between gap-4 p-4 sm:p-6 md:w-1/3 md:flex-1 md:overflow-y-auto">
               <div className="space-y-4">
                 <h3
                   id={titleId}

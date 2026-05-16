@@ -6,7 +6,6 @@ import {
   SiCss3,
   SiExpress,
   SiFigma,
-  SiFramer,
   SiGithub,
   SiHtml5,
   SiJavascript,
@@ -39,6 +38,7 @@ import {
   SiCanva,
   SiVisualstudiocode,
   SiFlutter,
+  SiPython,
 } from "react-icons/si";
 
 export type SkillProps = {
@@ -53,37 +53,7 @@ export type SkillProps = {
 const iconSize = 26;
 
 export const STACKS: SkillProps = {
-  Figma: {
-    icon: <SiFigma size={iconSize} />,
-    background: "bg-rose-500",
-    color: "text-rose-500",
-    isActive: true,
-  },
-  Photoshop: {
-    icon: <SiAdobephotoshop size={iconSize} />,
-    background: "bg-blue-800",
-    color: "text-blue-300",
-    isActive: true,
-  },
-  Canva: {
-    icon: <SiCanva size={iconSize} />,
-    background: "bg-teal-400",
-    color: "text-teal-800",
-    isActive: true,
-  },
-  "VS Code": {
-    icon: <SiVisualstudiocode size={iconSize} />,
-    background: "bg-blue-600",
-    color: "text-blue-200",
-    isActive: true,
-  },
-  Flutter: {
-    icon: <SiFlutter size={iconSize} />,
-    background: "bg-cyan-400",
-    color: "text-cyan-50",
-    isActive: true,
-  },
-  HTML: {
+    HTML: {
     icon: <SiHtml5 size={iconSize} />,
     background: "bg-orange-500",
     color: "text-orange-500",
@@ -129,6 +99,36 @@ export const STACKS: SkillProps = {
     icon: <SiReact size={iconSize} />,
     background: "bg-cyan-400",
     color: "text-cyan-400",
+    isActive: true,
+  },
+  Figma: {
+    icon: <SiFigma size={iconSize} />,
+    background: "bg-rose-500",
+    color: "text-rose-500",
+    isActive: true,
+  },
+  Photoshop: {
+    icon: <SiAdobephotoshop size={iconSize} />,
+    background: "bg-blue-800",
+    color: "text-blue-300",
+    isActive: true,
+  },
+  Canva: {
+    icon: <SiCanva size={iconSize} />,
+    background: "bg-teal-400",
+    color: "text-teal-800",
+    isActive: true,
+  },
+  "VS Code": {
+    icon: <SiVisualstudiocode size={iconSize} />,
+    background: "bg-blue-600",
+    color: "text-blue-200",
+    isActive: true,
+  },
+  Flutter: {
+    icon: <SiFlutter size={iconSize} />,
+    background: "bg-cyan-400",
+    color: "text-cyan-50",
     isActive: true,
   },
   "React Table": {
@@ -197,6 +197,12 @@ export const STACKS: SkillProps = {
     color: "text-rose-600",
     isActive: false,
   },
+  Python: {
+    icon: <SiPython size={iconSize} />,
+    background: "bg-blue-500",
+    color: "text-blue-500",
+    isActive: true,
+  },
   Go: {
     icon: <FaGolang size={iconSize} />,
     background: "bg-sky-500",
@@ -219,7 +225,7 @@ export const STACKS: SkillProps = {
     icon: <SiPrisma size={iconSize} />,
     background: "bg-teal-500",
     color: "text-teal-500",
-    isActive: false,
+    isActive: true,
   },
   Kotlin: {
     icon: <SiKotlin size={iconSize} />,
@@ -255,7 +261,7 @@ export const STACKS: SkillProps = {
     icon: <SiSupabase size={iconSize} />,
     background: "bg-blue-500",
     color: "text-blue-500",
-    isActive: false,
+    isActive: true,
   },
   Jest: {
     icon: <SiJest size={iconSize} />,
@@ -267,7 +273,7 @@ export const STACKS: SkillProps = {
     icon: <SiDocker size={iconSize} />,
     background: "bg-blue-600",
     color: "text-blue-500",
-    isActive: false,
+    isActive: true,
   },
   AI: {
     icon: <BsRobot size={iconSize} />,
@@ -285,13 +291,13 @@ export const STACKS: SkillProps = {
     icon: <SiYarn size={iconSize} />,
     background: "bg-violet-800",
     color: "text-sky-400",
-    isActive: false,
+    isActive: true,
   },
   bun: {
     icon: <SiBun size={iconSize} />,
-    background: "bg-orange-100",
+    background: "bg-orange-200",
     color: "text-yellow-50",
-    isActive: false,
+    isActive: true,
   },
   Github: {
     icon: <SiGithub size={iconSize} />,
