@@ -138,7 +138,7 @@ const Header = () => {
               {/* Mobile Menu Button */}
               <button
                 onClick={toggleMenu}
-                className="lg:hidden h-10 w-10 flex items-center justify-center rounded-xl bg-neutral-100/80 dark:bg-neutral-800/80 backdrop-blur-md border border-neutral-200/50 dark:border-neutral-700/50 shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105 active:scale-95"
+                className="lg:hidden h-10 w-10 flex items-center justify-center rounded-xl bg-white/60 dark:bg-neutral-800/80 backdrop-blur-md border border-neutral-200/50 dark:border-neutral-700/50 shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105 active:scale-95"
                 aria-label="Toggle menu"
               >
                 <motion.div

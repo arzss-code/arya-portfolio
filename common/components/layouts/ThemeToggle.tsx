@@ -89,7 +89,7 @@ const ThemeToggle = () => {
 
       {/* Mobile - Button Style */}
       <button
-        className="h-10 w-10 flex items-center justify-center rounded-xl border border-neutral-200/50 dark:border-neutral-700/50 bg-white/60 dark:bg-neutral-800/60 backdrop-blur-xl transition-all duration-200 active:scale-95 lg:hidden"
+        className="h-10 w-10 flex items-center justify-center rounded-xl border shadow-sm border-neutral-200/50 dark:border-neutral-700/50 bg-white/60 dark:bg-neutral-800/60 backdrop-blur-xl transition-all duration-200 active:scale-95 lg:hidden"
         onClick={() => setTheme(isLightMode ? "dark" : "light")}
         aria-label={isLightMode ? "Switch to dark theme" : "Switch to light theme"}
       >
