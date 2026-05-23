@@ -1,205 +1,121 @@
-  <h1>Atsiila Arya Portfolio</h1>
-  <p>🔥 Personal website was built originally from scratch using Next.js, TypeScript, Tailwind CSS, SWR, Supabase and more.</p> 
+# Atsiila Arya Portfolio
 
-[![GitHub Repo stars](https://img.shields.io/github/stars/arzss-code/arya-portfolio)](https://github.com/arzss-code/arya-portfolio/stargazers)
-[![Depfu](https://badges.depfu.com/badges/02483ebb21fdb2182a66a28b68d1b7b0/status.svg)](https://depfu.com)
-[![Depfu](https://badges.depfu.com/badges/02483ebb21fdb2182a66a28b68d1b7b0/overview.svg)](https://depfu.com/github/arzss-code/arya-portfolio?project_id=38809)
-[![Depfu](https://badges.depfu.com/badges/02483ebb21fdb2182a66a28b68d1b7b0/count.svg)](https://depfu.com/github/arzss-code/arya-portfolio?project_id=38809)
-[![Last Update](https://img.shields.io/badge/deps%20update-every%20sunday-blue.svg)](https://shields.io/)
+<p align="center">
+  <img src="./public/images/icon.webp" alt="Logo" width="80" height="80" />
+</p>
 
-<br/>
+<p align="center">
+  🔥 Personal website built with modern technologies: Next.js, TypeScript, Tailwind CSS, SWR, and Supabase.
+</p>
+
+<p align="center">
+  <a href="https://github.com/arzss-code/arya-portfolio/stargazers">
+    <img src="https://img.shields.io/github/stars/arzss-code/arya-portfolio?style=for-the-badge&color=yellow" alt="GitHub Repo stars" />
+  </a>
+  <a href="https://depfu.com/github/arzss-code/arya-portfolio">
+    <img src="https://badges.depfu.com/badges/02483ebb21fdb2182a66a28b68d1b7b0/status.svg?style=for-the-badge" alt="Depfu Status" />
+  </a>
+</p>
+
+---
 
 ## 📘 Introduction
 
-This is my personal website built from scratch since February 2024 using modern technologies such as Next.js and TypeScript.
+This is my personal portfolio and digital garden, built from scratch to showcase my projects, skills, and coding activity. It features a modern, modular architecture and a clean UI focused on performance and user experience.
 
-I use this platform to share projects, insights, and resources. The site is constantly evolving as I add more features and improvements.
-
-Feel free to explore the source code, use it as inspiration, or fork it as a template under the provided license. If you find this project useful, consider giving it a star ⭐.
-
-Have feedback, ideas, or questions? Don’t hesitate to reach out! 🙌
+Feel free to explore the source code, use it as inspiration, or fork it as a template. If you find this project useful, consider giving it a star ⭐.
 
 ---
 
-## Tech Stack
+## 🚀 Tech Stack
 
-This website is built using these technologies:
-
-- **⚛️ Next.js**
-- **🔰 TypeScript**
-- **💠 Tailwind CSS v3**
-- **🦫 Zustand**
-- **〰️ SWR**
-- **➰ Framer Motion**
-- **💢 React Icons**
-- **🌐 Next-Intl (i18n)**
-- **📦 Absolute Imports & Path Alias**
-- **📏 ESLint & Prettier**
-- **📌 Conventional Commit Lint**
+- **Framework:** [Next.js](https://nextjs.org/) (App Router)
+- **Language:** [TypeScript](https://www.typescriptlang.org/)
+- **Styling:** [Tailwind CSS](https://tailwindcss.com/)
+- **State Management:** [Zustand](https://github.com/pmndrs/zustand)
+- **Data Fetching:** [SWR](https://swr.vercel.app/) & [Axios](https://axios-http.com/)
+- **Animations:** [Framer Motion](https://www.framer.com/motion/), [GSAP](https://gsap.com/)
+- **Database:** [Supabase](https://supabase.com/) (PostgreSQL)
+- **Auth:** [NextAuth.js](https://next-auth.js.org/)
+- **i18n:** [next-intl](https://next-intl-docs.vercel.app/)
 
 ---
 
-## 🚀 Features
+## ✨ Features
 
-### 🕗 Wakatime Statistics
-Displays live coding statistics from Wakatime using serverless API routes in Next.js.
-
-### 🗳 Project Showcase
-Projects are stored in a Supabase PostgreSQL database. Uses ISR (1s revalidation) and SSR for optimal performance.
-
-### 🌍 Internationalization
-Supports multiple languages using `next-intl`. Easily extendable to support additional locales.
-
-### 📊 Developer Dashboard
-Interactive dashboard visualizing:
-- GitHub contributions
-- Wakatime data
-- Codewars stats
-- Monkeytype typing stats
-
-Each stat is retrieved using public APIs and visualized in a user-friendly way.
+- **📊 Developer Dashboard:** Visualizes coding activity and traffic using GitHub and Umami Analytics.
+- **🗳️ Project Showcase:** Dynamic project listing fetched from Supabase with MDX support for details.
+- **🌍 Multi-language:** Full internationalization support (English & Indonesian).
+- **🌙 Theme Switching:** Dark and light mode support with `next-themes`.
+- **📱 Responsive Design:** Fully optimized for mobile, tablet, and desktop.
+- **🚀 Performance:** Optimized images (WebP), server-side rendering, and smooth animations with Lenis.
 
 ---
 
 ## 🛠 Getting Started
 
-Follow these steps to run the project locally:
-
-### 1. Clone the Repository
-
-Using Git:
-```bash
-git clone https://github.com/arzss-code/arya-portfolio
-```
-
-Using `create-next-app`:
-```bash
-npx create-next-app -e https://github.com/arzss-code/arya-portfolio project-name
-```
-
-Using `degit`:
-```bash
-npx degit arzss-code/arya-portfolio YOUR_APP_NAME
-```
-
-Or deploy directly to Vercel / Netlify:
-
-[![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https://github.com/arzss-code/arya-portfolio)  
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/arzss-code/arya-portfolio)
-
----
-
-### 2. Install Dependencies
+### 1. Clone & Install
 
 ```bash
+git clone https://github.com/arzss-code/arya-portfolio.git
+cd arya-portfolio
 bun install
 ```
 
-> ⚠️ It's recommended to use **Bun** to ensure husky hooks and scripts work properly.
+> **Note:** [Bun](https://bun.sh/) is the recommended package manager for this project.
 
----
+### 2. Environment Variables
 
-### 3. Configure Environment Variables
+Create a `.env` file in the root directory and add the following variables:
 
-Copy `.env.example` to `.env` and replace with your own credentials.
-
-```bash
-cp .env.example .env
-```
-
-You’ll need credentials for services like:
-- Nodemailer
-- GitHub
-- Wakatime
-- Codewars
-- Monkeytype
-- Supabase/PostgreSQL
-
-#### Example:
-
-```
-# Nodemailer
-NODEMAILER_PW=your_email_password
-NODEMAILER_EMAIL=your_email@example.com
-
-# GitHub Token
-GITHUB_READ_USER_TOKEN_PERSONAL=your_github_token
-
-# Umami Analytics
-UMAMI_API_KEY=your_umami_api_key
-UMAMI_WEBSITE_ID_SITE=your_site_id
-UMAMI_WEBSITE_ID_MYID=your_myid_id
-
-# Wakatime
-WAKATIME_API_ID=your_wakatime_id
-WAKATIME_API_KEY=your_wakatime_key
-
-# Monkeytype
-MONKEYTYPE_API_KEY=your_monkeytype_api_key
-
-# Codewars
-CODEWARS_USER_ID=your_codewars_username
-
-# PostgreSQL (Supabase)
-POSTGRES_URL=your_postgres_url
-POSTGRES_PRISMA_URL=your_prisma_url
-POSTGRES_URL_NO_SSL=your_postgres_url_no_ssl
-POSTGRES_URL_NON_POOLING=your_postgres_url_non_pooling
-POSTGRES_USER=your_postgres_user
-POSTGRES_HOST=your_postgres_host
-POSTGRES_PASSWORD=your_postgres_password
-POSTGRES_DATABASE=your_postgres_db
-
-# Google Auth
-GOOGLE_CLIENT_ID=your_google_client_id
-GOOGLE_CLIENT_SECRET=your_google_client_secret
-
-# Gemini API
-GEMINI_API_KEY=your_gemini_api_key
-
-# GitHub Auth
-GITHUB_ID=your_github_app_id
-GITHUB_SECRET=your_github_app_secret
-
+```env
 # NextAuth
 NEXTAUTH_URL=http://localhost:3000
-NEXTAUTH_SECRET=your_nextauth_secret
-
-# Firebase
-NEXT_PUBLIC_FIREBASE_API_KEY=your_firebase_api_key
-NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_firebase_auth_domain
-NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_firebase_project_id
-NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your_firebase_storage_bucket
-NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_firebase_messaging_sender_id
-NEXT_PUBLIC_FIREBASE_APP_ID=your_firebase_app_id
-NEXT_PUBLIC_FIREBASE_DB_URL=your_firebase_db_url
-NEXT_PUBLIC_FIREBASE_CHAT_DB=messages
+NEXTAUTH_SECRET=your_secret
 
 # Supabase
 NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
 
-# Misc
-NEXT_PUBLIC_AUTHOR_EMAIL=your_email@example.com
-DOMAIN=https://www.yourdomain.com
+# Database (PostgreSQL)
+POSTGRES_URL=your_database_url
 
+# GitHub
+GITHUB_READ_USER_TOKEN_PERSONAL=your_token
+GITHUB_ID=your_client_id
+GITHUB_SECRET=your_client_secret
+
+# Umami Analytics
+UMAMI_API_KEY=your_key
+UMAMI_WEBSITE_ID_SITE=your_id
+
+# Nodemailer
+NODEMAILER_EMAIL=your_email
+NODEMAILER_PW=your_password
 ```
 
----
-
-### 4. Run Development Server
+### 3. Run Development
 
 ```bash
 bun run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+Open [http://localhost:3000](http://localhost:3000) to see the result.
 
-You can start editing the homepage in:  
-`src/pages/index.tsx`
+---
+
+## 📁 Structure
+
+The project uses a **Modular Feature-First** architecture:
+- `app/`: Routing and API handlers.
+- `modules/`: Feature-specific components and logic (Home, About, Dashboard).
+- `common/`: Shared components, hooks, stores, and utilities.
+- `services/`: API abstraction layer.
+
+For more details on the architecture, see [AGENTS.md](./AGENTS.md).
 
 ---
 
 ## 📄 License
 
-This project is licensed under the MIT License.
+This project is licensed under the **MIT License**.
