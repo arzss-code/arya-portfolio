@@ -72,6 +72,29 @@ const RootLayout = async ({
           </NextAuthProvider>
         </NextIntlClientProvider>
         <Analytics />
+        <Script
+          id="json-ld"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Person",
+              name: METADATA.creator,
+              url: METADATA.openGraph.url,
+              image: `${METADATA.openGraph.url}${METADATA.profile}`,
+              jobTitle: "Frontend Developer & UI/UX Designer",
+              worksFor: {
+                "@type": "Organization",
+                name: "Freelance",
+              },
+              sameAs: [
+                "https://github.com/arzss-code",
+                "https://www.linkedin.com/in/atsiila-arya-nabiih",
+                "https://www.instagram.com/atsiila.arya14/"
+              ],
+            }),
+          }}
+        />
       </body>
     </html>
   );
