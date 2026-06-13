@@ -31,7 +31,8 @@ export function CSPostHogProvider({ children }: { children: React.ReactNode }) {
         api_host:
           process.env.NEXT_PUBLIC_POSTHOG_HOST || "https://us.i.posthog.com",
         person_profiles: "identified_only",
-        capture_pageview: false, // We disable auto-capture because we capture manually using PostHogPageView
+        capture_pageview: false, // disable auto-capture because we capture manually using PostHogPageView
+        capture_pageleave: true, // Enable automatic pageleave capture for accurate session duration
       });
     }
   }, []);
