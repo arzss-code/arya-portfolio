@@ -43,7 +43,7 @@ Feel free to explore the source code, use it as inspiration, or fork it as a tem
 
 ## ✨ Features
 
-- **📊 Developer Dashboard:** Visualizes coding activity and traffic using GitHub and Umami Analytics.
+- **📊 Developer Dashboard:** Visualizes coding activity and traffic using GitHub and PostHog Analytics.
 - **🗳️ Project Showcase:** Dynamic project listing fetched from Supabase with MDX support for details.
 - **🌍 Multi-language:** Full internationalization support (English & Indonesian).
 - **🌙 Theme Switching:** Dark and light mode support with `next-themes`.
@@ -85,9 +85,11 @@ GITHUB_READ_USER_TOKEN_PERSONAL=your_token
 GITHUB_ID=your_client_id
 GITHUB_SECRET=your_client_secret
 
-# Umami Analytics
-UMAMI_API_KEY=your_key
-UMAMI_WEBSITE_ID_SITE=your_id
+# PostHog Analytics
+NEXT_PUBLIC_POSTHOG_KEY=your_project_api_key
+NEXT_PUBLIC_POSTHOG_HOST=https://us.i.posthog.com
+POSTHOG_PROJECT_ID=your_project_id
+POSTHOG_API_KEY=your_personal_api_key
 
 # Nodemailer
 NODEMAILER_EMAIL=your_email

@@ -1,8 +1,28 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, Suspense } from "react";
 import posthog from "posthog-js";
 import { PostHogProvider } from "posthog-js/react";
+import { usePathname, useSearchParams } from "next/navigation";
+
+function PostHogPageView() {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    if (pathname && typeof window !== "undefined") {
+      let url = window.origin + pathname;
+      if (searchParams && searchParams.toString()) {
+        url = url + `?${searchParams.toString()}`;
+      }
+      posthog.capture("$pageview", {
+        $current_url: url,
+      });
+    }
+  }, [pathname, searchParams]);
+
+  return null;
+}
 
 export function CSPostHogProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
@@ -11,10 +31,17 @@ export function CSPostHogProvider({ children }: { children: React.ReactNode }) {
         api_host:
           process.env.NEXT_PUBLIC_POSTHOG_HOST || "https://us.i.posthog.com",
         person_profiles: "identified_only",
-        capture_pageview: false, // We usually capture pageviews manually in Next.js or let the default auto-capture do its thing depending on Next.js version. Let's keep it default. Actually, posthog-js does auto-capture by default.
+        capture_pageview: false, // We disable auto-capture because we capture manually using PostHogPageView
       });
     }
   }, []);
 
-  return <PostHogProvider client={posthog}>{children}</PostHogProvider>;
+  return (
+    <PostHogProvider client={posthog}>
+      <Suspense fallback={null}>
+        <PostHogPageView />
+      </Suspense>
+      {children}
+    </PostHogProvider>
+  );
 }
