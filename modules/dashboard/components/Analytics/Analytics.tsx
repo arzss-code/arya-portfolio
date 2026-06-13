@@ -1,30 +1,29 @@
 "use client";
 
 import useSWR from "swr";
-import { SiUmami as UmamiIcon } from "react-icons/si";
+import { IoAnalytics as AnalyticsIcon } from "react-icons/io5";
 import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
 
-import UmamiSkeleton from "./UmamiSkeleton";
+import AnalyticsSkeleton from "./AnalyticsSkeleton";
 import TrafficTrendsChart from "./TrafficTrendsChart";
 import Overview from "./Overview";
-import ComboBoxFilter from "./ComboBoxFilter";
 
 import SectionHeading from "@/common/components/elements/SectionHeading";
 import SectionSubHeading from "@/common/components/elements/SectionSubHeading";
 import EmptyState from "@/common/components/elements/EmptyState";
 import { fetcher } from "@/services/fetcher";
-import { UMAMI_ACCOUNT } from "@/common/constants/umami";
+import { ANALYTICS_ACCOUNT } from "@/common/constants/analytics";
 
-const Umami = () => {
+const Analytics = () => {
   const searchParams = useSearchParams();
   const domain = searchParams.get("domain");
 
-  const key = domain ? `/api/umami?domain=${domain}` : `/api/umami`;
+  const key = "/api/analytics";
 
   const { data, isLoading, error } = useSWR(key, fetcher);
 
-  const { is_active } = UMAMI_ACCOUNT;
+  const { is_active } = ANALYTICS_ACCOUNT;
 
   const t = useTranslations("DashboardPage");
 
@@ -32,19 +31,17 @@ const Umami = () => {
 
   return (
     <section className="space-y-2">
-      <SectionHeading title={t("umami.title")} icon={<UmamiIcon />} />
+      <SectionHeading title={t("analytics.title")} icon={<AnalyticsIcon />} />
       <SectionSubHeading>
         <div className="flex w-full flex-col gap-2 md:flex-row md:items-center md:justify-between">
-          <p>{t("umami.sub_title")} </p>
-
-          <ComboBoxFilter />
+          <p>{t("analytics.sub_title")} </p>
         </div>
       </SectionSubHeading>
 
       {error ? (
         <EmptyState message={t("error")} />
       ) : isLoading ? (
-        <UmamiSkeleton />
+        <AnalyticsSkeleton />
       ) : (
         <div className="space-y-3">
           <Overview data={data} />
@@ -55,4 +52,4 @@ const Umami = () => {
   );
 };
 
-export default Umami;
+export default Analytics;

@@ -78,7 +78,7 @@
   },
   "ProjectsPage": {
     "title": "Projects",
-    "description": "A showcase of both private and open-source projects I’ve built or contributed to.",
+    "description": "A showcase of both private, group and open-source projects I’ve built or contributed to.",
     "view_project": "View Project",
     "tech_stack": "Skills",
     "back_button": "Back",
@@ -91,8 +91,8 @@
     "title": "Dashboard",
     "description": "My personal dashboard visualizing contributions and stats.",
     "error": "An error occurred on the server.",
-    "umami": {
-      "title": "Umami",
+    "analytics": {
+      "title": "Analytics",
       "sub_title": "Monitor real-time traffic and interactions from my portfolio site.",
       "overview": {
         "page_views": "Page Views",
