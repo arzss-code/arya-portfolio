@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Line } from "react-chartjs-2";
+import { Bar } from "react-chartjs-2";
 import { format, parseISO } from "date-fns";
 import { id, enUS } from "date-fns/locale";
 
@@ -9,24 +9,20 @@ import {
   Chart as ChartJS,
   CategoryScale,
   LinearScale,
-  PointElement,
-  LineElement,
+  BarElement,
   Title,
   Tooltip,
   Legend,
-  Filler,
   ChartOptions,
 } from "chart.js";
 
 ChartJS.register(
   CategoryScale,
   LinearScale,
-  PointElement,
-  LineElement,
+  BarElement,
   Title,
   Tooltip,
-  Legend,
-  Filler
+  Legend
 );
 
 interface DataPoint {
@@ -53,29 +49,23 @@ const TrafficTrendsChart = ({ data }: DataProps) => {
       {
         label: "Page Views",
         data: data?.pageviews?.map((point) => point.y) || [],
-        borderColor: "#3b82f6", // Blue
-        backgroundColor: "rgba(59, 130, 246, 0.15)",
-        fill: true,
-        tension: 0.4, // Smooth curve
-        pointRadius: 0,
-        pointHoverRadius: 6,
-        borderWidth: 2,
+        backgroundColor: "rgba(59, 130, 246, 0.85)", // Solid Blue
+        hoverBackgroundColor: "rgba(59, 130, 246, 1)",
+        borderRadius: 6, // Rounded top corners
+        borderSkipped: false,
       },
       {
         label: "Unique Visitors",
         data: data?.sessions?.map((point) => point.y) || [],
-        borderColor: "#10b981", // Emerald
-        backgroundColor: "rgba(16, 185, 129, 0.15)",
-        fill: true,
-        tension: 0.4, // Smooth curve
-        pointRadius: 0,
-        pointHoverRadius: 6,
-        borderWidth: 2,
+        backgroundColor: "rgba(16, 185, 129, 0.85)", // Solid Emerald
+        hoverBackgroundColor: "rgba(16, 185, 129, 1)",
+        borderRadius: 6,
+        borderSkipped: false,
       },
     ],
   };
 
-  const options: ChartOptions<"line"> = {
+  const options: ChartOptions<"bar"> = {
     responsive: true,
     maintainAspectRatio: false,
     interaction: {
@@ -88,8 +78,8 @@ const TrafficTrendsChart = ({ data }: DataProps) => {
         align: "end",
         labels: {
           usePointStyle: true,
-          boxWidth: 8,
-          boxHeight: 8,
+          boxWidth: 10,
+          boxHeight: 10,
           font: {
             family: "'Inter', sans-serif",
             size: 13,
@@ -127,7 +117,6 @@ const TrafficTrendsChart = ({ data }: DataProps) => {
           font: {
             family: "'Inter', sans-serif",
           },
-          maxTicksLimit: 7, // Jangan tampilkan semua tanggal jika terlalu padat
         },
       },
       y: {
@@ -151,7 +140,7 @@ const TrafficTrendsChart = ({ data }: DataProps) => {
 
   return (
     <div className="mx-auto w-full max-w-4xl h-[350px] mt-6">
-      <Line data={chartData} options={options} />
+      <Bar data={chartData} options={options} />
     </div>
   );
 };
