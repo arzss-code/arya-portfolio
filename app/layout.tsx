@@ -13,6 +13,7 @@ import NextAuthProvider from "@/SessionProvider";
 import { METADATA } from "@/common/constants/metadata";
 import { plusJakartaSans, manrope, dmSans } from "@/common/styles/fonts";
 import { authOptions } from "@/common/libs/auth";
+import { CSPostHogProvider } from "@/common/libs/posthog";
 
 export const metadata: Metadata = {
   metadataBase: new URL(
@@ -47,11 +48,6 @@ const RootLayout = async ({
 
   return (
     <html lang={locale} suppressHydrationWarning={true}>
-      <Script
-        defer
-        src="https://cloud.umami.is/script.js"
-        data-website-id="82eafea9-fa16-494f-aa9b-c6515f0a3d27"
-      />
       <body className={`${plusJakartaSans.variable} ${manrope.variable} ${dmSans.variable} font-sans antialiased`}>
         <NextTopLoader
           color="#3b82f6"
@@ -66,9 +62,11 @@ const RootLayout = async ({
         />
         <NextIntlClientProvider messages={messages}>
           <NextAuthProvider session={session}>
-            <ThemeProviderContext>
-              <Layouts>{children}</Layouts>
-            </ThemeProviderContext>
+            <CSPostHogProvider>
+              <ThemeProviderContext>
+                <Layouts>{children}</Layouts>
+              </ThemeProviderContext>
+            </CSPostHogProvider>
           </NextAuthProvider>
         </NextIntlClientProvider>
         <Analytics />

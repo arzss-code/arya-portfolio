@@ -1,5 +1,5 @@
 import Contributions from "./Contributions";
-import Umami from "./Umami";
+import Analytics from "./Analytics";
 
 import Breakline from "@/common/components/elements/Breakline";
 import { GITHUB_ACCOUNTS } from "@/common/constants/github";
@@ -7,7 +7,7 @@ import { GITHUB_ACCOUNTS } from "@/common/constants/github";
 const Dashboard = () => {
   return (
     <>
-      <Umami />
+      <Analytics />
       <Breakline className="my-8" />
       <Contributions endpoint={GITHUB_ACCOUNTS.endpoint} />
     </>

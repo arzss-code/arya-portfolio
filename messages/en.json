@@ -91,8 +91,8 @@
     "title": "Dashboard",
     "description": "My personal dashboard visualizing contributions and stats.",
     "error": "An error occurred on the server.",
-    "umami": {
-      "title": "Umami",
+    "analytics": {
+      "title": "Analytics",
       "sub_title": "Monitor real-time traffic and interactions from my portfolio site.",
       "overview": {
         "page_views": "Page Views",

@@ -91,8 +91,8 @@
     "title": "Dasbor",
     "description": "Dasbor pribadi saya memvisualisasikan kontribusi dan statistik.",
     "error": "Terjadi kesalahan pada server.",
-    "umami": {
-      "title": "Umami",
+    "analytics": {
+      "title": "Analytics",
       "sub_title": "Pantau lalu lintas dan interaksi secara real-time dari situs portofolio saya.",
       "overview": {
         "page_views": "Tampilan",
