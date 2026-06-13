@@ -78,7 +78,7 @@
   },
   "ProjectsPage": {
     "title": "Projects",
-    "description": "A showcase of both private and open-source projects I’ve built or contributed to.",
+    "description": "A showcase of both private, group and open-source projects I’ve built or contributed to.",
     "view_project": "View Project",
     "tech_stack": "Skills",
     "back_button": "Back",

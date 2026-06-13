@@ -1,27 +1,32 @@
 "use client";
 
 import React from "react";
-import { Bar } from "react-chartjs-2";
+import { Line } from "react-chartjs-2";
 import { format, parseISO } from "date-fns";
+import { id, enUS } from "date-fns/locale";
 
 import {
   Chart as ChartJS,
   CategoryScale,
   LinearScale,
-  BarElement,
+  PointElement,
+  LineElement,
   Title,
   Tooltip,
   Legend,
+  Filler,
   ChartOptions,
 } from "chart.js";
 
 ChartJS.register(
   CategoryScale,
   LinearScale,
-  BarElement,
+  PointElement,
+  LineElement,
   Title,
   Tooltip,
   Legend,
+  Filler
 );
 
 interface DataPoint {
@@ -37,60 +42,116 @@ interface DataProps {
 }
 
 const TrafficTrendsChart = ({ data }: DataProps) => {
-  const rawLabels = data?.pageviews?.map((point) => point.x);
-  const labels = rawLabels?.map((isoDate) => format(parseISO(isoDate), "MMM"));
+  const rawLabels = data?.pageviews?.map((point) => point.x) || [];
+  
+  // Format labels on X-axis: "Jun 2026"
+  const labels = rawLabels.map((isoDate) => format(parseISO(isoDate), "MMM yyyy"));
 
   const chartData = {
     labels,
     datasets: [
       {
-        label: "Sessions",
-        data: data?.sessions?.map((point) => point.y),
-        backgroundColor: "rgba(155, 233, 168, 0.7)",
-        stack: "traffic",
+        label: "Page Views",
+        data: data?.pageviews?.map((point) => point.y) || [],
+        borderColor: "#3b82f6", // Blue
+        backgroundColor: "rgba(59, 130, 246, 0.15)",
+        fill: true,
+        tension: 0.4, // Smooth curve
+        pointRadius: 0,
+        pointHoverRadius: 6,
+        borderWidth: 2,
       },
       {
-        label: "Page views",
-        data: data?.pageviews?.map((point) => point.y),
-        backgroundColor: "rgba(48,161,78,0.7)",
-        stack: "traffic",
+        label: "Unique Visitors",
+        data: data?.sessions?.map((point) => point.y) || [],
+        borderColor: "#10b981", // Emerald
+        backgroundColor: "rgba(16, 185, 129, 0.15)",
+        fill: true,
+        tension: 0.4, // Smooth curve
+        pointRadius: 0,
+        pointHoverRadius: 6,
+        borderWidth: 2,
       },
     ],
   };
 
-  const options: ChartOptions<"bar"> = {
+  const options: ChartOptions<"line"> = {
     responsive: true,
+    maintainAspectRatio: false,
+    interaction: {
+      mode: "index",
+      intersect: false,
+    },
     plugins: {
       legend: {
         position: "top",
+        align: "end",
+        labels: {
+          usePointStyle: true,
+          boxWidth: 8,
+          boxHeight: 8,
+          font: {
+            family: "'Inter', sans-serif",
+            size: 13,
+            weight: 500,
+          },
+        },
       },
       title: {
-        display: true,
-        text: "Stacked Traffic Trends",
+        display: false,
       },
       tooltip: {
+        backgroundColor: "rgba(17, 24, 39, 0.9)", // Dark modern tooltip
+        titleFont: { size: 14, family: "'Inter', sans-serif", weight: 600 },
+        bodyFont: { size: 13, family: "'Inter', sans-serif" },
+        padding: 12,
+        cornerRadius: 8,
+        usePointStyle: true,
         callbacks: {
           title: (tooltipItems) => {
             const index = tooltipItems[0].dataIndex;
             const isoDate = rawLabels[index];
-            return format(parseISO(isoDate), "MMM yyyy");
+            if (!isoDate) return "";
+            // Menampilkan bulan lengkap: "Juni 2026"
+            return format(parseISO(isoDate), "MMMM yyyy", { locale: id });
           },
         },
       },
     },
     scales: {
       x: {
-        stacked: true,
+        grid: {
+          display: false, // Hilangkan garis vertikal agar bersih
+        },
+        ticks: {
+          font: {
+            family: "'Inter', sans-serif",
+          },
+          maxTicksLimit: 7, // Jangan tampilkan semua tanggal jika terlalu padat
+        },
       },
       y: {
-        stacked: true,
+        beginAtZero: true,
+        border: {
+          display: false,
+        },
+        grid: {
+          color: "rgba(156, 163, 175, 0.2)",
+          tickLength: 0,
+        },
+        ticks: {
+          precision: 0,
+          font: {
+            family: "'Inter', sans-serif",
+          },
+        },
       },
     },
   };
 
   return (
-    <div className="mx-auto w-full max-w-3xl">
-      <Bar data={chartData} options={options} />
+    <div className="mx-auto w-full max-w-4xl h-[350px] mt-6">
+      <Line data={chartData} options={options} />
     </div>
   );
 };

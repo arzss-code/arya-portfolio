@@ -12,32 +12,39 @@ export const getPostHogTrends = async () => {
     };
   }
 
-  const url = `${posthog.base_url}/${posthog.project_id}/insights/trend/`;
+  const url = `${posthog.base_url}/${posthog.project_id}/query/`;
 
   try {
-    const response = await axios.get(url, {
-      headers: {
-        Authorization: `Bearer ${posthog.api_key}`,
-      },
-      params: {
-        events: JSON.stringify([
-          {
-            id: "$pageview",
-            type: "events",
-            math: "total",
-            name: "Pageviews",
+    const response = await axios.post(
+      url,
+      {
+        query: {
+          kind: "TrendsQuery",
+          series: [
+            {
+              kind: "EventsNode",
+              event: "$pageview",
+              math: "total",
+            },
+            {
+              kind: "EventsNode",
+              event: "$pageview",
+              math: "dau",
+            },
+          ],
+          dateRange: {
+            date_from: "-6m",
           },
-          {
-            id: "$pageview",
-            type: "events",
-            math: "dau",
-            name: "Unique Visitors",
-          },
-        ]),
-        date_from: "-30d",
-        display: "ActionsLineGraph",
+          interval: "month",
+        },
       },
-    });
+      {
+        headers: {
+          Authorization: `Bearer ${posthog.api_key}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
     return {
       status: response.status,

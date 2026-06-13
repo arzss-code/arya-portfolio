@@ -12,9 +12,9 @@ export const GET = async () => {
       );
     }
 
-    const result = trends.data.result || [];
-    const pageviewsSeries = result.find((s: any) => s.math === "total") || result[0];
-    const visitorsSeries = result.find((s: any) => s.math === "dau") || result[1];
+    const result = trends.data.results || trends.data.result || [];
+    const pageviewsSeries = result[0];
+    const visitorsSeries = result[1];
 
     const totalPageviews =
       pageviewsSeries?.data?.reduce((a: number, b: number) => a + b, 0) || 0;
