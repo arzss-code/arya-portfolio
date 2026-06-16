@@ -107,8 +107,8 @@ const ContactForm = () => {
         <button
           disabled={isLoading || isSuccess}
           type="submit"
-          className={`relative w-full overflow-hidden rounded-xl px-6 py-3.5 font-bold text-white transition-all duration-300 
-            ${isSuccess 
+          className={`relative w-full overflow-hidden rounded-xl px-6 py-3.5 font-bold text-white transition duration-300 ${
+            isSuccess 
               ? "bg-green-500 shadow-green-500/30" 
               : "bg-blue-600 shadow-blue-600/30 hover:bg-blue-700 hover:shadow-blue-700/40"
             } 

@@ -9,17 +9,55 @@ import SectionSubHeading from "@/common/components/elements/SectionSubHeading";
 import GlassIcon from "@/common/components/elements/GlassIcon";
 import { STACKS } from "@/common/constants/stacks";
 
+const CATEGORIES = [
+  {
+    title: "Frontend & Mobile",
+    skills: [
+      "HTML",
+      "CSS",
+      "TailwindCSS",
+      "JavaScript",
+      "React.js",
+      "Next.js",
+      "React Router",
+      "Framer Motion",
+      "Vite",
+      "Flutter",
+    ],
+  },
+  {
+    title: "Backend & Database",
+    skills: [
+      "Node.js",
+      "PHP",
+      "Laravel",
+      "Python",
+      "Prisma",
+      "PostgreSql",
+      "MySql",
+      "Supabase",
+      "Firebase",
+    ],
+  },
+  {
+    title: "Design & Tools",
+    skills: [
+      "Figma",
+      "Photoshop",
+      "Canva",
+      "VS Code",
+      "Docker",
+      "Github",
+      "bun",
+      "Npm",
+      "Yarn",
+      "AI",
+    ],
+  },
+];
+
 const SkillList = () => {
   const t = useTranslations("HomePage");
-
-  const stacksInArray: Array<
-    [string, { icon: JSX.Element; background: string }]
-  > = Object.entries(STACKS)
-    .filter(([, value]) => value.isActive)
-    .map(([name, value]) => [
-      name,
-      { icon: value.icon, background: value.background },
-    ]);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -37,7 +75,7 @@ const SkillList = () => {
   };
 
   return (
-    <section className="space-y-6">
+    <section className="space-y-10">
       <div className="space-y-2">
         <SectionHeading title={t("skills.title")} icon={<SkillsIcon />} />
         <SectionSubHeading>
@@ -45,23 +83,45 @@ const SkillList = () => {
         </SectionSubHeading>
       </div>
 
-      <motion.div
-        variants={containerVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-        className="grid w-full grid-cols-6 gap-x-[1em] gap-y-[2.7em] py-2 md:grid-cols-10 lg:grid-cols-11"
-      >
-        {stacksInArray.map(([name, { icon, background }], index) => (
-          <motion.div key={index} variants={itemVariants}>
-            <GlassIcon
-              name={name}
-              icon={icon}
-              background={background}
-            />
-          </motion.div>
-        ))}
-      </motion.div>
+      <div className="flex flex-col gap-12">
+        {CATEGORIES.map((category, idx) => {
+          // Hanya ambil skill yang aktif dari STACKS
+          const activeSkills = category.skills.filter(
+            (skillName) => STACKS[skillName]?.isActive
+          );
+
+          if (activeSkills.length === 0) return null;
+
+          return (
+            <div key={idx} className="flex flex-col gap-6">
+              <h3 className="text-xl font-bold tracking-tight text-neutral-800 border-b border-neutral-200 pb-3 dark:border-neutral-800 dark:text-neutral-200">
+                {category.title}
+              </h3>
+              
+              <motion.div
+                variants={containerVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                className="grid w-full grid-cols-5 gap-x-[1em] gap-y-[3.5em] sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10"
+              >
+                {activeSkills.map((skillName, index) => {
+                  const skill = STACKS[skillName];
+                  return (
+                    <motion.div key={index} variants={itemVariants} className="flex justify-center">
+                      <GlassIcon
+                        name={skillName}
+                        icon={skill.icon}
+                        background={skill.background}
+                      />
+                    </motion.div>
+                  );
+                })}
+              </motion.div>
+            </div>
+          );
+        })}
+      </div>
     </section>
   );
 };

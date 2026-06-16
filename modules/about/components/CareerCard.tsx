@@ -143,7 +143,7 @@ const CareerCard = ({
                 <ChevronIcon
                   size={18}
                   className={clsx({
-                    "rotate-90 transition-all duration-300":
+                    "rotate-90 transition-transform duration-300":
                       isShowResponsibility,
                   })}
                 />

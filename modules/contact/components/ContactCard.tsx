@@ -53,7 +53,7 @@ const ContactCard = ({
               >
                 {icon}
               </div>
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white opacity-0 transition-all duration-300 group-hover:opacity-100">
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                 <ArrowIcon size={24} />
               </div>
             </div>

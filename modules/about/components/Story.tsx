@@ -9,9 +9,9 @@ const Story = () => {
   return (
     <section className="space-y-4 leading-loose text-neutral-800 dark:text-neutral-300">
       {paragrafData.map((paragraph) => (
-        <div key={paragraph.index}>
+        <p key={paragraph.index}>
           {t(`resume.paragraf_${paragraph.index}`)}
-        </div>
+        </p>
       ))}
     </section>
   );

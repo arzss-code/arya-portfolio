@@ -20,7 +20,7 @@ const Introduction = () => {
   ];
 
   return (
-    <section className="flex flex-col-reverse items-start justify-between gap-12 md:flex-row md:items-center">
+    <section className="flex flex-col items-start justify-between gap-12 md:flex-row md:items-center">
       {/* ── Left: Text content ── */}
       <div className="flex-1 space-y-8">
         {/* Availability badge */}
@@ -28,13 +28,13 @@ const Introduction = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="inline-flex items-center gap-2 rounded-full border border-green-500/30 bg-green-500/10 px-3 py-1.5"
+          className="inline-flex items-center gap-2 rounded-full border border-neutral-200 bg-white px-3 py-1.5 shadow-sm dark:border-neutral-800 dark:bg-neutral-900/50 dark:backdrop-blur-md"
         >
           <div className="relative flex h-2 w-2">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75"></span>
-            <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500"></span>
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-blue-400 opacity-75"></span>
+            <span className="relative inline-flex h-2 w-2 rounded-full bg-blue-500"></span>
           </div>
-          <span className="text-xs font-semibold tracking-wide text-green-600 dark:text-green-400">
+          <span className="text-xs font-semibold tracking-wide text-neutral-700 dark:text-neutral-300">
             {t("available")}
           </span>
         </motion.div>
@@ -45,7 +45,7 @@ const Introduction = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-4xl font-extrabold tracking-tight text-neutral-900 dark:text-neutral-50 md:text-5xl lg:text-5xl"
+            className="text-balance text-4xl font-extrabold tracking-tight text-neutral-900 dark:text-neutral-50 md:text-5xl lg:text-5xl"
           >
             <h1>
               {t.rich("intro", {
@@ -66,9 +66,9 @@ const Introduction = () => {
           >
             <TypeAnimation
               sequence={[
-                "UI/UX Designer",
-                2000,
                 "Frontend Developer",
+                2000,
+                "UI/UX Designer",
                 2000,
                 "AI/ML Enthusiast",
                 2000,
@@ -118,10 +118,9 @@ const Introduction = () => {
             </Button>
           </Link>
           <a
-            href="
-            /CV_Atsiila_Arya_Nabiih.pdf"
+            href="/CV_Atsiila_Arya_Nabiih.pdf"
             download
-            className="inline-flex items-center gap-2 rounded-lg border border-neutral-200 bg-neutral-100 px-4 py-2 text-neutral-900 transition-all duration-300 hover:bg-neutral-200 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-50 dark:hover:bg-neutral-700"
+            className="inline-flex items-center gap-2 rounded-lg border border-neutral-200 bg-neutral-100 px-4 py-2 text-neutral-900 transition-colors duration-300 hover:bg-neutral-200 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-50 dark:hover:bg-neutral-700"
           >
             <DownloadIcon size={18} />
             {t("download_btn")}
@@ -159,7 +158,7 @@ const Introduction = () => {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.55 }}
-          className="grid w-full grid-cols-3 gap-3"
+          className="flex w-full items-center justify-center divide-x divide-neutral-200 pt-4 dark:divide-neutral-800"
         >
           {stats.map((stat, i) => (
             <motion.div
@@ -167,12 +166,12 @@ const Introduction = () => {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6 + i * 0.08 }}
-              className="flex flex-col items-center rounded-2xl border border-neutral-200/60 bg-white/50 px-3 py-2.5 text-center shadow-sm backdrop-blur-sm dark:border-white/10 dark:bg-white/5"
+              className="flex flex-1 flex-col items-center justify-center space-y-1 px-4 text-center"
             >
-              <span className="text-lg font-extrabold leading-none text-neutral-900 dark:text-white">
+              <span className="text-xl font-bold tracking-tight text-neutral-900 dark:text-neutral-50">
                 {stat.value}
               </span>
-              <span className="mt-0.5 text-[10px] font-medium tracking-wide text-neutral-500 dark:text-neutral-400">
+              <span className="text-[10px] font-medium uppercase text-neutral-500 dark:text-neutral-400">
                 {stat.label}
               </span>
             </motion.div>

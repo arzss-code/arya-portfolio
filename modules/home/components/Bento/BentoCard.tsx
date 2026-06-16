@@ -19,7 +19,7 @@ const BentoCard = ({
 }: BentoItemProps) => {
   const content = (
     <SpotlightCard
-      className={`glass-card-hover group relative flex h-full flex-col overflow-hidden !rounded-[2.5rem] border border-neutral-200/50 dark:border-white/5 bg-white/40 dark:bg-transparent ${className} transition-all duration-500`}
+      className={`glass-card-hover group relative flex h-full flex-col overflow-hidden !rounded-[2.5rem] border border-neutral-200/50 dark:border-white/5 bg-white/40 dark:bg-transparent ${className} transition duration-500`}
     >
       <div
         className={`relative z-10 flex flex-col p-6 sm:p-8 ${
@@ -40,7 +40,7 @@ const BentoCard = ({
               </div>
             )}
             {href && href !== "/" && (
-              <Link href={href} className="flex h-8 w-8 items-center justify-center rounded-full bg-neutral-900/10 dark:bg-white/10 text-neutral-900 dark:text-white opacity-0 transition-all duration-300 group-hover:opacity-100 hover:scale-110 relative z-20" aria-label={`View ${title}`}>
+              <Link href={href} className="relative z-20 flex h-8 w-8 items-center justify-center rounded-full bg-neutral-900/10 text-neutral-900 opacity-0 transition duration-300 hover:scale-110 group-hover:opacity-100 dark:bg-white/10 dark:text-white" aria-label={`View ${title}`}>
                 <ArrowIcon size={20} />
               </Link>
             )}

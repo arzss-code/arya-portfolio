@@ -20,7 +20,7 @@ const LinkComponent = ({ url, text, icon }: LinkComponentProps) => {
     <Link href={url} target="_blank">
       <div className="flex items-center gap-2 font-medium text-neutral-700 dark:text-neutral-300">
         <i>{icon}</i>
-        <p className="text-sm transition-all duration-300 dark:text-blue-500 hover:dark:text-blue-400">
+        <p className="text-sm transition-colors duration-300 dark:text-blue-500 hover:dark:text-blue-400">
           {text}
         </p>
       </div>

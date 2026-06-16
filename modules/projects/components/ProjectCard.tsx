@@ -43,10 +43,10 @@ const ProjectCard = ({
         </div>
         <div className="flex flex-1 flex-col gap-3 p-5">
           <div className="space-y-1.5">
-            <h3 className="cursor-pointer text-lg font-semibold leading-snug tracking-tight text-neutral-800 transition-all duration-300 group-hover:text-blue-500 dark:text-neutral-200 dark:group-hover:text-blue-400">
+            <h3 className="line-clamp-1 cursor-pointer text-lg font-semibold leading-snug tracking-tight text-neutral-800 transition-colors duration-300 group-hover:text-blue-500 dark:text-neutral-200 dark:group-hover:text-blue-400">
               {title}
             </h3>
-            <p className="line-clamp-3 text-sm leading-relaxed text-neutral-500 dark:text-neutral-400">
+            <p className="line-clamp-1 text-sm leading-relaxed text-neutral-500 dark:text-neutral-400">
               {description}
             </p>
           </div>
