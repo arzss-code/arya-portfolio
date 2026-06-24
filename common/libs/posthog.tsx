@@ -29,8 +29,8 @@ export function CSPostHogProvider({ children }: { children: React.ReactNode }) {
     if (typeof window !== "undefined") {
       import("posthog-js").then(({ default: posthog }) => {
         posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY!, {
-          api_host:
-            process.env.NEXT_PUBLIC_POSTHOG_HOST || "https://us.i.posthog.com",
+          api_host: "/ingest",
+          ui_host: "https://us.posthog.com",
           person_profiles: "identified_only",
           capture_pageview: false, // disable auto-capture because we capture manually using PostHogPageView
           capture_pageleave: true, // Enable automatic pageleave capture for accurate session duration
