@@ -20,38 +20,42 @@ const ProjectCard = ({
 
 
   return (
-    <Link href={`/projects/${slug}`} className="flex h-full flex-col">
-      <SpotlightCard className="group relative flex h-full cursor-pointer flex-col hover:shadow-sm">
-        {is_featured && (
-          <div className="absolute right-0 top-0 z-10 flex items-center gap-x-1 rounded-bl-lg rounded-tr-lg bg-blue-500 px-2 py-1 text-sm font-medium text-neutral-50">
-            <PinIcon size={15} />
-            <span>Featured</span>
-          </div>
-        )}
-        <div className="relative">
+    <Link href={`/projects/${slug}`} className="group flex h-full flex-col">
+      <SpotlightCard className="relative flex h-full cursor-pointer flex-col p-2 hover:shadow-md">
+        {/* Image Container with precise overflow hiding for the scale effect */}
+        <div className="relative overflow-hidden rounded-xl">
+          {is_featured && (
+            <div className="absolute left-3 top-3 z-10 flex items-center gap-x-1.5 rounded-full border border-neutral-200/50 bg-white/80 px-2.5 py-1 text-[11px] font-semibold tracking-wide text-neutral-800 shadow-sm backdrop-blur-md dark:border-neutral-700/50 dark:bg-neutral-900/80 dark:text-neutral-200">
+              <PinIcon size={14} className="text-blue-500" />
+              <span>Featured</span>
+            </div>
+          )}
           <Image
             src={image}
             alt={title}
             width={480}
             height={270}
-            className="aspect-video w-full rounded-t-xl object-cover"
+            className="aspect-video w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
           />
-          <div className="absolute left-0 top-0 flex h-full w-full items-center justify-center gap-1 rounded-t-xl bg-black text-sm font-medium text-neutral-50 opacity-0 transition-opacity duration-300 group-hover:opacity-80">
-            <span>{t("view_project")}</span>
-            <ViewIcon size={20} />
-          </div>
         </div>
-        <div className="flex flex-1 flex-col gap-3 p-5">
-          <div className="space-y-1.5">
-            <h3 className="line-clamp-1 cursor-pointer text-lg font-semibold leading-snug tracking-tight text-neutral-800 transition-colors duration-300 group-hover:text-blue-500 dark:text-neutral-200 dark:group-hover:text-blue-400">
-              {title}
+
+        {/* Content Section */}
+        <div className="flex flex-1 flex-col gap-4 px-3 py-5">
+          <div className="space-y-2">
+            <h3 className="flex items-center justify-between text-lg font-bold tracking-tight text-neutral-900 transition-colors duration-300 group-hover:text-blue-500 dark:text-neutral-100 dark:group-hover:text-blue-400">
+              <span className="line-clamp-1">{title}</span>
+              <ViewIcon
+                size={20}
+                className="-translate-x-2 text-neutral-400 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:text-blue-500 group-hover:opacity-100"
+              />
             </h3>
-            <p className="line-clamp-1 text-sm leading-relaxed text-neutral-500 dark:text-neutral-400">
+            <p className="line-clamp-2 text-sm leading-relaxed text-neutral-600 dark:text-neutral-400">
               {description}
             </p>
           </div>
-          <div className="mt-auto border-t border-neutral-100 pt-3 dark:border-neutral-800">
-            <div className="flex flex-wrap items-center gap-2.5">
+
+          <div className="mt-auto pt-2">
+            <div className="flex flex-wrap items-center gap-3">
               {stacks.map((stack: string, index: number) => {
                 const stackData = STACKS[stack];
 
