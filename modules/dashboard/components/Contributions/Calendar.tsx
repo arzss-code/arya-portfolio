@@ -65,7 +65,7 @@ const Calendar = ({ data }: CalendarProps) => {
   const contributionColors = data?.colors ?? [];
 
   return (
-    <>
+    <div className="mt-6 flex w-full flex-col gap-4 rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm dark:border-neutral-800/60 dark:bg-neutral-900/50 sm:p-6">
       <div className="relative flex flex-col">
         <ul className="flex justify-end gap-[3px] overflow-x-auto w-full text-xs dark:text-neutral-400 md:justify-start">
           {months.map((month) => (
@@ -83,30 +83,23 @@ const Calendar = ({ data }: CalendarProps) => {
           ))}
         </ul>
 
-        <div className="flex justify-start gap-[2.9px] overflow-x-auto w-full">
-          {weeks?.map((week) => (
-            <div key={week.firstDay} className="flex-1 min-w-[13px]">
+        <div className="flex justify-start gap-[3px] overflow-x-auto w-full pb-3 pt-1 px-1 -mx-1">
+          {weeks?.map((week, weekIndex) => (
+            <motion.div 
+              key={week.firstDay} 
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: weekIndex * 0.02, duration: 0.3 }}
+              className="flex flex-1 flex-col gap-[3px] min-w-[12px]"
+            >
               {week.contributionDays.map((contribution) => {
                 const backgroundColor =
                   contribution.contributionCount > 0 && contribution.color;
 
-                const getRandomDelayAnimate =
-                  Math.random() * week.contributionDays.length * 0.15;
-
                 return (
-                  <motion.span
+                  <span
                     key={contribution.date}
-                    initial="initial"
-                    animate="animate"
-                    variants={{
-                      initial: { opacity: 0, translateY: -20 },
-                      animate: {
-                        opacity: 1,
-                        translateY: 0,
-                        transition: { delay: getRandomDelayAnimate },
-                      },
-                    }}
-                    className="my-[2px] block h-auto aspect-square w-full rounded-sm bg-neutral-300 dark:bg-neutral-800"
+                    className="aspect-square w-full rounded-[2px] bg-neutral-200/70 outline-none transition-all duration-200 hover:ring-2 hover:ring-blue-500/50 hover:dark:ring-blue-400/50 dark:bg-neutral-800"
                     style={backgroundColor ? { backgroundColor } : undefined}
                     onMouseEnter={() =>
                       setSelectContribution({
@@ -120,18 +113,18 @@ const Calendar = ({ data }: CalendarProps) => {
                   />
                 );
               })}
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
 
-      <div className="flex flex-wrap items-center justify-between gap-2">
+      <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-neutral-100 dark:border-neutral-800/60">
         <div className="flex items-center gap-2 text-sm">
           <span className="dark:text-neutral-400">
             {t("title_less_contribution")}
           </span>
           <ul className="flex gap-1">
-            <li className="h-[10px] w-[10px] rounded-sm bg-neutral-300 dark:bg-neutral-800" />
+            <li className="h-[10px] w-[10px] rounded-[2px] bg-neutral-200/70 dark:bg-neutral-800" />
             {contributionColors.map((item, index) => (
               <motion.li
                 key={item}
@@ -155,7 +148,7 @@ const Calendar = ({ data }: CalendarProps) => {
         <div
           className={clsx(
             `${selectContribution?.date ? "opacity-100" : "opacity-0"}`,
-            "rounded bg-neutral-200 px-2 text-sm dark:bg-neutral-700",
+            "rounded bg-neutral-100 px-2 py-1 text-xs font-medium text-neutral-600 transition-opacity duration-300 dark:bg-neutral-800 dark:text-neutral-300",
           )}
         >
           {selectContribution?.count}{" "}
@@ -163,7 +156,7 @@ const Calendar = ({ data }: CalendarProps) => {
           {selectContribution?.date}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

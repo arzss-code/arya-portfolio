@@ -149,8 +149,10 @@ const TrafficTrendsChart = ({ data }: DataProps) => {
   };
 
   return (
-    <div className="mx-auto w-full max-w-4xl h-[350px] mt-6">
-      <Line data={chartData} options={options} />
+    <div className="mt-6 w-full rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm dark:border-neutral-800/60 dark:bg-neutral-900/50 sm:p-6">
+      <div className="h-[350px] w-full">
+        <Line data={chartData} options={options} />
+      </div>
     </div>
   );
 };

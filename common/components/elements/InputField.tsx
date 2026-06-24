@@ -34,14 +34,14 @@ const InputField = <TFormValue extends FieldValues>({
           rows={rows}
           placeholder={renderPlaceholder}
           {...register(name, rule)}
-          className="glass-input w-full rounded-xl p-3 text-sm outline-none transition-all duration-300 placeholder:text-neutral-500"
+          className="w-full rounded-xl border border-neutral-200 bg-neutral-50/50 p-4 text-sm text-neutral-900 outline-none transition-all duration-300 placeholder:text-neutral-400 focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10 dark:border-neutral-800 dark:bg-neutral-900/50 dark:text-neutral-100 dark:focus:border-blue-400 dark:focus:bg-neutral-900 dark:focus:ring-blue-400/10"
         ></textarea>
       ) : (
         <input
           type="text"
           placeholder={renderPlaceholder}
           {...register(name, rule)}
-          className="glass-input w-full rounded-xl p-3 text-sm outline-none transition-all duration-300 placeholder:text-neutral-500"
+          className="w-full rounded-xl border border-neutral-200 bg-neutral-50/50 p-4 text-sm text-neutral-900 outline-none transition-all duration-300 placeholder:text-neutral-400 focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10 dark:border-neutral-800 dark:bg-neutral-900/50 dark:text-neutral-100 dark:focus:border-blue-400 dark:focus:bg-neutral-900 dark:focus:ring-blue-400/10"
         />
       )}{" "}
       {error[name]?.type === "required" && (

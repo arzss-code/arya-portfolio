@@ -17,6 +17,33 @@ import Tooltip from "../elements/Tooltip";
 import ThemeToggle from "./ThemeToggle";
 import IntlToggle from "./IntlToggle";
 
+const NavItem = ({ item, compact = false, isActive, t }: { item: MenuItemProps; compact?: boolean; isActive: boolean; t: any }) => {
+  return (
+    <Link
+      href={item.href}
+      className={clsx(
+        "relative flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300",
+        compact ? "w-full" : "",
+        isActive
+          ? "text-blue-600 dark:text-blue-400"
+          : "text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white hover:bg-neutral-100/50 dark:hover:bg-neutral-800/50"
+      )}
+    >
+      {isActive && !compact && (
+        <motion.span
+          layoutId="header-nav-active"
+          className="absolute inset-0 bg-blue-500/10 dark:bg-blue-500/15 rounded-lg"
+          transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+        />
+      )}
+      <span className={clsx("relative z-10", isActive && compact && "text-blue-600 dark:text-blue-400")}>
+        {item.icon}
+      </span>
+      <span className="relative z-10">{t(item.title)}</span>
+    </Link>
+  );
+};
+
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -51,35 +78,7 @@ const Header = () => {
 
 
 
-  const NavItem = ({ item, compact = false }: { item: MenuItemProps; compact?: boolean }) => {
-    const isActive = pathname === item.href;
 
-    return (
-      <Link
-        href={item.href}
-
-        className={clsx(
-          "relative flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300",
-          compact ? "w-full" : "",
-          isActive
-            ? "text-blue-600 dark:text-blue-400"
-            : "text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white hover:bg-neutral-100/50 dark:hover:bg-neutral-800/50"
-        )}
-      >
-        {isActive && !compact && (
-          <motion.span
-            layoutId="header-nav-active"
-            className="absolute inset-0 bg-blue-500/10 dark:bg-blue-500/15 rounded-lg"
-            transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-          />
-        )}
-        <span className={clsx("relative z-10", isActive && compact && "text-blue-600 dark:text-blue-400")}>
-          {item.icon}
-        </span>
-        <span className="relative z-10">{t(item.title)}</span>
-      </Link>
-    );
-  };
 
   return (
     <>
@@ -88,7 +87,7 @@ const Header = () => {
           "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
           isScrolled
             ? "bg-white/70 dark:bg-neutral-900/70 backdrop-blur-2xl shadow-xl shadow-black/[0.03] dark:shadow-black/20 border-b border-neutral-200/50 dark:border-neutral-800/50"
-            : "bg-white/50 dark:bg-neutral-900/50 backdrop-blur-xl"
+            : "bg-white/50 dark:bg-neutral-900/50 backdrop-blur-xl border-b border-transparent"
         )}
       >
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -116,7 +115,7 @@ const Header = () => {
             {/* Desktop Navigation - Center */}
             <nav className="hidden lg:flex items-center gap-1 bg-neutral-100/50 dark:bg-neutral-800/30 backdrop-blur-sm rounded-xl p-1 border border-neutral-200/50 dark:border-neutral-700/30">
               {filteredMenu.map((item: MenuItemProps) => (
-                <NavItem key={item.href} item={item} />
+                <NavItem key={item.href} item={item} isActive={pathname === item.href} t={t} />
               ))}
             </nav>
 

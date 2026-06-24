@@ -8,14 +8,20 @@ interface OverviewItemProps {
 }
 
 const OverviewItem = ({ label, value, unit = "" }: OverviewItemProps) => (
-  <SpotlightCard className="flex flex-col bg-neutral-100 p-4 text-center">
-    <span className="text-sm dark:text-neutral-400">{label}</span>
-    <div>
+  <SpotlightCard className="flex flex-col items-center justify-center gap-1.5 p-5 text-center">
+    <span className="text-[13px] font-medium text-neutral-500 dark:text-neutral-400">
+      {label}
+    </span>
+    <div className="flex items-baseline gap-1">
       <AnimateCounter
-        className="text-xl font-medium text-blue-600 lg:text-2xl"
+        className="text-2xl font-semibold tracking-tight text-neutral-900 dark:text-neutral-100 lg:text-3xl"
         total={value}
       />
-      {unit && <span className="text-sm dark:text-neutral-400"> {unit}</span>}
+      {unit && (
+        <span className="text-sm font-medium text-neutral-500 dark:text-neutral-400">
+          {unit}
+        </span>
+      )}
     </div>
   </SpotlightCard>
 );

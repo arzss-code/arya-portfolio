@@ -56,14 +56,16 @@ const ContactForm = () => {
 
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.95 }}
-      animate={{ opacity: 1, scale: 1 }}
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="glass-card flex flex-col space-y-6 !rounded-3xl p-6 md:p-8 border border-neutral-200/50 dark:border-neutral-800/50"
+      className="flex flex-col space-y-8 rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm md:p-8 dark:border-neutral-800 dark:bg-neutral-900"
     >
       <div className="space-y-2">
-        <h2 className="text-2xl font-bold">{t("form.title")}</h2>
-        <p className="text-sm text-neutral-600 dark:text-neutral-400">
+        <h2 className="text-2xl font-bold tracking-tight text-neutral-900 dark:text-neutral-100">
+          {t("form.title")}
+        </h2>
+        <p className="text-sm leading-relaxed text-neutral-600 dark:text-neutral-400">
           {t("form.sub_title")}
         </p>
       </div>
@@ -107,12 +109,12 @@ const ContactForm = () => {
         <button
           disabled={isLoading || isSuccess}
           type="submit"
-          className={`relative w-full overflow-hidden rounded-xl px-6 py-3.5 font-bold text-white transition duration-300 ${
+          className={`relative w-full overflow-hidden rounded-xl px-6 py-4 font-bold transition-all duration-300 ${
             isSuccess 
-              ? "bg-green-500 shadow-green-500/30" 
-              : "bg-blue-600 shadow-blue-600/30 hover:bg-blue-700 hover:shadow-blue-700/40"
+              ? "bg-emerald-500 text-white shadow-emerald-500/30" 
+              : "bg-blue-600 text-white shadow-sm hover:-translate-y-0.5 hover:bg-blue-700 hover:shadow-lg hover:shadow-blue-600/30"
             } 
-            disabled:cursor-not-allowed disabled:opacity-70`}
+            disabled:cursor-not-allowed disabled:opacity-70 disabled:hover:translate-y-0 disabled:hover:shadow-none`}
         >
           <AnimatePresence mode="wait">
             {isLoading ? (
