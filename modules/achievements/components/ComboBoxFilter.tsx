@@ -118,58 +118,63 @@ const ComboBoxFilter = ({ categories }: ComboBoxFilterProps) => {
   }, []);
 
   return (
-    <div ref={comboBoxRef} className="relative w-full md:w-[230px]">
+    <div ref={comboBoxRef} className="relative w-full md:w-[220px]">
       <Button
-        className="flex w-full  items-center justify-between gap-4 bg-neutral-100 p-2 text-neutral-900 outline outline-neutral-300 hover:bg-neutral-300  dark:bg-neutral-900 dark:text-neutral-400 dark:outline-neutral-700 dark:hover:bg-neutral-800"
+        className="flex h-10 w-full items-center justify-between gap-3 rounded-lg border border-neutral-300 bg-white px-3 text-neutral-800 shadow-sm transition-all duration-200 hover:bg-neutral-50 focus:border-blue-500/80 focus:ring-4 focus:ring-blue-500/20 dark:border-neutral-600 dark:bg-neutral-800/80 dark:text-neutral-100 dark:hover:bg-neutral-700"
         onClick={handleClickOpen}
         data-umami-event="click_filter_achievements"
       >
-        <span className="text-sm ">
+        <span className="text-sm font-semibold">
           {selectValue
             ? data.find((item) => item.value === selectValue)?.label ||
               formatLabel(selectValue)
-            : `Filter achievements...`}
+            : `Filter categories`}
         </span>
         <ArrowIcon
-          className={cn("transition duration-200", isOpen && "scale-125")}
+          size={16}
+          className={cn("text-neutral-500 dark:text-neutral-400 transition-transform duration-200", isOpen && "rotate-180")}
         />
       </Button>
 
       {isOpen && (
         <motion.div
-          initial={{ scale: 0, y: -20 }}
-          animate={{ scale: 1, y: 0 }}
-          className="absolute left-0 top-12 z-10 w-full"
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.2 }}
+          className="absolute left-0 top-12 z-20 w-full"
         >
-          <div className="w-full rounded-md  bg-neutral-100 outline outline-neutral-300 dark:bg-neutral-900 dark:outline-neutral-600">
-            <div className="grid w-full grid-cols-[1.5rem_1fr] items-center border-b border-neutral-700 px-3 py-2">
-              <SearchIcon className="dark:text-neutral-500" />
+          <div className="w-full overflow-hidden rounded-lg border border-neutral-300 bg-white shadow-xl dark:border-neutral-600 dark:bg-neutral-800">
+            <div className="flex items-center gap-2.5 border-b border-neutral-200 px-3 py-2.5 dark:border-neutral-700">
+              <SearchIcon size={16} className="text-neutral-500 dark:text-neutral-400" />
               <input
                 type="search"
-                className="flex justify-start bg-neutral-100 text-sm text-neutral-900 outline-none placeholder:text-neutral-500 dark:bg-neutral-900 dark:text-neutral-50"
-                placeholder={`Search achievements...`}
+                className="w-full bg-transparent text-sm font-medium text-neutral-900 outline-none placeholder:font-normal placeholder:text-neutral-500 dark:text-neutral-50 dark:placeholder:text-neutral-400"
+                placeholder="Search category..."
                 onChange={handleChangeInput}
                 value={inputValueSearch}
               />
             </div>
 
-            <div className="p-1">
+            <div className="max-h-60 overflow-y-auto p-1.5">
               {filteredData.length === 0 && (
-                <div className="px-4 py-2 text-center text-sm text-neutral-900 dark:text-neutral-50">
-                  no category found.
+                <div className="px-3 py-4 text-center text-sm font-medium text-neutral-600 dark:text-neutral-300">
+                  No category found.
                 </div>
               )}
 
               {filteredData.map((item, index) => (
                 <button
                   key={index}
-                  className="grid w-full grid-cols-[1.5rem_1fr] items-center rounded-[4px] p-2 text-neutral-900 hover:bg-neutral-300 dark:text-neutral-50 dark:hover:bg-neutral-800"
+                  className={cn(
+                    "flex w-full items-center gap-2 rounded-md px-2.5 py-2 text-left text-sm font-medium transition-colors",
+                    item.value === selectValue
+                      ? "bg-blue-100 text-blue-700 dark:bg-blue-500/20 dark:text-blue-300"
+                      : "text-neutral-800 hover:bg-neutral-100 dark:text-neutral-200 dark:hover:bg-neutral-700"
+                  )}
                   onClick={() => handleSelect(item.value)}
                 >
-                  {item.value === selectValue && <ActiveIcon />}
-                  <span className="col-start-2 flex justify-start text-sm">
-                    {item.label}
-                  </span>
+                  <span className="flex-1">{item.label}</span>
+                  {item.value === selectValue && <ActiveIcon size={16} className="shrink-0" />}
                 </button>
               ))}
             </div>

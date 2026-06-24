@@ -80,98 +80,97 @@ const CareerCard = ({
   };
 
   return (
-    <SpotlightCard className="flex items-start gap-5 p-6">
-      {logo ? (
-        <Image
-          width={60}
-          height={60}
-          src={logo}
-          alt={company}
-          className="aspect-square rounded-lg object-contain bg-neutral-100"
-        />
-      ) : (
-        <CompanyIcon size={65} />
-      )}
+    <SpotlightCard className="flex flex-col items-start gap-5 p-5 sm:flex-row sm:p-6">
+      <div className="shrink-0 rounded-xl border border-neutral-200/60 bg-white p-2 shadow-sm dark:border-neutral-700/60 dark:bg-neutral-800">
+        {logo ? (
+          <Image
+            width={55}
+            height={55}
+            src={logo}
+            alt={company}
+            className="aspect-square rounded-lg object-contain"
+          />
+        ) : (
+          <CompanyIcon size={55} className="text-neutral-400" />
+        )}
+      </div>
 
-      <div className="space-y-1">
-        <h5>{position}</h5>
-        <div className="space-y-2 text-sm text-neutral-600 dark:text-neutral-400">
-          <div className="flex flex-col gap-2 md:flex-row">
+      <div className="w-full space-y-4">
+        <div className="space-y-1.5">
+          <h4 className="text-lg font-bold tracking-tight text-neutral-900 dark:text-neutral-100">
+            {position}
+          </h4>
+          
+          <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm">
             <Link href={link || "#"} target="_blank">
-              <span className="cursor-pointer hover:text-neutral-900 hover:underline hover:dark:text-neutral-50">
+              <span className="font-semibold text-neutral-800 transition-colors hover:text-neutral-900 hover:underline dark:text-neutral-200 dark:hover:text-neutral-100">
                 {company}
               </span>
             </Link>
-            <span className="hidden text-neutral-300 dark:text-neutral-700 md:block">
-              •
-            </span>
-            <span>{location}</span>
+            <span className="text-neutral-300 dark:text-neutral-600">•</span>
+            <span className="text-neutral-600 dark:text-neutral-400">{location}</span>
           </div>
 
-          <div className="flex flex-col gap-2 text-[13px] md:flex-row">
-            <div className="flex gap-1 text-neutral-600 dark:text-neutral-400">
-              <span>{format(startDate, "MMM yyyy", { locale: dateLocale })}</span> -{" "}
-              <span>{end_date ? format(endDate, "MMM yyyy", { locale: dateLocale }) : (locale === "id" ? "Saat ini" : "Present")}</span>
+          <div className="flex flex-wrap items-center gap-x-2 gap-y-2 text-[13px] text-neutral-500 dark:text-neutral-400">
+            <div className="flex items-center gap-1 font-medium">
+              <span>{format(startDate, "MMM yyyy", { locale: dateLocale })}</span>
+              <span>-</span>
+              <span className={!end_date ? "text-neutral-900 dark:text-neutral-200" : ""}>
+                {end_date ? format(endDate, "MMM yyyy", { locale: dateLocale }) : (locale === "id" ? "Saat ini" : "Present")}
+              </span>
             </div>
 
-            <span className="hidden text-neutral-300 dark:text-neutral-700 md:block">
-              •
-            </span>
-            <span className="text-neutral-500">{durationText}</span>
-
-            <span className="hidden text-neutral-300 dark:text-neutral-700 md:block">
-              •
-            </span>
-            <span className="text-neutral-600 dark:text-neutral-400">
+            <span className="text-neutral-300 dark:text-neutral-600">•</span>
+            <span>{durationText}</span>
+          </div>
+          
+          <div className="flex flex-wrap gap-2 pt-1">
+            <span className="inline-flex items-center rounded-full bg-neutral-100 px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wider text-neutral-600 dark:bg-neutral-800 dark:text-neutral-300">
               {getTranslatedType(type, locale)}
             </span>
-
-            <span className="hidden text-neutral-300 dark:text-neutral-700 md:block">
-              •
-            </span>
-            <span className="text-neutral-600 dark:text-neutral-400">
+            <span className="inline-flex items-center rounded-full bg-neutral-100 px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wider text-neutral-600 dark:bg-neutral-800 dark:text-neutral-300">
               {getTranslatedLocationType(location_type, locale)}
             </span>
           </div>
-
-          {responsibilities != null && (
-            <>
-              <button
-                onClick={() => setIsShowResponsibility(!isShowResponsibility)}
-                className="-ml-1 flex items-center justify-center gap-x-1 transition duration-300 hover:text-neutral-800 dark:text-neutral-500 dark:hover:text-neutral-300"
-              >
-                <ChevronIcon
-                  size={18}
-                  className={clsx({
-                    "rotate-90 transition-transform duration-300":
-                      isShowResponsibility,
-                  })}
-                />
-                <p className="text-sm">
-                  {isShowResponsibility ? hideText : showText}{" "}
-                  {responsibilityText}
-                </p>
-              </button>
-              <AnimatePresence>
-                {isShowResponsibility && (
-                  <motion.ul
-                    className="ml-[18px] list-disc space-y-1 pb-2 text-sm leading-normal text-neutral-600 dark:text-neutral-400"
-                    initial={{ opacity: 0, y: -20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ y: -20, opacity: 0 }}
-                    transition={{ duration: 0.3, ease: "easeInOut" }}
-                  >
-                    {(locale === "id" && responsibilities_id ? responsibilities_id : responsibilities)?.map((responsibility, index) => (
-                      <motion.li key={index} layout>
-                        {responsibility}
-                      </motion.li>
-                    ))}
-                  </motion.ul>
-                )}
-              </AnimatePresence>
-            </>
-          )}
         </div>
+
+        {responsibilities != null && (
+          <div className="pt-2">
+            <button
+              onClick={() => setIsShowResponsibility(!isShowResponsibility)}
+              className="group flex items-center gap-x-1.5 text-sm font-medium text-neutral-500 transition-colors duration-200 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-200"
+            >
+              <ChevronIcon
+                size={16}
+                className={clsx(
+                  "transition-transform duration-300 group-hover:text-neutral-900 dark:group-hover:text-neutral-200",
+                  isShowResponsibility ? "rotate-90 text-neutral-900 dark:text-neutral-200" : ""
+                )}
+              />
+              <span>
+                {isShowResponsibility ? hideText : showText}{" "}
+                {responsibilityText}
+              </span>
+            </button>
+            <AnimatePresence>
+              {isShowResponsibility && (
+                <motion.ul
+                  className="ml-[18px] mt-3 list-disc space-y-2 text-[14px] leading-relaxed text-neutral-600 dark:text-neutral-300"
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: "auto" }}
+                  exit={{ opacity: 0, height: 0 }}
+                  transition={{ duration: 0.3, ease: "easeInOut" }}
+                >
+                  {(locale === "id" && responsibilities_id ? responsibilities_id : responsibilities)?.map((responsibility, index) => (
+                    <motion.li key={index} layout>
+                      {responsibility}
+                    </motion.li>
+                  ))}
+                </motion.ul>
+              )}
+            </AnimatePresence>
+          </div>
+        )}
       </div>
     </SpotlightCard>
   );

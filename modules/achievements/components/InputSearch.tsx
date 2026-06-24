@@ -44,13 +44,13 @@ const InputSearch = () => {
   }, [debouncedValue, searchParams, router]);
 
   return (
-    <div className="flex w-full items-center gap-2 rounded-lg bg-neutral-50 p-2 outline outline-neutral-300 focus:outline-neutral-400 dark:bg-neutral-900 dark:outline-neutral-700 md:w-fit">
-      <SearchIcon className="text-neutral-500" size={17} />
+    <div className="flex h-10 w-full items-center gap-2.5 rounded-lg border border-neutral-300 bg-white px-3 shadow-sm transition-all duration-200 focus-within:border-blue-500/80 focus-within:ring-4 focus-within:ring-blue-500/20 dark:border-neutral-600 dark:bg-neutral-800/80 md:w-64">
+      <SearchIcon className="text-neutral-500 dark:text-neutral-400" size={16} />
       <input
         type="search"
-        placeholder="Search..."
+        placeholder="Search achievements..."
         value={inputValue}
-        className="w-full bg-transparent pr-2 text-sm outline-none placeholder:text-neutral-500"
+        className="h-full w-full bg-transparent text-sm font-medium text-neutral-900 outline-none placeholder:font-normal placeholder:text-neutral-500 dark:text-neutral-50 dark:placeholder:text-neutral-400"
         onChange={handleChange}
         onKeyDown={handleKeyDown}
         data-umami-event="input_search"
