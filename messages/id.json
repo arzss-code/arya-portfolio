@@ -74,18 +74,45 @@
     "description": "Kumpulan sertifikat dan badge yang saya peroleh sepanjang perjalanan profesional dan akademik.",
     "error": "Terjadi kesalahan pada server.",
     "no_data": "Data tidak tersedia.",
-    "show_credential": "Lihat Kredensial"
+    "show_credential": "Lihat Kredensial",
+    "filter": {
+      "showing_achievements": "Menampilkan {filtered} dari {total} pencapaian",
+      "search_placeholder": "Cari pencapaian...",
+      "filters": "Filter",
+      "category": "Kategori",
+      "sort_by": "Urutkan",
+      "all": "Semua",
+      "newest": "Terbaru",
+      "oldest": "Terlama",
+      "name_asc": "Nama (A-Z)",
+      "name_desc": "Nama (Z-A)"
+    }
   },
   "ProjectsPage": {
     "title": "Proyek",
     "description": "Kumpulan proyek pribadi, kelompok dan open-source yang telah saya buat atau kontribusikan.",
     "view_project": "Lihat Proyek",
     "tech_stack": "Keahlian",
+    "role": "Peran",
     "back_button": "Kembali",
     "source_code_text": "Kode Sumber",
     "live_demo_text": "Demo Langsung",
+    "gallery": "Galeri",
     "error": "Terjadi kesalahan pada server.",
-    "no_data": "Data tidak tersedia."
+    "no_data": "Data tidak tersedia.",
+    "filter": {
+      "showing_projects": "Menampilkan {filtered} dari {total} proyek",
+      "search_placeholder": "Cari proyek...",
+      "filters": "Filter",
+      "category": "Kategori",
+      "status": "Status",
+      "sort_by": "Urutkan",
+      "all": "Semua",
+      "newest": "Terbaru",
+      "oldest": "Terlama",
+      "name_asc": "Nama (A-Z)",
+      "name_desc": "Nama (Z-A)"
+    }
   },
   "DashboardPage": {
     "title": "Dasbor",

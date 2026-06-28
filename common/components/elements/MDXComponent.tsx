@@ -27,7 +27,7 @@ const MDXComponent = ({ children }: MarkdownRendererProps) => {
       components={{
         a: (props) => (
           <a
-            className="cursor-pointer text-teal-600 hover:text-teal-400 hover:underline"
+            className="cursor-pointer text-blue-600 hover:text-blue-400 hover:underline"
             target="_blank"
             {...props}
           />
@@ -57,7 +57,7 @@ const MDXComponent = ({ children }: MarkdownRendererProps) => {
         code: (props) => <CodeBlock {...props} />,
         blockquote: (props) => (
           <blockquote
-            className="text-md rounded-lg border-l-[5px] border-neutral-700 border-l-cyan-500 bg-neutral-100 py-3 pl-6 text-cyan-800 dark:bg-neutral-800 dark:text-cyan-200"
+            className="text-md rounded-lg border-l-[5px] border-neutral-700 border-l-blue-500 bg-neutral-100 py-3 pl-6 text-blue-800 dark:bg-neutral-800 dark:text-blue-200"
             {...props}
           />
         ),

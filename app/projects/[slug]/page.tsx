@@ -48,13 +48,9 @@ const ProjectDetailPage = async ({ params }: ProjectDetailPageProps) => {
   const { slug } = await params;
   const data = await getProjectDetail(slug);
 
-  const PAGE_TITLE = data?.title;
-  const PAGE_DESCRIPTION = data?.description;
-
   return (
     <Container data-aos="fade-up">
       <BackButton url="/projects" />
-      <PageHeading title={PAGE_TITLE} description={PAGE_DESCRIPTION} />
       <ProjectDetail {...data} />
     </Container>
   );

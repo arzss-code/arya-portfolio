@@ -23,6 +23,7 @@ const Achievements = () => {
     useState<AchievementItem | null>(null);
   const category = params.get("category")?.toLowerCase() || "";
   const search = params.get("search")?.toLowerCase() || "";
+  const sort = params.get("sort") || "newest";
 
   const { data, isLoading, error } = useSWR<AchievementItem[]>(
     "/api/achievements",
@@ -63,15 +64,22 @@ const Achievements = () => {
         .includes(search);
       return nameMatch || credentialMatch;
     })
-    .sort((a: AchievementItem, b: AchievementItem) => b.id - a.id);
+    .sort((a: AchievementItem, b: AchievementItem) => {
+      if (sort === "oldest") return a.id - b.id;
+      if (sort === "name_asc") return a.name.localeCompare(b.name);
+      if (sort === "name_desc") return b.name.localeCompare(a.name);
+      return b.id - a.id;
+    });
 
+  const allVisibleAchievements = (data ?? []).filter((item: AchievementItem) => item?.is_show);
   const hasData = filteredAchievements.length > 0;
 
   return (
     <section className="space-y-4">
-      {!isLoading && !error && hasData && (
+      {!isLoading && !error && allVisibleAchievements.length > 0 && (
         <FilterHeader
-          totalData={filteredAchievements.length}
+          totalData={allVisibleAchievements.length}
+          totalFiltered={filteredAchievements.length}
           categories={categoryOptions}
         />
       )}

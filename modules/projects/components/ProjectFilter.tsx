@@ -1,6 +1,6 @@
 "use client";
 
-import { ChangeEvent, KeyboardEvent, useEffect, useState } from "react";
+import { ChangeEvent, KeyboardEvent, useEffect, useState, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useDebounceValue } from "usehooks-ts";
 import { FiSearch as SearchIcon, FiFilter as FilterIcon } from "react-icons/fi";
@@ -17,23 +17,27 @@ interface FilterOption {
   value: string;
 }
 
-interface FilterHeaderProps {
+interface ProjectFilterProps {
   totalData: number;
   totalFiltered: number;
   categories: string[];
+  statuses: string[];
 }
 
 const formatLabel = (value: string) =>
   value.replace(/[-_]+/g, " ").replace(/\b\w/g, (char) => char.toUpperCase());
 
-export default function FilterHeader({
+
+
+export default function ProjectFilter({
   totalData,
   totalFiltered,
   categories,
-}: FilterHeaderProps) {
+  statuses,
+}: ProjectFilterProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const t = useTranslations("AchievementsPage.filter");
+  const t = useTranslations("ProjectsPage.filter");
 
   const SORT_OPTIONS: FilterOption[] = [
     { label: t("newest"), value: "newest" },
@@ -52,6 +56,7 @@ export default function FilterHeader({
 
   // Filter states
   const currentCategory = searchParams.get("category") || "";
+  const currentStatus = searchParams.get("status") || "";
   const currentSort = searchParams.get("sort") || "newest";
 
   // Handle URL updates
@@ -62,7 +67,7 @@ export default function FilterHeader({
     } else {
       params.delete(key);
     }
-    router.push(`/achievements?${params.toString()}`, { scroll: false });
+    router.push(`/projects?${params.toString()}`, { scroll: false });
   };
 
   // Search effect
@@ -99,7 +104,7 @@ export default function FilterHeader({
         <span className="text-sm font-medium text-neutral-700 dark:text-neutral-300">
           {label}
         </span>
-        <button
+        <Button
           onClick={() => setOpenDropdown(isOpen ? null : id)}
           className="flex h-10 w-full min-w-[160px] md:w-[180px] items-center justify-between gap-3 rounded-lg border border-neutral-300 bg-white px-3 text-neutral-800 shadow-sm transition-all hover:bg-neutral-50 focus:border-blue-500/80 focus:ring-4 focus:ring-blue-500/20 dark:border-neutral-700 dark:bg-neutral-900/80 dark:text-neutral-200 dark:hover:bg-neutral-800"
         >
@@ -111,7 +116,7 @@ export default function FilterHeader({
               isOpen && "rotate-180"
             )}
           />
-        </button>
+        </Button>
 
         <AnimatePresence>
           {isOpen && (
@@ -128,7 +133,11 @@ export default function FilterHeader({
                     key={opt.value}
                     onClick={() => {
                       updateQueryParams(
-                        id === "Category" ? "category" : "sort",
+                        id === "Category"
+                          ? "category"
+                          : id === "Status"
+                          ? "status"
+                          : "sort",
                         opt.value
                       );
                       setOpenDropdown(null);
@@ -169,7 +178,7 @@ export default function FilterHeader({
     <div className="relative z-30 mb-8 flex flex-col gap-4">
       <div className="flex flex-col-reverse items-start justify-between gap-4 md:flex-row md:items-center">
         <span className="text-sm font-medium text-neutral-500 dark:text-neutral-400">
-          {t("showing_achievements", { filtered: totalFiltered, total: totalData })}
+          {t("showing_projects", { filtered: totalFiltered, total: totalData })}
         </span>
 
         <div className="flex w-full flex-col gap-3 md:w-auto md:flex-row md:items-center">
@@ -188,7 +197,7 @@ export default function FilterHeader({
             />
           </div>
 
-          <button
+          <Button
             onClick={() => setIsFiltersOpen(!isFiltersOpen)}
             className={cn(
               "flex h-10 items-center justify-center gap-2 rounded-lg border px-4 text-sm font-medium transition-all shadow-sm focus:ring-4 focus:ring-blue-500/20 outline-none",
@@ -199,7 +208,7 @@ export default function FilterHeader({
           >
             <FilterIcon size={16} />
             <span>{t("filters")}</span>
-          </button>
+          </Button>
         </div>
       </div>
 
@@ -221,6 +230,12 @@ export default function FilterHeader({
                 t("category"),
                 [{ label: t("all"), value: "all" }, ...categories.map(c => ({ label: formatLabel(c), value: c }))],
                 currentCategory || "all"
+              )}
+              {renderDropdown(
+                "Status",
+                t("status"),
+                [{ label: t("all"), value: "all" }, ...statuses.map(s => ({ label: formatLabel(s), value: s }))],
+                currentStatus || "all"
               )}
               {renderDropdown(
                 "Sort",

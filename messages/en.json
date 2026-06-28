@@ -74,18 +74,45 @@
     "description": "A curated collection of certificates and badges I’ve earned throughout my professional and academic journey.",
     "error": "An error occurred on the server.",
     "no_data": "No data available.",
-    "show_credential": "Show Credentials"
+    "show_credential": "Show Credentials",
+    "filter": {
+      "showing_achievements": "Showing {filtered} of {total} achievements",
+      "search_placeholder": "Search achievements...",
+      "filters": "Filters",
+      "category": "Category",
+      "sort_by": "Sort By",
+      "all": "All",
+      "newest": "Newest First",
+      "oldest": "Oldest First",
+      "name_asc": "Name (A-Z)",
+      "name_desc": "Name (Z-A)"
+    }
   },
   "ProjectsPage": {
     "title": "Projects",
     "description": "A showcase of both private, group and open-source projects I’ve built or contributed to.",
     "view_project": "View Project",
     "tech_stack": "Skills",
+    "role": "Role",
     "back_button": "Back",
     "source_code_text": "Source Code",
     "live_demo_text": "Live Demo",
+    "gallery": "Gallery",
     "error": "An error occurred on the server.",
-    "no_data": "No data available."
+    "no_data": "No data available.",
+    "filter": {
+      "showing_projects": "Showing {filtered} of {total} projects",
+      "search_placeholder": "Search projects...",
+      "filters": "Filters",
+      "category": "Category",
+      "status": "Status",
+      "sort_by": "Sort By",
+      "all": "All",
+      "newest": "Newest First",
+      "oldest": "Oldest First",
+      "name_asc": "Name (A-Z)",
+      "name_desc": "Name (Z-A)"
+    }
   },
   "DashboardPage": {
     "title": "Dashboard",
