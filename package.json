@@ -1,7 +1,18 @@
 {
-  "name": "portfolio",
-  "version": "0.1.0",
+  "name": "arya-portfolio",
+  "version": "1.1.1",
   "private": true,
+  "description": "Personal portfolio and developer dashboard of Atsiila Arya Nabiih, built with Next.js 16 (App Router), TypeScript, Tailwind CSS, Supabase, Next-Intl, and PostHog.",
+  "homepage": "https://atsiilaarya.me",
+  "license": "MIT",
+  "author": {
+    "name": "Atsiila Arya Nabiih",
+    "url": "https://atsiilaarya.me"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/arzss-code/arya-portfolio.git"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",

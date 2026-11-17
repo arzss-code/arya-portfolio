@@ -3,6 +3,19 @@
 All notable changes to **arya-portfolio** will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [v1.1.1] - 2026-11-18
+
+### Added
+- Official `LICENSE` (MIT), `SECURITY.md` vulnerability disclosure policy, `CONTRIBUTING.md` developer & forking guide, and `.github` issue/PR templates for public repository standards.
+- Dedicated `services/email.ts` service layer enforcing server-side payload validation, length bounds, header newline sanitization, and HTML entity escaping for `/api/email`.
+
+### Changed
+- Rewrote `README.md` and `contents/projects/arya-portfolio.mdx` with accurate Next.js 16 App Router architecture, live badges, verified environment variable reference, and Core Web Vitals metrics (removing broken links and legacy template references).
+- Updated `package.json` repository metadata (`name`, `version`, `description`, `homepage`, `license`, `author`, `repository`) and hardened `.gitignore` with `.env.*` and `.freebuff/`.
+
+### Fixed
+- Fixed missing `!email` server-side check, unescaped HTML interpolation, and unhandled promise rejection handling in `app/api/email/route.ts`.
+
 ## [v1.1.0] - 2026-11-18
 
 ### Added

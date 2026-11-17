@@ -1,48 +1,26 @@
-import * as nodemailer from "nodemailer";
 import { NextResponse } from "next/server";
 
+import {
+  ContactEmailValidationError,
+  sendContactEmail,
+  validateContactEmailInput,
+} from "@/services/email";
+
 export const POST = async (request: Request) => {
-  const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-      user: process.env.NODEMAILER_EMAIL,
-      pass: process.env.NODEMAILER_PW,
-    },
-    secure: false,
-  });
+  try {
+    const body: unknown = await request.json();
+    const validatedInput = validateContactEmailInput(body);
+    await sendContactEmail(validatedInput);
 
-  const body = await request.json();
-  const { name, email, message } = body;
+    return NextResponse.json({ message: "Message sent!" }, { status: 200 });
+  } catch (error: unknown) {
+    if (error instanceof ContactEmailValidationError) {
+      return NextResponse.json({ message: error.message }, { status: 400 });
+    }
 
-  if (!message || !name || !message) {
     return NextResponse.json(
-      { message: "Please fill out the necessary fields" },
-      { status: 400 },
+      { error: "Failed to send message. Please try again later." },
+      { status: 500 },
     );
   }
-
-  const mailData = {
-    from: email,
-    to: "atsiilaarya14@gmail.com",
-    subject: `Message from ${name}`,
-    text: `${message} | Sent from: ${email}`,
-    html: `<div>${message}</div><p>Sent from: ${email}</p>`,
-  };
-
-  await new Promise((resolve, reject) => {
-    transporter.sendMail(mailData, (err: Error | null, info) => {
-      if (err) {
-        reject(err);
-        return NextResponse.json(
-          { error: err.message || "Something went wrong" },
-          { status: 500 },
-        );
-      } else {
-        resolve(info.accepted);
-        NextResponse.json({ message: "Message sent!" }, { status: 200 });
-      }
-    });
-  });
-
-  return NextResponse.json({ message: "berhasil" });
 };
