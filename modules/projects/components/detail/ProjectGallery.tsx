@@ -1,9 +1,11 @@
 "use client";
 
 import { useRef, useState, useEffect } from "react";
+import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
+
+import Button from "@/common/components/elements/Button";
 import Image from "@/common/components/elements/Image";
 import { ProjectItem } from "@/common/types/projects";
-import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 
 type ProjectGalleryProps = {
   images: ProjectItem["gallery"];
@@ -16,11 +18,10 @@ const ProjectGallery = ({ images, title }: ProjectGalleryProps) => {
   const [canScrollRight, setCanScrollRight] = useState(true);
 
   const checkScroll = () => {
-    if (scrollRef.current) {
-      const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
-      setCanScrollLeft(scrollLeft > 0);
-      setCanScrollRight(scrollLeft + clientWidth < scrollWidth - 1);
-    }
+    if (!scrollRef.current) return;
+    const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
+    setCanScrollLeft(scrollLeft > 0);
+    setCanScrollRight(scrollLeft + clientWidth < scrollWidth - 1);
   };
 
   useEffect(() => {
@@ -28,56 +29,73 @@ const ProjectGallery = ({ images, title }: ProjectGalleryProps) => {
   }, [images]);
 
   const scroll = (direction: "left" | "right") => {
-    if (scrollRef.current) {
-      const { clientWidth } = scrollRef.current;
-      scrollRef.current.scrollBy({
-        left: direction === "left" ? -clientWidth : clientWidth,
-        behavior: "smooth",
-      });
-    }
+    if (!scrollRef.current) return;
+    const { clientWidth } = scrollRef.current;
+    scrollRef.current.scrollBy({
+      left: direction === "left" ? -clientWidth : clientWidth,
+      behavior: "smooth",
+    });
   };
 
   if (!images || images.length === 0) return null;
 
   return (
-    <div className="space-y-6 pt-12 border-t border-neutral-200 dark:border-neutral-800 mt-16">
+    <div className="mt-16 space-y-6 border-t border-neutral-200 pt-12 dark:border-neutral-800">
       <div className="flex items-center justify-between px-1">
-        <h3 className="text-xl font-semibold text-neutral-900 dark:text-neutral-100">
+        <h2 className="text-xl font-semibold text-neutral-900 dark:text-neutral-100">
           Project Gallery
-        </h3>
+        </h2>
         <div className="flex gap-2">
-          <button
+          <Button
+            type="button"
+            variant="secondary"
+            size="icon"
+            shape="pill"
             onClick={() => scroll("left")}
             disabled={!canScrollLeft}
-            className="p-2 rounded-full border border-neutral-300 dark:border-neutral-700 disabled:opacity-30 transition-all hover:bg-neutral-100 dark:hover:bg-neutral-800 active:scale-95"
-            aria-label="Previous image"
+            aria-label="Previous gallery image"
           >
-            <FiChevronLeft size={20} className="text-neutral-700 dark:text-neutral-300" />
-          </button>
-          <button
+            <FiChevronLeft
+              size={18}
+              aria-hidden="true"
+              className="text-neutral-700 dark:text-neutral-200"
+            />
+          </Button>
+          <Button
+            type="button"
+            variant="secondary"
+            size="icon"
+            shape="pill"
             onClick={() => scroll("right")}
             disabled={!canScrollRight}
-            className="p-2 rounded-full border border-neutral-300 dark:border-neutral-700 disabled:opacity-30 transition-all hover:bg-neutral-100 dark:hover:bg-neutral-800 active:scale-95"
-            aria-label="Next image"
+            aria-label="Next gallery image"
           >
-            <FiChevronRight size={20} className="text-neutral-700 dark:text-neutral-300" />
-          </button>
+            <FiChevronRight
+              size={18}
+              aria-hidden="true"
+              className="text-neutral-700 dark:text-neutral-200"
+            />
+          </Button>
         </div>
       </div>
-      
-      <div 
+
+      <div
         ref={scrollRef}
         onScroll={checkScroll}
-        className="flex snap-x snap-mandatory overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] w-full"
+        role="region"
+        aria-label={`${title} image gallery`}
+        tabIndex={0}
+        className="flex w-full snap-x snap-mandatory overflow-x-auto rounded-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-500 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >
         {images.map((src, index) => (
           <div key={index} className="w-full shrink-0 snap-center px-1">
             <div className="overflow-hidden rounded-xl bg-neutral-100 dark:bg-neutral-900">
               <Image
                 src={src}
-                alt={`${title} gallery image ${index + 1}`}
+                alt={`${title} screenshot ${index + 1}`}
                 width={1200}
                 height={675}
+                sizes="(max-width: 768px) 100vw, 900px"
                 className="aspect-video w-full object-cover"
               />
             </div>

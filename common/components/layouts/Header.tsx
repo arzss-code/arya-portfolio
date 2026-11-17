@@ -6,40 +6,59 @@ import { useSelectedLayoutSegment } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import clsx from "clsx";
-import { BadgeCheck, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import NextImage from "next/image";
 
+import { getButtonClasses } from "@/common/components/elements/Button";
 import { MENU_ITEMS } from "@/common/constants/menu";
 import { MenuItemProps } from "@/common/types/menu";
 import { useMenu } from "@/common/stores/menu";
 
-import Tooltip from "../elements/Tooltip";
 import ThemeToggle from "./ThemeToggle";
 import IntlToggle from "./IntlToggle";
 
-const NavItem = ({ item, compact = false, isActive, t }: { item: MenuItemProps; compact?: boolean; isActive: boolean; t: any }) => {
+interface NavItemProps {
+  item: MenuItemProps;
+  compact?: boolean;
+  isActive: boolean;
+  translateLabel: (key: string) => string;
+}
+
+const NavItem = ({
+  item,
+  compact = false,
+  isActive,
+  translateLabel,
+}: NavItemProps) => {
   return (
     <Link
       href={item.href}
+      aria-current={isActive ? "page" : undefined}
       className={clsx(
-        "relative flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300",
+        "relative flex items-center gap-2 rounded-lg px-3.5 py-2 text-sm font-medium transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500",
         compact ? "w-full" : "",
         isActive
-          ? "text-blue-600 dark:text-blue-400"
-          : "text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white hover:bg-neutral-100/50 dark:hover:bg-neutral-800/50"
+          ? "font-semibold text-blue-600 dark:text-blue-400"
+          : "text-neutral-600 hover:bg-white/60 hover:text-neutral-900 dark:text-neutral-400 dark:hover:bg-neutral-800/60 dark:hover:text-white",
       )}
     >
       {isActive && !compact && (
         <motion.span
           layoutId="header-nav-active"
-          className="absolute inset-0 bg-blue-500/10 dark:bg-blue-500/15 rounded-lg"
-          transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+          className="surface-tactile-pill absolute inset-0 rounded-lg"
+          transition={{ type: "spring", bounce: 0.18, duration: 0.5 }}
         />
       )}
-      <span className={clsx("relative z-10", isActive && compact && "text-blue-600 dark:text-blue-400")}>
+      <span
+        aria-hidden="true"
+        className={clsx(
+          "relative z-10",
+          isActive && "text-blue-600 dark:text-blue-400",
+        )}
+      >
         {item.icon}
       </span>
-      <span className="relative z-10">{t(item.title)}</span>
+      <span className="relative z-10">{translateLabel(item.title)}</span>
     </Link>
   );
 };
@@ -53,15 +72,13 @@ const Header = () => {
   const t = useTranslations("Navigation");
 
   const filteredMenu = MENU_ITEMS?.filter((item) => item?.isShow);
-  
-
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -69,85 +86,126 @@ const Header = () => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = "auto";
+      document.body.style.overflow = "";
     }
     return () => {
-      document.body.style.overflow = "auto";
+      document.body.style.overflow = "";
     };
   }, [isOpen]);
 
-
-
-
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape" && isOpen) {
+        hideMenu();
+      }
+    };
+    if (isOpen) {
+      document.addEventListener("keydown", handleKeyDown);
+    }
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [isOpen, hideMenu]);
 
   return (
     <>
+      <a
+        href="#main-content"
+        className={getButtonClasses({
+          variant: "primary",
+          size: "sm",
+          className: "skip-link",
+        })}
+      >
+        Skip to content
+      </a>
+
       <header
         className={clsx(
-          "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
+          "fixed left-0 right-0 top-0 z-50 transition-[background-color,border-color,box-shadow] duration-300",
           isScrolled
-            ? "bg-white/70 dark:bg-neutral-900/70 backdrop-blur-2xl shadow-xl shadow-black/[0.03] dark:shadow-black/20 border-b border-neutral-200/50 dark:border-neutral-800/50"
-            : "bg-white/50 dark:bg-neutral-900/50 backdrop-blur-xl border-b border-transparent"
+            ? "border-b border-neutral-200/70 bg-white/80 shadow-lg shadow-black/[0.03] backdrop-blur-2xl dark:border-neutral-800/70 dark:bg-neutral-950/80 dark:shadow-black/25"
+            : "border-b border-transparent bg-white/55 backdrop-blur-xl dark:bg-neutral-950/55",
         )}
       >
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex h-18 sm:h-20 items-center justify-between">
-            {/* Logo & Brand - Always Visible */}
-            <Link href="/" className="flex items-center gap-3 group shrink-0">
-              <div className="relative w-10 h-10 sm:w-11 sm:h-11 shrink-0">
+          <div className="flex h-18 items-center justify-between sm:h-20">
+            {/* Logo & Brand */}
+            <Link
+              href="/"
+              className="group flex shrink-0 items-center gap-3 rounded-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-500"
+            >
+              <div className="relative h-10 w-10 shrink-0 sm:h-11 sm:w-11">
                 <NextImage
                   src="/images/icon.webp"
-                  alt="Icon logo Atsiila Arya Nabiih"
+                  alt="Atsiila Arya Nabiih logo"
                   fill
-                  className="rounded-full object-cover border-2 border-blue-500/20 group-hover:border-blue-500/40 transition-all duration-300"
+                  sizes="44px"
+                  priority
+                  className="rounded-full border-2 border-blue-500/20 object-cover transition-colors duration-300 group-hover:border-blue-500/45"
                 />
               </div>
-              {/* Name - Always visible including mobile */}
-              <div className="flex flex-col">
-                <div className="flex items-center gap-1">
-                  <span className="font-bold text-neutral-900 dark:text-white text-lg">
-                    Arya
-                  </span>
-                </div>
-              </div>
+              <span
+                translate="no"
+                className="text-lg font-bold tracking-tight text-neutral-900 dark:text-white"
+              >
+                Arya
+              </span>
             </Link>
 
-            {/* Desktop Navigation - Center */}
-            <nav className="hidden lg:flex items-center gap-1 bg-neutral-100/50 dark:bg-neutral-800/30 backdrop-blur-sm rounded-xl p-1 border border-neutral-200/50 dark:border-neutral-700/30">
+            {/* Desktop Navigation */}
+            <nav
+              aria-label="Primary"
+              className="surface-tactile-track hidden items-center gap-1 rounded-xl p-1 backdrop-blur-sm lg:flex"
+            >
               {filteredMenu.map((item: MenuItemProps) => (
-                <NavItem key={item.href} item={item} isActive={pathname === item.href} t={t} />
+                <NavItem
+                  key={item.href}
+                  item={item}
+                  isActive={pathname === item.href}
+                  translateLabel={(key) => t(key)}
+                />
               ))}
             </nav>
 
             {/* Right Side Actions */}
             <div className="flex items-center gap-2">
-              {/* Mobile: IntlToggle + ThemeToggle visible in header */}
-              <div className="flex lg:hidden items-center gap-2">
+              <div className="flex items-center gap-2 lg:hidden">
                 <IntlToggle />
                 <ThemeToggle />
               </div>
 
-              {/* Desktop: Theme & Language Toggle */}
-              <div className="hidden lg:flex items-center gap-2 rounded-xl p-1">
+              <div className="hidden items-center gap-2 rounded-xl p-1 lg:flex">
                 <IntlToggle />
-                <div className="w-px h-6 bg-neutral-300/50 dark:bg-neutral-600/50" />
+                <div
+                  aria-hidden="true"
+                  className="h-6 w-px bg-neutral-300/60 dark:bg-neutral-700/60"
+                />
                 <ThemeToggle />
               </div>
 
-              {/* Mobile Menu Button */}
               <button
+                type="button"
                 onClick={toggleMenu}
-                className="lg:hidden h-10 w-10 flex items-center justify-center rounded-xl bg-white/60 dark:bg-neutral-800/80 backdrop-blur-md border border-neutral-200/50 dark:border-neutral-700/50 shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105 active:scale-95"
-                aria-label="Toggle menu"
+                aria-expanded={isOpen}
+                aria-controls="mobile-nav-drawer"
+                aria-label={isOpen ? "Close menu" : "Open menu"}
+                className="btn-tactile btn-tactile-secondary h-10 w-10 rounded-xl p-0 lg:hidden"
               >
                 <motion.div
                   animate={{ rotate: isOpen ? 90 : 0 }}
                   transition={{ duration: 0.2 }}
                 >
                   {isOpen ? (
-                    <X size={20} className="text-neutral-700 dark:text-neutral-300" />
+                    <X
+                      size={20}
+                      aria-hidden="true"
+                      className="text-neutral-700 dark:text-neutral-200"
+                    />
                   ) : (
-                    <Menu size={20} className="text-neutral-700 dark:text-neutral-300" />
+                    <Menu
+                      size={20}
+                      aria-hidden="true"
+                      className="text-neutral-700 dark:text-neutral-200"
+                    />
                   )}
                 </motion.div>
               </button>
@@ -156,45 +214,55 @@ const Header = () => {
         </div>
       </header>
 
-      {/* Mobile Menu Overlay - Dropdown Style */}
+      {/* Mobile Menu Overlay */}
       <AnimatePresence>
         {isOpen && (
           <>
-            {/* Backdrop to close menu */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="fixed inset-0 z-40 bg-black/20 dark:bg-black/40 backdrop-blur-sm lg:hidden"
+              className="fixed inset-0 z-40 bg-black/25 backdrop-blur-sm dark:bg-black/45 lg:hidden"
               onClick={hideMenu}
+              aria-hidden="true"
             />
 
-            {/* Dropdown Menu Content */}
             <motion.div
-              initial={{ opacity: 0, y: -10, scale: 0.95 }}
+              id="mobile-nav-drawer"
+              initial={{ opacity: 0, y: -10, scale: 0.96 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -10, scale: 0.95 }}
+              exit={{ opacity: 0, y: -10, scale: 0.96 }}
               transition={{ duration: 0.2, ease: "easeOut" }}
-              className="fixed top-20 right-4 left-4 sm:left-auto sm:w-80 z-50 lg:hidden"
+              style={{ transformOrigin: "top right" }}
+              className="fixed left-4 right-4 top-20 z-50 sm:left-auto sm:w-80 lg:hidden"
             >
-              <div className="bg-white/90 dark:bg-neutral-900/90 backdrop-blur-2xl rounded-2xl border border-neutral-200/50 dark:border-neutral-700/50 shadow-2xl p-3 overflow-hidden">
-                <nav className="flex flex-col gap-1 max-h-[60vh] overflow-y-auto">
-                  {filteredMenu.map((item: MenuItemProps, index: number) => {
+              <div className="overflow-hidden rounded-2xl border border-neutral-200/80 bg-white/95 p-3 shadow-2xl backdrop-blur-2xl dark:border-neutral-800 dark:bg-neutral-900/95">
+                <nav
+                  aria-label="Mobile"
+                  className="flex max-h-[65vh] flex-col gap-1 overflow-y-auto overscroll-contain"
+                >
+                  {filteredMenu.map((item: MenuItemProps) => {
                     const isActive = pathname === item.href;
                     return (
                       <Link
                         key={item.href}
                         href={item.href}
                         onClick={hideMenu}
+                        aria-current={isActive ? "page" : undefined}
                         className={clsx(
-                          "flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200",
+                          "flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500",
                           isActive
-                            ? "bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400"
-                            : "text-neutral-600 dark:text-neutral-400 hover:bg-neutral-100/80 dark:hover:bg-neutral-800/80 hover:text-neutral-900 dark:hover:text-white"
+                            ? "surface-tactile-pill font-semibold text-blue-600 dark:text-blue-400"
+                            : "text-neutral-600 hover:bg-neutral-100/80 hover:text-neutral-900 dark:text-neutral-400 dark:hover:bg-neutral-800/80 dark:hover:text-white",
                         )}
                       >
-                        <span className={isActive ? "text-blue-600 dark:text-blue-400" : ""}>
+                        <span
+                          aria-hidden="true"
+                          className={
+                            isActive ? "text-blue-600 dark:text-blue-400" : ""
+                          }
+                        >
                           {item.icon}
                         </span>
                         <span className="flex-1">{t(item.title)}</span>

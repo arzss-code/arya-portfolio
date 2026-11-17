@@ -1,6 +1,12 @@
 "use client";
 
-import { ChangeEvent, KeyboardEvent, useEffect, useState } from "react";
+import {
+  ChangeEvent,
+  KeyboardEvent,
+  useEffect,
+  useId,
+  useState,
+} from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useDebounceValue } from "usehooks-ts";
 import { FiSearch as SearchIcon, FiFilter as FilterIcon } from "react-icons/fi";
@@ -34,6 +40,8 @@ export default function FilterHeader({
   const router = useRouter();
   const searchParams = useSearchParams();
   const t = useTranslations("AchievementsPage.filter");
+  const searchInputId = useId();
+  const filtersPanelId = useId();
 
   const SORT_OPTIONS: FilterOption[] = [
     { label: t("newest"), value: "newest" },
@@ -45,16 +53,13 @@ export default function FilterHeader({
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
-  // Search state
   const initialSearch = searchParams.get("search") || "";
   const [searchValue, setSearchValue] = useState(initialSearch);
   const [debouncedSearch] = useDebounceValue(searchValue, 500);
 
-  // Filter states
   const currentCategory = searchParams.get("category") || "";
   const currentSort = searchParams.get("sort") || "newest";
 
-  // Handle URL updates
   const updateQueryParams = (key: string, value: string) => {
     const params = new URLSearchParams(searchParams.toString());
     if (value && value !== "all") {
@@ -62,16 +67,18 @@ export default function FilterHeader({
     } else {
       params.delete(key);
     }
-    router.push(`/achievements?${params.toString()}`, { scroll: false });
+    const query = params.toString();
+    router.push(query ? `/achievements?${query}` : "/achievements", {
+      scroll: false,
+    });
   };
 
-  // Search effect
   useEffect(() => {
     const trimmedSearch = debouncedSearch.trim();
     if (trimmedSearch !== (searchParams.get("search") || "")) {
       updateQueryParams("search", trimmedSearch);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedSearch]);
 
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -79,6 +86,7 @@ export default function FilterHeader({
   };
 
   const handleSearchKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.nativeEvent.isComposing) return;
     if (e.key === "Enter") {
       updateQueryParams("search", searchValue.trim());
     }
@@ -88,29 +96,35 @@ export default function FilterHeader({
     id: string,
     label: string,
     options: FilterOption[],
-    currentValue: string
+    currentValue: string,
   ) => {
     const isOpen = openDropdown === id;
     const activeLabel =
       options.find((opt) => opt.value === currentValue)?.label || t("all");
 
     return (
-      <div className="relative flex flex-col gap-2">
+      <div className="dropdown-root relative flex flex-col gap-2">
         <span className="text-sm font-medium text-neutral-700 dark:text-neutral-300">
           {label}
         </span>
         <Button
+          type="button"
           variant="secondary"
           size="md"
+          aria-expanded={isOpen}
+          aria-haspopup="listbox"
           onClick={() => setOpenDropdown(isOpen ? null : id)}
           className="w-full min-w-[160px] justify-between gap-3 px-3 md:w-[180px]"
         >
-          <span className="truncate text-sm font-semibold">{activeLabel}</span>
+          <span className="min-w-0 truncate text-sm font-semibold">
+            {activeLabel}
+          </span>
           <ArrowIcon
             size={16}
+            aria-hidden="true"
             className={cn(
-              "text-neutral-500 transition-transform duration-200 dark:text-neutral-400 shrink-0",
-              isOpen && "rotate-180"
+              "shrink-0 text-neutral-500 transition-transform duration-200 dark:text-neutral-400",
+              isOpen && "rotate-180",
             )}
           />
         </Button>
@@ -118,36 +132,49 @@ export default function FilterHeader({
         <AnimatePresence>
           {isOpen && (
             <motion.div
-              initial={{ opacity: 0, y: -5 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -5 }}
-              transition={{ duration: 0.15 }}
-              className="absolute left-0 top-[72px] z-20 w-full rounded-lg border border-neutral-200 bg-white shadow-xl dark:border-neutral-700 dark:bg-neutral-800"
+              role="listbox"
+              aria-label={label}
+              initial={{ opacity: 0, y: -4, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -4, scale: 0.98 }}
+              transition={{ duration: 0.14 }}
+              style={{ transformOrigin: "top left" }}
+              className="absolute left-0 top-[72px] z-20 w-full rounded-xl border border-neutral-200 bg-white shadow-xl dark:border-neutral-700 dark:bg-neutral-900"
             >
-              <div className="flex max-h-60 flex-col overflow-y-auto p-1.5">
-                {options.map((opt) => (
-                  <button
-                    key={opt.value}
-                    onClick={() => {
-                      updateQueryParams(
-                        id === "Category" ? "category" : "sort",
-                        opt.value
-                      );
-                      setOpenDropdown(null);
-                    }}
-                    className={cn(
-                      "flex w-full items-center justify-between rounded-md px-2.5 py-2 text-left text-sm font-medium transition-colors",
-                      currentValue === opt.value
-                        ? "bg-blue-50 text-blue-700 dark:bg-blue-500/20 dark:text-blue-300"
-                        : "text-neutral-700 hover:bg-neutral-100 dark:text-neutral-300 dark:hover:bg-neutral-700"
-                    )}
-                  >
-                    <span className="truncate">{opt.label}</span>
-                    {currentValue === opt.value && (
-                      <ActiveIcon size={16} className="shrink-0" />
-                    )}
-                  </button>
-                ))}
+              <div className="flex max-h-60 flex-col overflow-y-auto overscroll-contain p-1.5">
+                {options.map((opt) => {
+                  const isSelected = currentValue === opt.value;
+                  return (
+                    <button
+                      key={opt.value}
+                      type="button"
+                      role="option"
+                      aria-selected={isSelected}
+                      onClick={() => {
+                        updateQueryParams(
+                          id === "Category" ? "category" : "sort",
+                          opt.value,
+                        );
+                        setOpenDropdown(null);
+                      }}
+                      className={cn(
+                        "flex w-full items-center justify-between rounded-lg px-2.5 py-2 text-left text-sm font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-blue-500",
+                        isSelected
+                          ? "bg-blue-50 text-blue-700 dark:bg-blue-500/20 dark:text-blue-300"
+                          : "text-neutral-700 hover:bg-neutral-100 dark:text-neutral-300 dark:hover:bg-neutral-800",
+                      )}
+                    >
+                      <span className="min-w-0 truncate">{opt.label}</span>
+                      {isSelected && (
+                        <ActiveIcon
+                          size={16}
+                          aria-hidden="true"
+                          className="shrink-0"
+                        />
+                      )}
+                    </button>
+                  );
+                })}
               </div>
             </motion.div>
           )}
@@ -156,43 +183,68 @@ export default function FilterHeader({
     );
   };
 
-  // Close dropdowns on outside click
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
-      if (!(e.target as Element).closest(".relative")) {
+      if (!(e.target as Element).closest(".dropdown-root")) {
+        setOpenDropdown(null);
+      }
+    };
+    const handleKeyDown = (e: globalThis.KeyboardEvent) => {
+      if (e.key === "Escape") {
         setOpenDropdown(null);
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
   }, []);
 
   return (
-    <div className="relative z-30 mb-8 flex flex-col gap-4">
+    <search className="relative z-30 mb-8 flex flex-col gap-4">
       <div className="flex flex-col-reverse items-start justify-between gap-4 md:flex-row md:items-center">
-        <span className="text-sm font-medium text-neutral-500 dark:text-neutral-400">
-          {t("showing_achievements", { filtered: totalFiltered, total: totalData })}
+        <span
+          aria-live="polite"
+          className="text-sm font-medium tabular-nums text-neutral-500 dark:text-neutral-400"
+        >
+          {t("showing_achievements", {
+            filtered: totalFiltered,
+            total: totalData,
+          })}
         </span>
 
         <div className="flex w-full flex-col gap-3 md:w-auto md:flex-row md:items-center">
-          <div className="flex h-10 w-full items-center gap-2.5 rounded-lg border border-neutral-300 bg-white px-3 shadow-sm transition-all focus-within:border-blue-500/80 focus-within:ring-4 focus-within:ring-blue-500/20 dark:border-neutral-700 dark:bg-neutral-900 md:w-64">
+          <div className="input-tactile flex h-10 w-full items-center gap-2.5 rounded-[10px] px-3 md:w-64">
+            <label htmlFor={searchInputId} className="sr-only">
+              {t("search_placeholder")}
+            </label>
             <SearchIcon
-              className="text-neutral-500 dark:text-neutral-400 shrink-0"
+              aria-hidden="true"
+              className="shrink-0 text-neutral-500 dark:text-neutral-400"
               size={16}
             />
             <input
-              type="text"
+              id={searchInputId}
+              name="search"
+              type="search"
+              autoComplete="off"
+              spellCheck={false}
               placeholder={t("search_placeholder")}
               value={searchValue}
               onChange={handleSearchChange}
               onKeyDown={handleSearchKeyDown}
-              className="h-full w-full bg-transparent text-sm font-medium text-neutral-900 outline-none placeholder:font-normal placeholder:text-neutral-500 dark:text-neutral-50 dark:placeholder:text-neutral-400"
+              className="h-full w-full bg-transparent text-base font-medium text-neutral-900 outline-none placeholder:font-normal placeholder:text-neutral-500 sm:text-sm dark:text-neutral-50 dark:placeholder:text-neutral-400"
             />
           </div>
 
           <Button
+            type="button"
             variant={isFiltersOpen ? "primary" : "secondary"}
             size="md"
+            aria-expanded={isFiltersOpen}
+            aria-controls={filtersPanelId}
             onClick={() => setIsFiltersOpen(!isFiltersOpen)}
           >
             <FilterIcon size={16} aria-hidden="true" />
@@ -204,32 +256,34 @@ export default function FilterHeader({
       <AnimatePresence>
         {isFiltersOpen && (
           <motion.div
+            id={filtersPanelId}
             initial={{ height: 0, opacity: 0, overflow: "hidden" }}
-            animate={{ 
-              height: "auto", 
+            animate={{
+              height: "auto",
               opacity: 1,
-              transitionEnd: { overflow: "visible" } 
+              transitionEnd: { overflow: "visible" },
             }}
             exit={{ height: 0, opacity: 0, overflow: "hidden" }}
             transition={{ duration: 0.2 }}
           >
-            <div className="flex flex-wrap items-center gap-4 pt-1 pb-2 md:gap-6">
+            <div className="flex flex-wrap items-center gap-4 pb-2 pt-1 md:gap-6">
               {renderDropdown(
                 "Category",
                 t("category"),
-                [{ label: t("all"), value: "all" }, ...categories.map(c => ({ label: formatLabel(c), value: c }))],
-                currentCategory || "all"
+                [
+                  { label: t("all"), value: "all" },
+                  ...categories.map((c) => ({
+                    label: formatLabel(c),
+                    value: c,
+                  })),
+                ],
+                currentCategory || "all",
               )}
-              {renderDropdown(
-                "Sort",
-                t("sort_by"),
-                SORT_OPTIONS,
-                currentSort
-              )}
+              {renderDropdown("Sort", t("sort_by"), SORT_OPTIONS, currentSort)}
             </div>
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+    </search>
   );
 }

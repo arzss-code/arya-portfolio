@@ -3,6 +3,11 @@ import { useTranslations } from "next-intl";
 import { BsGithub as GithubIcon } from "react-icons/bs";
 import { FiExternalLink as LinkIcon } from "react-icons/fi";
 
+import {
+  ButtonVariant,
+  getButtonClasses,
+} from "@/common/components/elements/Button";
+
 interface ProjectLinkProps {
   title?: string;
   link_github?: string;
@@ -12,20 +17,30 @@ interface ProjectLinkProps {
 interface LinkComponentProps {
   url: string;
   text: string;
-  icon: JSX.Element;
+  ariaLabel?: string;
+  variant: ButtonVariant;
+  icon: React.ReactNode;
 }
 
-const LinkComponent = ({ url, text, icon }: LinkComponentProps) => {
+const LinkComponent = ({
+  url,
+  text,
+  ariaLabel,
+  variant,
+  icon,
+}: LinkComponentProps) => {
   return (
-    <Link 
-      href={url} 
+    <Link
+      href={url}
       target="_blank"
-      className="group flex items-center gap-2 text-sm font-medium text-neutral-600 transition-colors duration-300 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100"
+      rel="noopener noreferrer"
+      aria-label={ariaLabel}
+      className={getButtonClasses({ variant, size: "sm" })}
     >
-      <i className="transition-transform duration-300 group-hover:scale-110">{icon}</i>
-      <span className="underline decoration-neutral-300 underline-offset-4 transition-colors duration-300 group-hover:decoration-neutral-900 dark:decoration-neutral-700 dark:group-hover:decoration-neutral-100">
-        {text}
+      <span aria-hidden="true" className="shrink-0">
+        {icon}
       </span>
+      <span>{text}</span>
     </Link>
   );
 };
@@ -34,19 +49,29 @@ const ProjectLink = ({ title, link_github, link_demo }: ProjectLinkProps) => {
   const t = useTranslations("ProjectsPage");
 
   return (
-    <div className="flex flex-wrap items-center gap-4">
+    <div className="flex flex-wrap items-center gap-2.5">
       {link_demo ? (
         <LinkComponent
           url={link_demo}
           text={t("live_demo_text")}
-          icon={<LinkIcon size={18} />}
+          ariaLabel={
+            title ? `${t("live_demo_text")} — ${title}` : t("live_demo_text")
+          }
+          variant="primary"
+          icon={<LinkIcon size={15} />}
         />
       ) : null}
       {link_github ? (
         <LinkComponent
           url={link_github}
           text={t("source_code_text")}
-          icon={<GithubIcon size={18} />}
+          ariaLabel={
+            title
+              ? `${t("source_code_text")} — ${title}`
+              : t("source_code_text")
+          }
+          variant="secondary"
+          icon={<GithubIcon size={15} />}
         />
       ) : null}
     </div>

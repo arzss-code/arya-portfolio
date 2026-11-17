@@ -3,6 +3,16 @@
 All notable changes to **arya-portfolio** will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [v1.1.0] - 2026-11-18
+
+### Added
+- Full Tactile / Rim-Lit Design System (`app/globals.css`, `common/components/elements/Button.tsx`) inspired by Cloudflare Kumo & Clerk/Linear micro-skeuomorphism, including `.btn-tactile` (`primary`, `obsidian`, `secondary`, `success`), `.surface-tactile-track`, `.thumb-tactile-primary`, `.surface-tactile-pill`, and `.input-tactile` recessed form controls.
+- Accessible Skip-to-Content link (`Header.tsx` -> `<main id="main-content">`), semantic `<search>` landmarks (`ProjectFilter.tsx`, `FilterHeader.tsx`), explicit `<label htmlFor>` + `autoComplete` + `inputMode` + `aria-invalid`/`aria-describedby` form bindings (`InputField.tsx`, `ContactForm.tsx`), and `preconnect` hint for Supabase image CDN.
+
+### Changed
+- Upgraded buttons, segmented language/theme switches, navigation active pills, project links, back buttons, gallery/carousel controls, and achievement triggers across `Header`, `IntlToggle`, `ThemeToggle`, `Introduction`, `Services`, `Resume`, `ContactForm`, `ContactCard`, `ProjectLink`, `ProjectGallery`, `ProjectsCarousel`, `ProjectFilter`, `FilterHeader`, `AchievementCard`, `AchievementDetailModal`, and `not-found.tsx`.
+- Optimized `common/components/elements/Image.tsx` default quality (`100` -> `85`), removed hydration blur delay on `priority` LCP images, added responsive `sizes` attributes, enforced `prefers-reduced-motion` compliance, and replaced `transition: all` with explicit compositor/paint properties.
+
 ## [v1.0.2] - 2026-11-18
 
 ### Fixed

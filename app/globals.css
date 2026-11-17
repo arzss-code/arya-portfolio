@@ -21,8 +21,13 @@
 @layer base {
   html {
     @apply scroll-smooth;
+    color-scheme: light;
   }
-  
+
+  html.dark {
+    color-scheme: dark;
+  }
+
   body {
     @apply text-neutral-900 dark:text-neutral-100;
     font-feature-settings: "cv11", "ss01";
@@ -30,8 +35,15 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     @apply font-semibold tracking-tight;
+    text-wrap: balance;
+    scroll-margin-top: 6rem;
   }
 
   h1 {
@@ -67,71 +79,59 @@
 }
 
 /* ==========================================
-   Glassmorphism Utilities
+   Glassmorphism & Tactile Design System
    ========================================== */
 @layer components {
+  .skip-link {
+    position: fixed;
+    top: 0.75rem;
+    left: 0.75rem;
+    z-index: 100;
+    transform: translateY(-200%);
+    transition: transform 150ms ease-out;
+  }
+
+  .skip-link:focus-visible {
+    transform: translateY(0);
+  }
+
   .hexagon {
     clip-path: polygon(0 25%, 50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%);
   }
 
   /* Glass Card - Light */
   .glass {
-    @apply bg-white/70 backdrop-blur-xl border border-white/20 shadow-lg;
+    @apply border border-white/20 bg-white/70 shadow-lg backdrop-blur-xl;
   }
 
   /* Glass Card - Dark Mode Compatible */
   .glass-card {
-    @apply bg-white/60 dark:bg-neutral-900/60 
-           backdrop-blur-xl backdrop-saturate-150
-           border border-white/20 dark:border-white/10 
-           shadow-xl shadow-black/5 dark:shadow-black/20
-           transition-all duration-300;
+    @apply border border-white/20 bg-white/60 shadow-xl shadow-black/5 backdrop-blur-xl backdrop-saturate-150 transition-[background-color,border-color,box-shadow,transform] duration-300 dark:border-white/10 dark:bg-neutral-900/60 dark:shadow-black/20;
   }
 
   /* Glass Card with Hover Effect */
   .glass-card-hover {
-    @apply glass-card 
-           hover:bg-white/80 dark:hover:bg-neutral-800/80
-           hover:border-white/30 dark:hover:border-white/20
-           hover:shadow-2xl hover:shadow-blue-500/10 dark:hover:shadow-blue-500/5
-           hover:-translate-y-0.5;
+    @apply glass-card hover:-translate-y-0.5 hover:border-white/30 hover:bg-white/80 hover:shadow-2xl hover:shadow-blue-500/10 dark:hover:border-white/20 dark:hover:bg-neutral-800/80 dark:hover:shadow-blue-500/5;
   }
 
   /* Glass Sidebar */
   .glass-sidebar {
-    @apply bg-white/80 dark:bg-neutral-900/80
-           backdrop-blur-2xl backdrop-saturate-200
-           border-r border-white/20 dark:border-neutral-800/50
-           shadow-xl shadow-black/5;
+    @apply border-r border-white/20 bg-white/80 shadow-xl shadow-black/5 backdrop-blur-2xl backdrop-saturate-200 dark:border-neutral-800/50 dark:bg-neutral-900/80;
   }
 
   /* Glass Header */
   .glass-header {
-    @apply bg-white/70 dark:bg-neutral-900/70
-           backdrop-blur-xl backdrop-saturate-150
-           border-b border-white/20 dark:border-neutral-800/50
-           shadow-sm;
+    @apply border-b border-white/20 bg-white/70 shadow-sm backdrop-blur-xl backdrop-saturate-150 dark:border-neutral-800/50 dark:bg-neutral-900/70;
   }
 
   /* Glass Button */
   .glass-button {
-    @apply bg-white/50 dark:bg-neutral-800/50
-           backdrop-blur-md
-           border border-white/30 dark:border-white/10
-           shadow-md shadow-black/5
-           hover:bg-white/70 dark:hover:bg-neutral-700/70
-           hover:shadow-lg hover:shadow-blue-500/10
-           transition-all duration-300;
+    @apply border border-white/30 bg-white/50 shadow-md shadow-black/5 backdrop-blur-md transition-[background-color,border-color,box-shadow] duration-300 hover:bg-white/70 hover:shadow-lg hover:shadow-blue-500/10 dark:border-white/10 dark:bg-neutral-800/50 dark:hover:bg-neutral-700/70;
   }
 
   /* Glass Input */
   .glass-input {
-    @apply bg-white/50 dark:bg-neutral-800/50
-           backdrop-blur-md
-           border border-neutral-200/50 dark:border-neutral-700/50
-           focus:border-blue-500/50 dark:focus:border-blue-400/50
-           focus:ring-2 focus:ring-blue-500/20
-           transition-all duration-300;
+    @apply border border-neutral-200/50 bg-white/50 backdrop-blur-md transition-[border-color,box-shadow,background-color] duration-300 focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/20 dark:border-neutral-700/50 dark:bg-neutral-800/50 dark:focus:border-blue-400/50;
   }
 
   /* Accent Glow Effect */
@@ -140,8 +140,7 @@
   }
 
   .accent-glow-hover {
-    @apply hover:shadow-xl hover:shadow-blue-500/30 dark:hover:shadow-blue-500/25
-           transition-shadow duration-300;
+    @apply transition-shadow duration-300 hover:shadow-xl hover:shadow-blue-500/30 dark:hover:shadow-blue-500/25;
   }
 
   /* Blue Gradient Text */
@@ -156,12 +155,11 @@
 
   /* Subtle Gradient Background */
   .bg-gradient-subtle {
-    @apply bg-gradient-to-br from-blue-50/50 via-transparent to-sky-50/50
-           dark:from-blue-950/20 dark:via-transparent dark:to-sky-950/20;
+    @apply bg-gradient-to-br from-blue-50/50 via-transparent to-sky-50/50 dark:from-blue-950/20 dark:via-transparent dark:to-sky-950/20;
   }
 
   /* ==========================================
-     Tactile / Rim-Lit Button System
+     Tactile / Rim-Lit Button & Surface System
      Inspired by Cloudflare Kumo & Clerk/Linear micro-skeuomorphism
      ========================================== */
   .btn-tactile {
@@ -173,6 +171,8 @@
     font-weight: 600;
     white-space: nowrap;
     user-select: none;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
     transition:
       transform 120ms cubic-bezier(0.16, 1, 0.3, 1),
       box-shadow 160ms ease-out,
@@ -193,7 +193,7 @@
   .btn-tactile:disabled,
   .btn-tactile[aria-disabled="true"] {
     cursor: not-allowed;
-    opacity: 0.68;
+    opacity: 0.6;
   }
 
   /* Primary: Cloudflare Workers / Kumo Electric Blue Bevel */
@@ -336,15 +336,90 @@
       0 1px 2px 0 rgba(4, 120, 87, 0.3),
       0 4px 10px -2px rgba(5, 150, 105, 0.22);
   }
-}
 
-@media (prefers-reduced-motion: reduce) {
-  .btn-tactile {
-    transition: none;
+  /* Recessed Tactile Track (for Navbars, Segmented Controls, Switchers) */
+  .surface-tactile-track {
+    background-color: rgba(241, 245, 249, 0.85);
+    border: 1px solid rgba(203, 213, 225, 0.85);
+    box-shadow:
+      inset 0 1px 2px 0 rgba(15, 23, 42, 0.06),
+      0 1px 0 0 rgba(255, 255, 255, 0.8);
   }
 
-  .btn-tactile:active:not(:disabled):not([aria-disabled="true"]) {
-    transform: none;
+  .dark .surface-tactile-track {
+    background-color: rgba(20, 21, 26, 0.9);
+    border-color: rgba(39, 41, 50, 0.95);
+    box-shadow:
+      inset 0 1px 2px 0 rgba(0, 0, 0, 0.55),
+      0 1px 0 0 rgba(255, 255, 255, 0.04);
+  }
+
+  /* Raised Rim-Lit Thumb inside Segmented Controls */
+  .thumb-tactile-primary {
+    background: linear-gradient(180deg, #297aff 0%, #0f5ef0 100%);
+    border: 1px solid #0a4ecc;
+    box-shadow:
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.4),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.14),
+      0 1px 3px 0 rgba(10, 78, 204, 0.35);
+  }
+
+  .dark .thumb-tactile-primary {
+    border-color: #1e6cf7;
+  }
+
+  /* Tactile Pill / Status Surface */
+  .surface-tactile-pill {
+    background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+    border: 1px solid #e2e8f0;
+    box-shadow:
+      inset 0 1px 0 0 rgba(255, 255, 255, 1),
+      0 1px 2px 0 rgba(15, 23, 42, 0.05);
+  }
+
+  .dark .surface-tactile-pill {
+    background: linear-gradient(180deg, #222328 0%, #16171b 100%);
+    border-color: #2a2c34;
+    box-shadow:
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.12),
+      0 1px 2px 0 rgba(0, 0, 0, 0.35);
+  }
+
+  /* Recessed Tactile Form & Search Input */
+  .input-tactile {
+    background-color: #ffffff;
+    border: 1px solid #cbd5e1;
+    box-shadow:
+      inset 0 1px 2px 0 rgba(15, 23, 42, 0.05),
+      0 1px 0 0 rgba(255, 255, 255, 0.8);
+    transition:
+      border-color 150ms ease-out,
+      box-shadow 150ms ease-out,
+      background-color 150ms ease-out;
+  }
+
+  .input-tactile:focus,
+  .input-tactile:focus-within {
+    border-color: #2563eb;
+    box-shadow:
+      inset 0 1px 1px 0 rgba(15, 23, 42, 0.03),
+      0 0 0 3px rgba(37, 99, 235, 0.16);
+  }
+
+  .dark .input-tactile {
+    background-color: #141519;
+    border-color: #2b2d36;
+    box-shadow:
+      inset 0 1px 2px 0 rgba(0, 0, 0, 0.5),
+      0 1px 0 0 rgba(255, 255, 255, 0.03);
+  }
+
+  .dark .input-tactile:focus,
+  .dark .input-tactile:focus-within {
+    border-color: #3b82f6;
+    box-shadow:
+      inset 0 1px 2px 0 rgba(0, 0, 0, 0.4),
+      0 0 0 3px rgba(59, 130, 246, 0.22);
   }
 }
 
@@ -367,18 +442,53 @@
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
 }
 
 @keyframes glow {
-  from { box-shadow: 0 0 20px rgb(var(--accent-glow) / 0.2); }
-  to { box-shadow: 0 0 40px rgb(var(--accent-glow) / 0.4); }
+  from {
+    box-shadow: 0 0 20px rgb(var(--accent-glow) / 0.2);
+  }
+  to {
+    box-shadow: 0 0 40px rgb(var(--accent-glow) / 0.4);
+  }
 }
 
 @keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .btn-tactile,
+  .input-tactile,
+  .skip-link {
+    transition: none;
+  }
+
+  .btn-tactile:active:not(:disabled):not([aria-disabled="true"]) {
+    transform: none;
+  }
+
+  .animate-float,
+  .animate-glow,
+  .animate-shimmer {
+    animation: none;
+  }
 }
 
 /* ==========================================
@@ -387,4 +497,3 @@
 ::selection {
   @apply bg-blue-500/30 text-blue-900 dark:bg-blue-400/30 dark:text-blue-100;
 }
-

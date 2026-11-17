@@ -2,11 +2,12 @@
 
 import type { SpringOptions } from "framer-motion";
 import { useRef, useState } from "react";
+import NextImage from "next/image";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import "./TiltedCard.css";
 
 interface TiltedCardProps {
-  imageSrc: React.ComponentProps<"img">["src"];
+  imageSrc: string;
   altText?: string;
   captionText?: string;
   containerHeight?: React.CSSProperties["height"];
@@ -98,10 +99,6 @@ export default function TiltedCard({
     rotateFigcaption.set(0);
   }
 
-  const priorityAttributes = priority
-    ? { fetchPriority: "high" as const }
-    : {};
-
   return (
     <figure
       ref={ref}
@@ -130,15 +127,16 @@ export default function TiltedCard({
           scale,
         }}
       >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
+        <NextImage
           src={imageSrc}
           alt={altText}
           width={intrinsicWidth}
           height={intrinsicHeight}
-          loading={priority ? "eager" : "lazy"}
-          decoding={priority ? "sync" : "async"}
-          {...priorityAttributes}
+          sizes="(max-width: 768px) 256px, (max-width: 1024px) 320px, 384px"
+          quality={85}
+          priority={priority}
+          fetchPriority={priority ? "high" : undefined}
+          decoding="async"
           className="tilted-card-img"
           style={{
             width: imageWidth,

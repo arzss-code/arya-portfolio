@@ -81,7 +81,7 @@
     "show_credential": "Show Credentials",
     "filter": {
       "showing_achievements": "Showing {filtered} of {total} achievements",
-      "search_placeholder": "Search achievements...",
+      "search_placeholder": "Search achievements…",
       "filters": "Filters",
       "category": "Category",
       "sort_by": "Sort By",
@@ -107,7 +107,7 @@
     "no_data": "No data available.",
     "filter": {
       "showing_projects": "Showing {filtered} of {total} projects",
-      "search_placeholder": "Search projects...",
+      "search_placeholder": "Search projects…",
       "filters": "Filters",
       "category": "Category",
       "status": "Status",
@@ -190,7 +190,7 @@
       "error_email_required": "*email is required",
       "error_email_invalid": "please enter a valid email",
       "error_message": "*message is required",
-      "sending": "Sending...",
+      "sending": "Sending…",
       "success": "Message Sent!",
       "button": "Send Message"
     }

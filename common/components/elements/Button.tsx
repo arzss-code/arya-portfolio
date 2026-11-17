@@ -9,7 +9,7 @@ export type ButtonVariant =
   | "success"
   | "ghost";
 
-export type ButtonSize = "sm" | "md" | "lg";
+export type ButtonSize = "sm" | "md" | "lg" | "icon";
 export type ButtonShape = "rounded" | "pill";
 
 interface ButtonStyleOptions {
@@ -40,6 +40,7 @@ const SIZE_CLASSES: Record<ButtonSize, string> = {
   sm: "h-9 px-3.5 text-xs",
   md: "h-10 px-4 py-2 text-sm",
   lg: "h-12 px-7 py-3 text-base",
+  icon: "h-9 w-9 p-0",
 };
 
 const SHAPE_CLASSES: Record<ButtonShape, string> = {
@@ -81,7 +82,7 @@ const Button = ({
       {...rest}
     >
       {isLoading ? (
-        <span>Loading...</span>
+        <span>Loading…</span>
       ) : (
         <>
           {icon ? <span className="shrink-0">{icon}</span> : null}

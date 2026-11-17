@@ -81,7 +81,7 @@
     "show_credential": "Lihat Kredensial",
     "filter": {
       "showing_achievements": "Menampilkan {filtered} dari {total} pencapaian",
-      "search_placeholder": "Cari pencapaian...",
+      "search_placeholder": "Cari pencapaian…",
       "filters": "Filter",
       "category": "Kategori",
       "sort_by": "Urutkan",
@@ -107,7 +107,7 @@
     "no_data": "Data tidak tersedia.",
     "filter": {
       "showing_projects": "Menampilkan {filtered} dari {total} proyek",
-      "search_placeholder": "Cari proyek...",
+      "search_placeholder": "Cari proyek…",
       "filters": "Filter",
       "category": "Kategori",
       "status": "Status",
@@ -190,7 +190,7 @@
       "error_email_required": "*email wajib diisi",
       "error_email_invalid": "mohon masukkan email yang valid",
       "error_message": "*pesan wajib diisi",
-      "sending": "Mengirim...",
+      "sending": "Mengirim…",
       "success": "Pesan Terkirim!",
       "button": "Kirim Pesan"
     }

@@ -1,5 +1,5 @@
-import { useTranslations } from "next-intl";
-import { format, parseISO } from "date-fns";
+import { parseISO } from "date-fns";
+import { useLocale } from "next-intl";
 import { HiOutlineArrowSmRight as ViewIcon } from "react-icons/hi";
 
 import Image from "@/common/components/elements/Image";
@@ -10,6 +10,20 @@ interface AchievementCardProps extends AchievementItem {
   onClick?: () => void;
 }
 
+const formatIssueDate = (rawDate: string | undefined, locale: string) => {
+  if (!rawDate) return "—";
+  try {
+    const parsed = parseISO(rawDate);
+    if (Number.isNaN(parsed.getTime())) return "—";
+    return new Intl.DateTimeFormat(locale === "en" ? "en-US" : "id-ID", {
+      month: "long",
+      year: "numeric",
+    }).format(parsed);
+  } catch {
+    return "—";
+  }
+};
+
 const AchievementCard = ({
   credential_id,
   name,
@@ -18,47 +32,44 @@ const AchievementCard = ({
   image,
   onClick,
 }: AchievementCardProps) => {
-  const issueDate = issue_date
-    ? (() => {
-        try {
-          return format(parseISO(issue_date), "MMMM yyyy");
-        } catch {
-          return "Unknown date";
-        }
-      })()
-    : "Unknown date";
-
-  const t = useTranslations("AchievementsPage");
+  const locale = useLocale();
+  const issueDate = formatIssueDate(issue_date, locale);
 
   return (
-    <div className="group flex h-full cursor-pointer" onClick={onClick}>
-      <SpotlightCard className="relative flex h-full w-full flex-col p-2 hover:shadow-md">
+    <button
+      type="button"
+      onClick={onClick}
+      className="group flex h-full w-full cursor-pointer rounded-2xl text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500"
+    >
+      <SpotlightCard className="relative flex h-full w-full flex-col p-2 transition-shadow duration-300 hover:shadow-md">
         {/* Image Container */}
-        <div className="relative overflow-hidden rounded-xl border border-neutral-200/50 dark:border-neutral-700/50">
+        <div className="relative overflow-hidden rounded-xl border border-neutral-200/60 dark:border-neutral-700/60">
           <Image
             src={image}
             alt={name}
             width={594}
             height={420}
-            className="w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+            sizes="(max-width: 768px) 100vw, 380px"
+            className="w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
             style={{ aspectRatio: "297/210" }}
           />
         </div>
-        
+
         {/* Content Section */}
         <div className="flex flex-1 flex-col gap-3 px-3 py-4">
           {credential_id && (
-            <p className="text-[11px] font-semibold uppercase tracking-wider text-neutral-500 dark:text-neutral-400">
+            <p className="truncate text-[11px] font-semibold uppercase tracking-wider text-neutral-500 dark:text-neutral-400">
               {credential_id}
             </p>
           )}
-          
+
           <div className="space-y-1.5">
-            <h3 className="flex items-center justify-between gap-4 text-lg font-bold tracking-tight text-neutral-900 transition-colors duration-300 group-hover:text-blue-500 dark:text-neutral-100 dark:group-hover:text-blue-400">
-              <span className="line-clamp-2 leading-snug">{name}</span>
+            <h3 className="flex items-center justify-between gap-3 text-lg font-bold tracking-tight text-neutral-900 transition-colors duration-200 group-hover:text-blue-600 dark:text-neutral-100 dark:group-hover:text-blue-400">
+              <span className="min-w-0 line-clamp-2 leading-snug">{name}</span>
               <ViewIcon
                 size={20}
-                className="shrink-0 -translate-x-2 text-neutral-400 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:text-blue-500 group-hover:opacity-100"
+                aria-hidden="true"
+                className="shrink-0 -translate-x-2 text-neutral-400 opacity-0 transition-[transform,opacity,color] duration-200 group-hover:translate-x-0 group-hover:text-blue-500 group-hover:opacity-100 group-focus-visible:translate-x-0 group-focus-visible:opacity-100"
               />
             </h3>
             <p className="text-sm font-medium text-neutral-600 dark:text-neutral-400">
@@ -67,7 +78,7 @@ const AchievementCard = ({
           </div>
 
           <div className="mt-auto pt-2">
-            <div className="inline-flex items-center gap-1.5 rounded-md border border-neutral-200 bg-white px-2.5 py-1.5 dark:border-neutral-700/80 dark:bg-neutral-800/80">
+            <div className="surface-tactile-pill inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1.5">
               <span className="text-[10px] font-semibold uppercase tracking-wider text-neutral-500 dark:text-neutral-400">
                 Issued
               </span>
@@ -78,7 +89,7 @@ const AchievementCard = ({
           </div>
         </div>
       </SpotlightCard>
-    </div>
+    </button>
   );
 };
 

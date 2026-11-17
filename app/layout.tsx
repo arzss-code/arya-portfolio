@@ -129,6 +129,11 @@ const RootLayout = async ({
     <html lang={locale} suppressHydrationWarning={true}>
       <head>
         <meta httpEquiv="content-language" content={locale} />
+        <link
+          rel="preconnect"
+          href="https://cqkstplcbucaqdbvmucx.supabase.co"
+          crossOrigin=""
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
