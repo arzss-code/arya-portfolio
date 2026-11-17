@@ -1,27 +1,17 @@
-import { Plus_Jakarta_Sans, Manrope, DM_Sans } from "next/font/google";
+import { Plus_Jakarta_Sans } from "next/font/google";
 
+// Variable font mode (omitting explicit weight array) serves static .woff2 files
+// covering weights 200-800 without dynamic `?kit=...&skey=...` URLs that break
+// Next.js 16 Turbopack font import-map resolution on Vercel builds, while avoiding
+// unused multi-family font preloads.
 export const plusJakartaSans = Plus_Jakarta_Sans({
   variable: "--font-plus-jakarta",
   subsets: ["latin"],
   display: "swap",
-  weight: ["300", "400", "500", "600", "700", "800"],
 });
 
-export const manrope = Manrope({
-  variable: "--font-manrope",
-  subsets: ["latin"],
-  display: "swap",
-  weight: ["300", "400", "500", "600", "700", "800"],
-});
-
-export const dmSans = DM_Sans({
-  variable: "--font-dm-sans",
-  subsets: ["latin"],
-  display: "swap",
-  weight: ["300", "400", "500", "600", "700"],
-});
-
-// Legacy exports for backward compatibility
+// Legacy exports kept for backward compatibility
+export const manrope = plusJakartaSans;
+export const dmSans = plusJakartaSans;
 export const soraSans = plusJakartaSans;
 export const onestSans = plusJakartaSans;
-

@@ -3,6 +3,11 @@
 All notable changes to **arya-portfolio** will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [v1.0.1] - 2026-11-18
+
+### Fixed
+- Resolved Vercel Next.js 16 Turbopack build failure (`next/font/google queries have exactly one entry` on `DM_Sans`) in `common/styles/fonts.ts` by switching `Plus_Jakarta_Sans` to variable-font mode and removing unused multi-weight static `DM_Sans` / `Manrope` font requests that returned dynamic `?kit=...&skey=...` URLs.
+
 ## [v1.0.0] - 2026-11-18
 
 ### Added
