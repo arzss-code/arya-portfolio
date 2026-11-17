@@ -7,6 +7,7 @@ import { useTranslations } from "next-intl";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiSend, FiCheckCircle } from "react-icons/fi";
 
+import Button from "@/common/components/elements/Button";
 import InputField from "@/common/components/elements/InputField";
 
 interface FormEmail {
@@ -106,15 +107,12 @@ const ContactForm = () => {
           isTextArea
         />
         
-        <button
+        <Button
           disabled={isLoading || isSuccess}
           type="submit"
-          className={`relative w-full overflow-hidden rounded-xl px-6 py-4 font-bold transition-all duration-300 ${
-            isSuccess 
-              ? "bg-emerald-500 text-white shadow-emerald-500/30" 
-              : "bg-blue-600 text-white shadow-sm hover:-translate-y-0.5 hover:bg-blue-700 hover:shadow-lg hover:shadow-blue-600/30"
-            } 
-            disabled:cursor-not-allowed disabled:opacity-70 disabled:hover:translate-y-0 disabled:hover:shadow-none`}
+          variant={isSuccess ? "success" : "primary"}
+          size="lg"
+          className="h-12 w-full overflow-hidden font-semibold"
         >
           <AnimatePresence mode="wait">
             {isLoading ? (
@@ -136,7 +134,7 @@ const ContactForm = () => {
                 exit={{ opacity: 0, scale: 0.5 }}
                 className="flex items-center justify-center gap-2"
               >
-                <FiCheckCircle size={20} />
+                <FiCheckCircle size={20} aria-hidden="true" />
                 <span>{t("form.success")}</span>
               </motion.div>
             ) : (
@@ -147,12 +145,12 @@ const ContactForm = () => {
                 exit={{ opacity: 0, y: 10 }}
                 className="flex items-center justify-center gap-2"
               >
-                <FiSend size={18} />
+                <FiSend size={18} aria-hidden="true" />
                 <span>{t("form.button")}</span>
               </motion.div>
             )}
           </AnimatePresence>
-        </button>
+        </Button>
       </form>
     </motion.div>
   );

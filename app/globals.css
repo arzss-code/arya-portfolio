@@ -159,6 +159,193 @@
     @apply bg-gradient-to-br from-blue-50/50 via-transparent to-sky-50/50
            dark:from-blue-950/20 dark:via-transparent dark:to-sky-950/20;
   }
+
+  /* ==========================================
+     Tactile / Rim-Lit Button System
+     Inspired by Cloudflare Kumo & Clerk/Linear micro-skeuomorphism
+     ========================================== */
+  .btn-tactile {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    white-space: nowrap;
+    user-select: none;
+    transition:
+      transform 120ms cubic-bezier(0.16, 1, 0.3, 1),
+      box-shadow 160ms ease-out,
+      background 160ms ease-out,
+      border-color 160ms ease-out,
+      color 160ms ease-out;
+  }
+
+  .btn-tactile:focus-visible {
+    outline: 2px solid rgb(59 130 246);
+    outline-offset: 3px;
+  }
+
+  .btn-tactile:active:not(:disabled):not([aria-disabled="true"]) {
+    transform: translateY(1px) scale(0.985);
+  }
+
+  .btn-tactile:disabled,
+  .btn-tactile[aria-disabled="true"] {
+    cursor: not-allowed;
+    opacity: 0.68;
+  }
+
+  /* Primary: Cloudflare Workers / Kumo Electric Blue Bevel */
+  .btn-tactile-primary {
+    color: #ffffff;
+    background: linear-gradient(180deg, #297aff 0%, #0f5ef0 100%);
+    border: 1px solid #0a4ecc;
+    text-shadow: 0 1px 1px rgba(6, 34, 102, 0.22);
+    box-shadow:
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.42),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.16),
+      inset 0 -1px 1px 0 rgba(4, 31, 96, 0.34),
+      0 1px 2px 0 rgba(10, 78, 204, 0.32),
+      0 4px 10px -2px rgba(15, 94, 240, 0.24);
+  }
+
+  .dark .btn-tactile-primary {
+    border-color: #1e6cf7;
+  }
+
+  .btn-tactile-primary:hover:not(:disabled):not([aria-disabled="true"]) {
+    background: linear-gradient(180deg, #3884ff 0%, #1665f6 100%);
+    box-shadow:
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.52),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.22),
+      inset 0 -1px 1px 0 rgba(4, 31, 96, 0.38),
+      0 2px 4px 0 rgba(10, 78, 204, 0.36),
+      0 8px 18px -4px rgba(15, 94, 240, 0.34);
+  }
+
+  .btn-tactile-primary:active:not(:disabled):not([aria-disabled="true"]) {
+    background: linear-gradient(180deg, #1055dc 0%, #1560eb 100%);
+    box-shadow:
+      inset 0 1px 2px 0 rgba(4, 25, 78, 0.48),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.08),
+      0 1px 1px 0 rgba(10, 78, 204, 0.2);
+  }
+
+  /* Obsidian: Rim-Lit Dark Surface (YoungLA / Clerk / Linear Dark) */
+  .btn-tactile-obsidian {
+    color: #ffffff;
+    background: linear-gradient(180deg, #242529 0%, #0d0e11 100%);
+    border: 1px solid #050506;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.35);
+    box-shadow:
+      inset 0 1px 0.5px 0 rgba(255, 255, 255, 0.28),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.11),
+      inset 0 -1px 1px 0 rgba(0, 0, 0, 0.7),
+      0 1px 2px 0 rgba(0, 0, 0, 0.28),
+      0 4px 10px -2px rgba(0, 0, 0, 0.18);
+  }
+
+  .dark .btn-tactile-obsidian {
+    background: linear-gradient(180deg, #2b2d33 0%, #15161a 100%);
+    border-color: #2f323b;
+  }
+
+  .btn-tactile-obsidian:hover:not(:disabled):not([aria-disabled="true"]) {
+    background: linear-gradient(180deg, #2e3036 0%, #141519 100%);
+    box-shadow:
+      inset 0 1px 0.5px 0 rgba(255, 255, 255, 0.36),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.15),
+      inset 0 -1px 1px 0 rgba(0, 0, 0, 0.75),
+      0 2px 5px 0 rgba(0, 0, 0, 0.34),
+      0 8px 18px -4px rgba(0, 0, 0, 0.24);
+  }
+
+  .btn-tactile-obsidian:active:not(:disabled):not([aria-disabled="true"]) {
+    background: linear-gradient(180deg, #111215 0%, #18191d 100%);
+    box-shadow:
+      inset 0 1px 2px 0 rgba(0, 0, 0, 0.65),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.06),
+      0 1px 1px 0 rgba(0, 0, 0, 0.2);
+  }
+
+  /* Secondary: Tactile Keycap Neutral Surface */
+  .btn-tactile-secondary {
+    color: #171717;
+    background: linear-gradient(180deg, #ffffff 0%, #f4f5f7 100%);
+    border: 1px solid #d1d5db;
+    box-shadow:
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.96),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.5),
+      inset 0 -1px 0 0 rgba(15, 23, 42, 0.06),
+      0 1px 2px 0 rgba(15, 23, 42, 0.06);
+  }
+
+  .btn-tactile-secondary:hover:not(:disabled):not([aria-disabled="true"]) {
+    background: linear-gradient(180deg, #ffffff 0%, #ebedf0 100%);
+    border-color: #bcc2cc;
+    box-shadow:
+      inset 0 1px 0 0 rgba(255, 255, 255, 1),
+      inset 0 -1px 0 0 rgba(15, 23, 42, 0.08),
+      0 2px 6px -1px rgba(15, 23, 42, 0.1);
+  }
+
+  .btn-tactile-secondary:active:not(:disabled):not([aria-disabled="true"]) {
+    background: linear-gradient(180deg, #eceef2 0%, #f4f5f7 100%);
+    box-shadow: inset 0 1px 2px 0 rgba(15, 23, 42, 0.12);
+  }
+
+  .dark .btn-tactile-secondary {
+    color: #f5f5f5;
+    background: linear-gradient(180deg, #26272c 0%, #18191d 100%);
+    border-color: #0d0e11;
+    box-shadow:
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.16),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.07),
+      inset 0 -1px 1px 0 rgba(0, 0, 0, 0.55),
+      0 1px 2px 0 rgba(0, 0, 0, 0.35);
+  }
+
+  .dark .btn-tactile-secondary:hover:not(:disabled):not([aria-disabled="true"]) {
+    background: linear-gradient(180deg, #2f3137 0%, #1e2025 100%);
+    border-color: #14161b;
+    box-shadow:
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.24),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.1),
+      inset 0 -1px 1px 0 rgba(0, 0, 0, 0.6),
+      0 3px 8px -1px rgba(0, 0, 0, 0.45);
+  }
+
+  .dark .btn-tactile-secondary:active:not(:disabled):not([aria-disabled="true"]) {
+    background: linear-gradient(180deg, #16171b 0%, #1d1e23 100%);
+    box-shadow:
+      inset 0 1px 2px 0 rgba(0, 0, 0, 0.6),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+  }
+
+  /* Success: Tactile Emerald Bevel */
+  .btn-tactile-success {
+    color: #ffffff;
+    background: linear-gradient(180deg, #16c486 0%, #059669 100%);
+    border: 1px solid #047857;
+    text-shadow: 0 1px 1px rgba(4, 60, 42, 0.22);
+    box-shadow:
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.4),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.14),
+      inset 0 -1px 1px 0 rgba(3, 46, 34, 0.34),
+      0 1px 2px 0 rgba(4, 120, 87, 0.3),
+      0 4px 10px -2px rgba(5, 150, 105, 0.22);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-tactile {
+    transition: none;
+  }
+
+  .btn-tactile:active:not(:disabled):not([aria-disabled="true"]) {
+    transform: none;
+  }
 }
 
 /* ==========================================

@@ -7,7 +7,7 @@ import { HiOutlineArrowNarrowRight } from "react-icons/hi";
 import { GiTimeTrap as ServiceIcon } from "react-icons/gi";
 
 import SpotlightCard from "@/common/components/elements/SpotlightCard";
-import Button from "@/common/components/elements/Button";
+import { getButtonClasses } from "@/common/components/elements/Button";
 import SectionHeading from "@/common/components/elements/SectionHeading";
 import SectionSubHeading from "@/common/components/elements/SectionSubHeading";
 import Link from "next/link";
@@ -85,20 +85,20 @@ const Services = () => {
             </div>
 
             <div className="flex w-full flex-col gap-4 sm:flex-row lg:w-auto lg:flex-col xl:flex-row">
-              <Link href="/contact" passHref className="w-full lg:w-fit">
-                <Button
-                  className="group/btn relative flex h-16 w-full items-center justify-center gap-3 overflow-hidden rounded-[1.5rem] bg-blue-500 px-10 text-white transition duration-300 hover:scale-[1.02] hover:bg-blue-700 hover:shadow-[0_20px_40px_-15px_rgba(37,99,235,0.3)] active:scale-[0.98] dark:bg-blue-600 dark:hover:bg-blue-700"
-                >
-                  <span className="relative z-10 text-lg font-bold">
-                    {t("cta.button")}
-                  </span>
-                  <HiOutlineArrowNarrowRight
-                    size={24}
-                    aria-hidden="true"
-                    className="relative z-10 transition-transform duration-300 group-hover/btn:translate-x-2"
-                  />
-                  <div className="absolute inset-0 translate-y-full bg-gradient-to-r from-blue-500 to-blue-700 transition-transform duration-500 group-hover/btn:translate-y-0" aria-hidden="true" />
-                </Button>
+              <Link
+                href="/contact"
+                className={getButtonClasses({
+                  variant: "primary",
+                  size: "lg",
+                  className: "group/btn h-14 w-full px-8 text-base font-semibold lg:w-fit",
+                })}
+              >
+                <span>{t("cta.button")}</span>
+                <HiOutlineArrowNarrowRight
+                  size={20}
+                  aria-hidden="true"
+                  className="transition-transform duration-200 group-hover/btn:translate-x-1"
+                />
               </Link>
             </div>
           </div>

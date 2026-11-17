@@ -105,8 +105,10 @@ export default function ProjectFilter({
           {label}
         </span>
         <Button
+          variant="secondary"
+          size="md"
           onClick={() => setOpenDropdown(isOpen ? null : id)}
-          className="flex h-10 w-full min-w-[160px] md:w-[180px] items-center justify-between gap-3 rounded-lg border border-neutral-300 bg-white px-3 text-neutral-800 shadow-sm transition-all hover:bg-neutral-50 focus:border-blue-500/80 focus:ring-4 focus:ring-blue-500/20 dark:border-neutral-700 dark:bg-neutral-900/80 dark:text-neutral-200 dark:hover:bg-neutral-800"
+          className="w-full min-w-[160px] justify-between gap-3 px-3 md:w-[180px]"
         >
           <span className="truncate text-sm font-semibold">{activeLabel}</span>
           <ArrowIcon
@@ -198,15 +200,11 @@ export default function ProjectFilter({
           </div>
 
           <Button
+            variant={isFiltersOpen ? "primary" : "secondary"}
+            size="md"
             onClick={() => setIsFiltersOpen(!isFiltersOpen)}
-            className={cn(
-              "flex h-10 items-center justify-center gap-2 rounded-lg border px-4 text-sm font-medium transition-all shadow-sm focus:ring-4 focus:ring-blue-500/20 outline-none",
-              isFiltersOpen
-                ? "border-blue-500 bg-blue-50 text-blue-700 hover:bg-blue-100 dark:border-blue-500/50 dark:bg-blue-500/20 dark:text-blue-300 dark:hover:bg-blue-500/30"
-                : "border-neutral-300 bg-white text-neutral-700 hover:bg-neutral-50 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-300 dark:hover:bg-neutral-800"
-            )}
           >
-            <FilterIcon size={16} />
+            <FilterIcon size={16} aria-hidden="true" />
             <span>{t("filters")}</span>
           </Button>
         </div>

@@ -7,6 +7,7 @@ import { format, parseISO } from "date-fns";
 import { HiX as CloseIcon } from "react-icons/hi";
 import { HiOutlineArrowTopRightOnSquare as ExternalIcon } from "react-icons/hi2";
 
+import { getButtonClasses } from "@/common/components/elements/Button";
 import Image from "@/common/components/elements/Image";
 import { AchievementItem } from "@/common/types/achievements";
 
@@ -166,10 +167,14 @@ const AchievementDetailModal = ({ isOpen, onClose, achievement }: Props) => {
                   href={achievement.url_credential}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-300 md:w-auto"
+                  className={getButtonClasses({
+                    variant: "primary",
+                    size: "md",
+                    className: "w-full md:w-auto",
+                  })}
                 >
-                  Credential URL
-                  <ExternalIcon size={15} />
+                  <span>Credential URL</span>
+                  <ExternalIcon size={15} aria-hidden="true" />
                 </a>
               )}
             </div>
