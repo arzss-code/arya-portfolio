@@ -2,19 +2,23 @@
 
 import { useState, useEffect, useCallback, useMemo, memo } from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { HiChevronLeft, HiChevronRight } from "react-icons/hi";
 import useSWR from "swr";
 
+import Button from "@/common/components/elements/Button";
 import Image from "@/common/components/elements/Image";
 import { ProjectItem } from "@/common/types/projects";
 import { fetcher } from "@/services/fetcher";
 
 const ProjectsCarousel = () => {
-  const { data } = useSWR("/api/projects", fetcher);
+  const { data } = useSWR("/api/projects", fetcher, {
+    revalidateOnFocus: false,
+  });
+  const shouldReduceMotion = useReducedMotion();
   const [activeIndex, setActiveIndex] = useState(0);
   const [direction, setDirection] = useState(0);
-  const [isHovered, setIsHovered] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
 
   const projects: ProjectItem[] = useMemo(() => {
     return (
@@ -88,140 +92,158 @@ const ProjectsCarousel = () => {
     setActiveIndex((prev) => (prev - 1 + projects.length) % projects.length);
   }, [projects.length]);
 
-  // Auto-rotate every 3.5 seconds, pause on hover
   useEffect(() => {
-    if (projects.length < 2 || isHovered) return;
-    const timer = setInterval(goNext, 3500);
+    if (projects.length < 2 || isPaused || shouldReduceMotion) return;
+    const timer = setInterval(goNext, 4000);
     return () => clearInterval(timer);
-  }, [goNext, projects.length, isHovered]);
+  }, [goNext, projects.length, isPaused, shouldReduceMotion]);
 
   if (!projects.length) {
     return (
       <div className="flex h-[220px] items-center justify-center">
-        <div className="h-8 w-8 animate-spin rounded-full border-2 border-neutral-300 border-t-blue-500" />
+        <div
+          aria-hidden="true"
+          className="h-8 w-8 animate-spin rounded-full border-2 border-neutral-300 border-t-blue-500"
+        />
+        <span className="sr-only">Loading featured projects…</span>
       </div>
     );
   }
 
   return (
-    <div className="relative flex w-full flex-col items-center gap-4 py-4">
+    <div
+      className="relative flex w-full flex-col items-center gap-4 py-4"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+      onFocus={() => setIsPaused(true)}
+      onBlur={() => setIsPaused(false)}
+    >
       {/* Carousel stage */}
       <div
         className="relative flex w-full items-center justify-center overflow-hidden py-8"
         style={{ perspective: "900px" }}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
       >
-        {/* Hidden spacer to maintain responsive height */}
         <div className="aspect-video w-[60%]" aria-hidden="true" />
 
         {visibleIndexes.map((index) => {
           const project = projects[index];
           const pos = getCardPosition(index);
+          const isCenter = pos === "center";
+
           return (
             <motion.div
               key={project.id}
-              className="absolute w-[60%] cursor-pointer rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+              className="absolute w-[60%] rounded-2xl"
               variants={cardVariants}
               animate={pos}
               initial={false}
               transition={{
-                duration: 0.45,
+                duration: shouldReduceMotion ? 0 : 0.42,
                 ease: [0.25, 0.46, 0.45, 0.94],
               }}
-              role="button"
-              tabIndex={pos !== "hidden" ? 0 : -1}
-              aria-label={`Project ${project.title}`}
-              onClick={() => {
-                if (pos === "left") goPrev();
-                else if (pos === "right") goNext();
-              }}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") {
-                  e.preventDefault();
-                  if (pos === "left") goPrev();
-                  else if (pos === "right") goNext();
-                  else if (pos === "center") document.getElementById(`link-${project.slug}`)?.click();
-                } else if (e.key === "ArrowLeft") {
-                  goPrev();
-                } else if (e.key === "ArrowRight") {
-                  goNext();
-                }
-              }}
-              onFocus={() => setIsHovered(true)}
-              onBlur={() => setIsHovered(false)}
             >
-              <Link
-                id={`link-${project.slug}`}
-                href={`/projects/${project.slug}`}
-                onClick={(e) => pos !== "center" && e.preventDefault()}
-                tabIndex={-1}
-                className="block"
-              >
-                <div className="group relative aspect-video overflow-hidden rounded-2xl shadow-xl ring-1 ring-white/10">
-                  <Image
-                    src={project.image}
-                    alt={project.title}
-                    width={360}
-                    height={200}
-                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                  {/* Overlay replacing filter: brightness() */}
-                  <div 
-                    className={`pointer-events-none absolute inset-0 bg-black/40 transition-opacity duration-300 ${pos === "center" ? "opacity-0" : "opacity-100"}`} 
-                    aria-hidden="true" 
-                  />
-                  <div className="absolute inset-0 flex items-end rounded-2xl bg-gradient-to-t from-black/80 via-black/20 to-transparent p-3 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                    <p className="line-clamp-1 text-xs font-semibold leading-tight text-white">
-                      {project.title}
-                    </p>
+              {isCenter ? (
+                <Link
+                  href={`/projects/${project.slug}`}
+                  aria-label={`View project ${project.title}`}
+                  className="block rounded-2xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500"
+                >
+                  <div className="group relative aspect-video overflow-hidden rounded-2xl shadow-xl ring-1 ring-white/15">
+                    <Image
+                      src={project.image}
+                      alt={project.title}
+                      width={360}
+                      height={200}
+                      sizes="(max-width: 768px) 60vw, 360px"
+                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 flex items-end rounded-2xl bg-gradient-to-t from-black/80 via-black/20 to-transparent p-3 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100">
+                      <p className="line-clamp-1 text-xs font-semibold leading-tight text-white">
+                        {project.title}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              </Link>
+                </Link>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => (pos === "left" ? goPrev() : goNext())}
+                  aria-label={`Preview ${project.title}`}
+                  className="block w-full cursor-pointer rounded-2xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500"
+                >
+                  <div className="relative aspect-video overflow-hidden rounded-2xl shadow-xl ring-1 ring-white/10">
+                    <Image
+                      src={project.image}
+                      alt={project.title}
+                      width={360}
+                      height={200}
+                      sizes="(max-width: 768px) 45vw, 280px"
+                      className="h-full w-full object-cover"
+                    />
+                    <div
+                      className="pointer-events-none absolute inset-0 bg-black/45"
+                      aria-hidden="true"
+                    />
+                  </div>
+                </button>
+              )}
             </motion.div>
           );
         })}
       </div>
 
-      {/* Title + controls row */}
+      {/* Controls row */}
       <div className="flex w-full items-center justify-between px-4">
-        {/* Dot indicators */}
-        <div className="flex gap-1.5" role="tablist">
-          {projects.map((_, i) => (
-            <button
-              key={i}
-              role="tab"
-              aria-selected={i === activeIndex}
-              onClick={() => {
-                setDirection(i > activeIndex ? 1 : -1);
-                setActiveIndex(i);
-              }}
-              aria-label={`Go to slide ${i + 1}`}
-              className={`h-1.5 rounded-full transition-[width,background-color] duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-neutral-900 ${
-                i === activeIndex
-                  ? "w-5 bg-blue-500"
-                  : "w-1.5 bg-neutral-400/50 hover:bg-neutral-400"
-              }`}
-            />
-          ))}
+        <div className="flex items-center gap-1.5">
+          {projects.map((project, i) => {
+            const isSelected = i === activeIndex;
+            return (
+              <button
+                key={project.id}
+                type="button"
+                aria-pressed={isSelected}
+                onClick={() => {
+                  setDirection(i > activeIndex ? 1 : -1);
+                  setActiveIndex(i);
+                }}
+                aria-label={`Show project ${i + 1}: ${project.title}`}
+                className="group flex h-6 items-center px-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500"
+              >
+                <span
+                  className={`block h-1.5 rounded-full transition-[width,background-color] duration-300 ${
+                    isSelected
+                      ? "w-5 bg-blue-500"
+                      : "w-1.5 bg-neutral-400/60 group-hover:bg-neutral-500 dark:bg-neutral-600 dark:group-hover:bg-neutral-400"
+                  }`}
+                />
+              </button>
+            );
+          })}
         </div>
 
-        {/* Prev / Next buttons */}
         <div className="flex gap-1.5">
-          <button
+          <Button
+            type="button"
+            variant="secondary"
+            size="icon"
+            shape="pill"
             onClick={goPrev}
-            aria-label="Previous slide"
-            className="flex h-7 w-7 items-center justify-center rounded-full bg-white/10 text-neutral-700 backdrop-blur-sm transition duration-200 hover:scale-110 hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:text-neutral-300"
+            aria-label="Previous project slide"
+            className="h-8 w-8"
           >
-            <HiChevronLeft size={16} />
-          </button>
-          <button
+            <HiChevronLeft size={16} aria-hidden="true" />
+          </Button>
+          <Button
+            type="button"
+            variant="secondary"
+            size="icon"
+            shape="pill"
             onClick={goNext}
-            aria-label="Next slide"
-            className="flex h-7 w-7 items-center justify-center rounded-full bg-white/10 text-neutral-700 backdrop-blur-sm transition duration-200 hover:scale-110 hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:text-neutral-300"
+            aria-label="Next project slide"
+            className="h-8 w-8"
           >
-            <HiChevronRight size={16} />
-          </button>
+            <HiChevronRight size={16} aria-hidden="true" />
+          </Button>
         </div>
       </div>
     </div>

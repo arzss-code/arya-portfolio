@@ -3,7 +3,9 @@
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { FiArrowLeftCircle as BackButtonIcon } from "react-icons/fi";
+import { FiArrowLeft as BackIcon } from "react-icons/fi";
+
+import { getButtonClasses } from "./Button";
 
 interface BackButtonProps {
   url?: string;
@@ -13,39 +15,41 @@ const BackButton = ({ url }: BackButtonProps) => {
   const router = useRouter();
   const t = useTranslations("ProjectsPage");
 
-  const className =
-    "flex gap-2 w-max hover:gap-3 items-center pb-8 transition-all duration-300 font-medium text-neutral-600 dark:text-neutral-400 cursor-pointer";
+  const buttonClassName = getButtonClasses({
+    variant: "secondary",
+    size: "sm",
+    className: "group mb-6 px-3.5",
+  });
 
-  const handleOnClick = () => {
-    if (url) {
-      window.location.href = url;
-    } else {
-      router.back();
-    }
-  };
-
-  const BackButtonChildComponent = () => {
+  if (url) {
     return (
-      <>
-        <BackButtonIcon size={20} />
-        <span>{t("back_button")}</span>
-      </>
+      <div className="w-fit">
+        <Link href={url} className={buttonClassName}>
+          <BackIcon
+            size={15}
+            aria-hidden="true"
+            className="transition-transform duration-200 group-hover:-translate-x-0.5"
+          />
+          <span>{t("back_button")}</span>
+        </Link>
+      </div>
     );
-  };
+  }
 
   return (
     <div className="w-fit">
-      {url ? (
-        <Link href={url}>
-          <div className={className}>
-            <BackButtonChildComponent />
-          </div>
-        </Link>
-      ) : (
-        <div className={className} onClick={handleOnClick}>
-          <BackButtonChildComponent />
-        </div>
-      )}
+      <button
+        type="button"
+        onClick={() => router.back()}
+        className={buttonClassName}
+      >
+        <BackIcon
+          size={15}
+          aria-hidden="true"
+          className="transition-transform duration-200 group-hover:-translate-x-0.5"
+        />
+        <span>{t("back_button")}</span>
+      </button>
     </div>
   );
 };

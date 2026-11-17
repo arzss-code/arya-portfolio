@@ -15,95 +15,99 @@ const ThemeToggle = () => {
 
   const isLightMode = resolvedTheme === "light";
 
-  // Skeleton while mounting
   if (!mounted) {
     return (
       <>
-        {/* Desktop Skeleton */}
-        <div className="hidden lg:flex items-center rounded-full border border-neutral-200/50 dark:border-neutral-700/50 bg-white/60 dark:bg-neutral-800/60 p-1">
-          <div className="h-9 w-10" />
-          <div className="h-9 w-10" />
+        <div className="surface-tactile-track hidden items-center rounded-full p-1 lg:flex">
+          <div className="h-8 w-10" />
+          <div className="h-8 w-10" />
         </div>
-        {/* Mobile Skeleton */}
-        <div className="h-10 w-10 rounded-xl border border-neutral-200/50 dark:border-neutral-700/50 bg-white/60 dark:bg-neutral-800/60 lg:hidden" />
+        <div className="btn-tactile btn-tactile-secondary h-10 w-10 rounded-xl p-0 lg:hidden" />
       </>
     );
   }
 
   return (
     <>
-      {/* Desktop - Switch Style */}
-      <div className="relative hidden items-center rounded-full border border-neutral-200/50 dark:border-neutral-700/30 bg-neutral-100/50 dark:bg-neutral-800/30 backdrop-blur-xl p-1 lg:flex">
-        {/* Sliding Background */}
+      {/* Desktop - Tactile Segmented Switch */}
+      <div
+        role="group"
+        aria-label="Theme switcher"
+        className="surface-tactile-track relative hidden items-center rounded-full p-1 backdrop-blur-xl lg:flex"
+      >
         <motion.div
-          className="absolute h-9 w-10 rounded-full bg-blue-500 shadow-md shadow-blue-500/25"
-          style={{ top: '4px', left: '4px' }}
+          aria-hidden="true"
+          className="thumb-tactile-primary absolute h-8 w-10 rounded-full"
+          style={{ top: "4px", left: "4px" }}
           animate={{
             x: isLightMode ? 0 : 40,
           }}
           transition={{
             type: "spring",
-            stiffness: 300,
-            damping: 30,
+            stiffness: 340,
+            damping: 28,
           }}
         />
 
-        {/* Light Mode Button */}
-        <motion.button
-          className="relative z-10 h-9 w-10 flex items-center justify-center"
+        <button
+          type="button"
+          aria-pressed={isLightMode}
+          className="relative z-10 flex h-8 w-10 items-center justify-center rounded-full transition-colors duration-150 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500"
           onClick={() => setTheme("light")}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
           aria-label="Switch to light theme"
         >
-          <motion.div
-            animate={{
-              color: isLightMode ? "#FFFFFF" : "#737373",
-            }}
-            transition={{ duration: 0.2 }}
-            className="flex items-center justify-center"
-          >
-            <Sun size={18} strokeWidth={2} />
-          </motion.div>
-        </motion.button>
+          <Sun
+            size={17}
+            strokeWidth={2}
+            aria-hidden="true"
+            className={
+              isLightMode
+                ? "text-white"
+                : "text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100"
+            }
+          />
+        </button>
 
-        {/* Dark Mode Button */}
-        <motion.button
-          className="relative z-10 h-9 w-10 flex items-center justify-center"
+        <button
+          type="button"
+          aria-pressed={!isLightMode}
+          className="relative z-10 flex h-8 w-10 items-center justify-center rounded-full transition-colors duration-150 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500"
           onClick={() => setTheme("dark")}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
           aria-label="Switch to dark theme"
         >
-          <motion.div
-            animate={{
-              color: !isLightMode ? "#FFFFFF" : "#737373",
-            }}
-            transition={{ duration: 0.2 }}
-            className="flex items-center justify-center"
-          >
-            <Moon size={18} strokeWidth={2} />
-          </motion.div>
-        </motion.button>
+          <Moon
+            size={17}
+            strokeWidth={2}
+            aria-hidden="true"
+            className={
+              !isLightMode
+                ? "text-white"
+                : "text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100"
+            }
+          />
+        </button>
       </div>
 
-      {/* Mobile - Button Style */}
+      {/* Mobile - Tactile Keycap Button */}
       <button
-        className="h-10 w-10 flex items-center justify-center rounded-xl border shadow-sm border-neutral-200/50 dark:border-neutral-700/50 bg-white/60 dark:bg-neutral-800/60 backdrop-blur-xl transition-all duration-200 active:scale-95 lg:hidden"
+        type="button"
+        className="btn-tactile btn-tactile-secondary h-10 w-10 rounded-xl p-0 lg:hidden"
         onClick={() => setTheme(isLightMode ? "dark" : "light")}
-        aria-label={isLightMode ? "Switch to dark theme" : "Switch to light theme"}
+        aria-label={
+          isLightMode ? "Switch to dark theme" : "Switch to light theme"
+        }
       >
         <motion.div
           key={isLightMode ? "to-dark" : "to-light"}
-          initial={{ rotate: -30, opacity: 0 }}
+          initial={{ rotate: -25, opacity: 0 }}
           animate={{ rotate: 0, opacity: 1 }}
           transition={{ duration: 0.15 }}
-          className="flex items-center justify-center text-neutral-700 dark:text-neutral-200"
+          className="flex items-center justify-center text-neutral-800 dark:text-neutral-100"
         >
           {isLightMode ? (
-            <Moon size={18} strokeWidth={2} />
+            <Moon size={18} strokeWidth={2} aria-hidden="true" />
           ) : (
-            <Sun size={18} strokeWidth={2} />
+            <Sun size={18} strokeWidth={2} aria-hidden="true" />
           )}
         </motion.div>
       </button>

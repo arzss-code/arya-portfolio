@@ -1,12 +1,13 @@
 "use client";
 
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useId, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslations } from "next-intl";
 import { motion, AnimatePresence } from "framer-motion";
-import { FiSend, FiCheckCircle } from "react-icons/fi";
+import { FiSend, FiCheckCircle, FiAlertCircle } from "react-icons/fi";
 
+import Button from "@/common/components/elements/Button";
 import InputField from "@/common/components/elements/InputField";
 
 interface FormEmail {
@@ -15,40 +16,46 @@ interface FormEmail {
   message: string;
 }
 
+const EMAIL_PATTERN =
+  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
 const ContactForm = () => {
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<FormEmail>();
+  } = useForm<FormEmail>({
+    shouldFocusError: true,
+  });
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const formHeadingId = useId();
 
   const t = useTranslations("ContactPage");
 
-  const regexEmail =
-    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
   useEffect(() => {
-    if (isSuccess) {
-      const timeout = setTimeout(() => {
-        setIsSuccess(false);
-      }, 5000);
-      return () => clearTimeout(timeout);
-    }
+    if (!isSuccess) return;
+    const timeout = setTimeout(() => {
+      setIsSuccess(false);
+    }, 5000);
+    return () => clearTimeout(timeout);
   }, [isSuccess]);
 
   const handleFormSubmit = async (payload: FormEmail) => {
     setIsLoading(true);
+    setSubmitError(null);
     try {
       const response = await axios.post("/api/email", payload);
       if (response.status === 200) {
         setIsSuccess(true);
         reset();
       }
-    } catch (error) {
-      console.log(error);
+    } catch {
+      setSubmitError(
+        "Failed to send message. Please check your connection or reach out directly via email.",
+      );
     } finally {
       setIsLoading(false);
     }
@@ -58,11 +65,14 @@ const ContactForm = () => {
     <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      className="flex flex-col space-y-8 rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm md:p-8 dark:border-neutral-800 dark:bg-neutral-900"
+      transition={{ duration: 0.45 }}
+      className="flex flex-col space-y-6 rounded-2xl border border-neutral-200/90 bg-white p-6 shadow-sm md:p-8 dark:border-neutral-800 dark:bg-neutral-900/90"
     >
-      <div className="space-y-2">
-        <h2 className="text-2xl font-bold tracking-tight text-neutral-900 dark:text-neutral-100">
+      <div className="space-y-1.5">
+        <h2
+          id={formHeadingId}
+          className="text-2xl font-bold tracking-tight text-neutral-900 dark:text-neutral-100"
+        >
           {t("form.title")}
         </h2>
         <p className="text-sm leading-relaxed text-neutral-600 dark:text-neutral-400">
@@ -71,24 +81,33 @@ const ContactForm = () => {
       </div>
 
       <form
+        aria-labelledby={formHeadingId}
+        noValidate
         onSubmit={handleSubmit(handleFormSubmit)}
-        className="space-y-4"
+        className="space-y-5"
       >
-        <div className="flex w-full flex-col space-y-4 md:flex-row md:space-x-4 md:space-y-0">
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
           <InputField
             name="name"
+            label={t("form.input_name")}
             placeholder={t("form.input_name")}
+            autoComplete="name"
             rule={{ required: t("form.error_name") }}
             register={register}
             error={errors}
           />
           <InputField
             name="email"
-            placeholder={t("form.input_email")}
+            type="email"
+            inputMode="email"
+            autoComplete="email"
+            spellCheck={false}
+            label={t("form.input_email")}
+            placeholder="name@example.com"
             rule={{
               required: t("form.error_email_required"),
               pattern: {
-                value: regexEmail,
+                value: EMAIL_PATTERN,
                 message: t("form.error_email_invalid"),
               },
             }}
@@ -96,8 +115,10 @@ const ContactForm = () => {
             error={errors}
           />
         </div>
+
         <InputField
           name="message"
+          label={t("form.input_message")}
           placeholder={t("form.input_message")}
           rows={5}
           rule={{ required: t("form.error_message") }}
@@ -105,54 +126,69 @@ const ContactForm = () => {
           error={errors}
           isTextArea
         />
-        
-        <button
+
+        {submitError ? (
+          <div
+            role="alert"
+            aria-live="polite"
+            className="flex items-center gap-2 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-700 dark:border-red-900/60 dark:bg-red-950/40 dark:text-red-300"
+          >
+            <FiAlertCircle size={18} aria-hidden="true" className="shrink-0" />
+            <span>{submitError}</span>
+          </div>
+        ) : null}
+
+        <div aria-live="polite" className="sr-only">
+          {isSuccess ? t("form.success") : ""}
+        </div>
+
+        <Button
           disabled={isLoading || isSuccess}
           type="submit"
-          className={`relative w-full overflow-hidden rounded-xl px-6 py-4 font-bold transition-all duration-300 ${
-            isSuccess 
-              ? "bg-emerald-500 text-white shadow-emerald-500/30" 
-              : "bg-blue-600 text-white shadow-sm hover:-translate-y-0.5 hover:bg-blue-700 hover:shadow-lg hover:shadow-blue-600/30"
-            } 
-            disabled:cursor-not-allowed disabled:opacity-70 disabled:hover:translate-y-0 disabled:hover:shadow-none`}
+          variant={isSuccess ? "success" : "primary"}
+          size="lg"
+          className="h-12 w-full overflow-hidden font-semibold"
         >
           <AnimatePresence mode="wait">
             {isLoading ? (
               <motion.div
                 key="loading"
-                initial={{ opacity: 0, y: 10 }}
+                initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
+                exit={{ opacity: 0, y: -8 }}
                 className="flex items-center justify-center gap-2"
               >
-                <div className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />
+                <div
+                  aria-hidden="true"
+                  className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white"
+                />
                 <span>{t("form.sending")}</span>
               </motion.div>
             ) : isSuccess ? (
               <motion.div
                 key="success"
-                initial={{ opacity: 0, scale: 0.5 }}
+                initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.5 }}
+                exit={{ opacity: 0, scale: 0.8 }}
                 className="flex items-center justify-center gap-2"
               >
-                <FiCheckCircle size={20} />
+                <FiCheckCircle size={19} aria-hidden="true" />
                 <span>{t("form.success")}</span>
               </motion.div>
             ) : (
               <motion.div
                 key="default"
-                initial={{ opacity: 0, y: -10 }}
+                initial={{ opacity: 0, y: -8 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 10 }}
+                exit={{ opacity: 0, y: 8 }}
                 className="flex items-center justify-center gap-2"
               >
-                <FiSend size={18} />
+                <FiSend size={17} aria-hidden="true" />
                 <span>{t("form.button")}</span>
               </motion.div>
             )}
           </AnimatePresence>
-        </button>
+        </Button>
       </form>
     </motion.div>
   );

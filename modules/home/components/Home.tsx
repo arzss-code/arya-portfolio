@@ -1,16 +1,18 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 
 import Breakline from "@/common/components/elements/Breakline";
 
 import Introduction from "./Introduction";
 import SkillList from "./SkillList";
-import BentoGrid from "./Bento/BentoGrid";
-import Services from "./Services";
+
+const BentoGrid = dynamic(() => import("./Bento/BentoGrid"));
+const Services = dynamic(() => import("./Services"));
 
 const sectionVariants = {
-  hidden: { opacity: 0, y: 40 },
+  hidden: { opacity: 0, y: 32 },
   visible: { opacity: 1, y: 0 },
 };
 
@@ -25,7 +27,7 @@ const Home = () => {
         variants={sectionVariants}
         initial="hidden"
         whileInView="visible"
-        transition={{ duration: 0.55, ease: "easeOut" }}
+        transition={{ duration: 0.45, ease: "easeOut" }}
         viewport={{ once: true, margin: "-80px" }}
       >
         <SkillList />
@@ -37,7 +39,7 @@ const Home = () => {
         variants={sectionVariants}
         initial="hidden"
         whileInView="visible"
-        transition={{ duration: 0.55, ease: "easeOut" }}
+        transition={{ duration: 0.45, ease: "easeOut" }}
         viewport={{ once: true, margin: "-80px" }}
       >
         <BentoGrid />
@@ -49,7 +51,7 @@ const Home = () => {
         variants={sectionVariants}
         initial="hidden"
         whileInView="visible"
-        transition={{ duration: 0.55, ease: "easeOut" }}
+        transition={{ duration: 0.45, ease: "easeOut" }}
         viewport={{ once: true, margin: "-80px" }}
       >
         <Services />

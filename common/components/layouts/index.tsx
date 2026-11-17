@@ -5,7 +5,6 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import { useEffect } from "react";
 
-
 import Header from "./Header";
 
 const Notif = dynamic(() => import("../elements/Notif"), { ssr: false });
@@ -15,19 +14,22 @@ interface LayoutsProps {
 }
 
 const Layouts = ({ children }: LayoutsProps) => {
-
   useEffect(() => {
     AOS.init({
-      duration: 800,
-      delay: 50,
+      duration: 700,
+      delay: 40,
+      once: true,
+      disable: () =>
+        typeof window !== "undefined" &&
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches,
     });
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-subtle">
+    <div className="min-h-screen overflow-x-clip bg-gradient-subtle">
       <Header />
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 lg:py-10">
-        <main className="w-full">
+      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 lg:py-10">
+        <main id="main-content" tabIndex={-1} className="w-full outline-none">
           {children}
         </main>
       </div>
@@ -37,4 +39,3 @@ const Layouts = ({ children }: LayoutsProps) => {
 };
 
 export default Layouts;
-

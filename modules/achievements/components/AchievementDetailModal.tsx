@@ -1,12 +1,14 @@
 "use client";
 
-import { useEffect, useId, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { format, parseISO } from "date-fns";
+import { parseISO } from "date-fns";
+import { useLocale } from "next-intl";
 import { HiX as CloseIcon } from "react-icons/hi";
 import { HiOutlineArrowTopRightOnSquare as ExternalIcon } from "react-icons/hi2";
 
+import { getButtonClasses } from "@/common/components/elements/Button";
 import Image from "@/common/components/elements/Image";
 import { AchievementItem } from "@/common/types/achievements";
 
@@ -16,10 +18,15 @@ interface Props {
   achievement: AchievementItem | null;
 }
 
-const formatDate = (date?: string) => {
+const formatDate = (date: string | undefined, locale: string) => {
   if (!date) return null;
   try {
-    return format(parseISO(date), "MMMM yyyy");
+    const parsed = parseISO(date);
+    if (Number.isNaN(parsed.getTime())) return null;
+    return new Intl.DateTimeFormat(locale === "en" ? "en-US" : "id-ID", {
+      month: "long",
+      year: "numeric",
+    }).format(parsed);
   } catch {
     return null;
   }
@@ -27,30 +34,44 @@ const formatDate = (date?: string) => {
 
 const AchievementDetailModal = ({ isOpen, onClose, achievement }: Props) => {
   const [mounted, setMounted] = useState(false);
+  const locale = useLocale();
   const titleId = useId();
   const descId = useId();
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const previousActiveRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
   useEffect(() => {
-    document.body.style.overflow = isOpen ? "hidden" : "";
+    if (isOpen) {
+      previousActiveRef.current = document.activeElement as HTMLElement | null;
+      document.body.style.overflow = "hidden";
+      requestAnimationFrame(() => {
+        closeButtonRef.current?.focus();
+      });
+    } else {
+      document.body.style.overflow = "";
+      previousActiveRef.current?.focus?.();
+    }
     return () => {
       document.body.style.overflow = "";
     };
   }, [isOpen]);
 
   useEffect(() => {
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
     if (isOpen) document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
   }, [isOpen, onClose]);
 
   if (!mounted || !achievement) return null;
 
-  const issueDate = formatDate(achievement.issue_date);
-  const expirationDate = formatDate(achievement.expiration_date);
+  const issueDate = formatDate(achievement.issue_date, locale);
+  const expirationDate = formatDate(achievement.expiration_date, locale);
 
   return createPortal(
     <AnimatePresence>
@@ -75,40 +96,43 @@ const AchievementDetailModal = ({ isOpen, onClose, achievement }: Props) => {
             aria-labelledby={titleId}
             aria-describedby={descId}
             className="relative z-10 flex max-h-[90vh] w-full max-w-5xl flex-col overflow-hidden rounded-2xl border border-neutral-200/80 bg-white shadow-[0_25px_80px_-20px_rgba(0,0,0,0.6)] dark:border-neutral-800 dark:bg-neutral-900 md:flex-row"
-            initial={{ opacity: 0, scale: 0.94, y: 20 }}
+            initial={{ opacity: 0, scale: 0.95, y: 16 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.94, y: 20 }}
-            transition={{ type: "spring", stiffness: 240, damping: 24 }}
+            exit={{ opacity: 0, scale: 0.95, y: 16 }}
+            transition={{ type: "spring", stiffness: 260, damping: 26 }}
           >
-            {/* Close button */}
+            {/* Tactile Close Button */}
             <button
+              ref={closeButtonRef}
+              type="button"
               onClick={onClose}
-              className="absolute right-3 top-3 z-20 rounded-full bg-black/55 p-1.5 text-white transition-colors hover:bg-black/75 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80"
-              aria-label="Close"
+              className="btn-tactile btn-tactile-obsidian absolute right-3 top-3 z-20 h-9 w-9 rounded-full p-0"
+              aria-label="Close certificate preview"
             >
-              <CloseIcon size={18} />
+              <CloseIcon size={17} aria-hidden="true" />
             </button>
 
-            {/* Left: Certificate image — A4 Landscape ratio 297:210 */}
-            <div className="flex-1 min-h-0 w-full overflow-y-auto bg-neutral-100 p-2 md:w-2/3 md:flex-none md:p-2">
+            {/* Left: Certificate image */}
+            <div className="min-h-0 w-full flex-1 overflow-y-auto overscroll-contain bg-neutral-100 p-2 dark:bg-neutral-950 md:w-2/3 md:flex-none">
               <Image
                 src={achievement.image}
                 alt={achievement.name}
                 width={900}
                 height={637}
+                sizes="(max-width: 768px) 95vw, 660px"
                 className="block w-full rounded-lg object-contain md:rounded-none"
               />
             </div>
 
             {/* Right: Details */}
-            <div className="flex w-full shrink-0 flex-col justify-between gap-4 p-4 sm:p-6 md:w-1/3 md:flex-1 md:overflow-y-auto">
+            <div className="flex w-full shrink-0 flex-col justify-between gap-4 overflow-y-auto overscroll-contain p-4 sm:p-6 md:w-1/3 md:flex-1">
               <div className="space-y-4">
-                <h3
+                <h2
                   id={titleId}
-                  className="text-xl font-bold leading-tight text-neutral-900 dark:text-neutral-100 sm:text-xl"
+                  className="pr-8 text-xl font-bold leading-tight text-neutral-900 dark:text-neutral-100"
                 >
                   {achievement.name}
-                </h3>
+                </h2>
 
                 <p className="text-sm font-medium text-neutral-600 dark:text-neutral-400 sm:text-base">
                   {achievement.issuing_organization}
@@ -153,7 +177,7 @@ const AchievementDetailModal = ({ isOpen, onClose, achievement }: Props) => {
                       <p className="text-[11px] font-semibold uppercase tracking-wide text-neutral-500">
                         Category
                       </p>
-                      <span className="inline-flex w-fit items-center rounded-full bg-blue-100 px-3 py-1 text-sm font-semibold text-blue-700 dark:bg-blue-900/30 dark:text-blue-300">
+                      <span className="surface-tactile-pill inline-flex w-fit items-center rounded-full px-3 py-1 text-xs font-semibold text-blue-700 dark:text-blue-300">
                         {achievement.category}
                       </span>
                     </div>
@@ -166,10 +190,14 @@ const AchievementDetailModal = ({ isOpen, onClose, achievement }: Props) => {
                   href={achievement.url_credential}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-300 md:w-auto"
+                  className={getButtonClasses({
+                    variant: "primary",
+                    size: "md",
+                    className: "w-full md:w-auto",
+                  })}
                 >
-                  Credential URL
-                  <ExternalIcon size={15} />
+                  <span>Credential URL</span>
+                  <ExternalIcon size={15} aria-hidden="true" />
                 </a>
               )}
             </div>
