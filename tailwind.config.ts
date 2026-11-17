@@ -11,10 +11,16 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["var(--font-plus-jakarta)", "var(--font-manrope)", "var(--font-dm-sans)", "system-ui", "sans-serif"],
-        jakarta: ["var(--font-plus-jakarta)", "sans-serif"],
-        manrope: ["var(--font-manrope)", "sans-serif"],
-        dm: ["var(--font-dm-sans)", "sans-serif"],
+        sans: [
+          "var(--font-plus-jakarta, system-ui)",
+          "var(--font-manrope, sans-serif)",
+          "var(--font-dm-sans, sans-serif)",
+          "system-ui",
+          "sans-serif",
+        ],
+        jakarta: ["var(--font-plus-jakarta, sans-serif)", "sans-serif"],
+        manrope: ["var(--font-manrope, sans-serif)", "sans-serif"],
+        dm: ["var(--font-dm-sans, sans-serif)", "sans-serif"],
       },
       colors: {
         darkText: "#E4E6EB",

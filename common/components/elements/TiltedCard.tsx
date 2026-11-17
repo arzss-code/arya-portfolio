@@ -98,8 +98,8 @@ export default function TiltedCard({
     rotateFigcaption.set(0);
   }
 
-  const priorityAttributes: Record<string, string> = priority
-    ? { fetchpriority: "high" }
+  const priorityAttributes = priority
+    ? { fetchPriority: "high" as const }
     : {};
 
   return (

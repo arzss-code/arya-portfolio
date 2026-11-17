@@ -3,6 +3,12 @@
 All notable changes to **arya-portfolio** will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [v1.0.2] - 2026-11-18
+
+### Fixed
+- Restored full `Plus Jakarta Sans`, `Manrope`, and variable-font `DM Sans` CSS variables on `<body>` in `app/layout.tsx` and `common/styles/fonts.ts` (plus CSS custom-property fallbacks in `tailwind.config.ts`) so `font-sans` never falls back to browser serif (`Times New Roman`), while keeping Vercel Turbopack builds passing.
+- Fixed React development console warning in `common/components/elements/TiltedCard.tsx` by using camelCase `fetchPriority="high"` JSX prop (`fetchpriority="high"` in rendered HTML).
+
 ## [v1.0.1] - 2026-11-18
 
 ### Fixed

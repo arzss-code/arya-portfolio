@@ -18,7 +18,7 @@ import {
   METADATA_BASE_URL,
   SITE_URL,
 } from "@/common/constants/metadata";
-import { plusJakartaSans } from "@/common/styles/fonts";
+import { plusJakartaSans, manrope, dmSans } from "@/common/styles/fonts";
 import { authOptions } from "@/common/libs/auth";
 import { buildRootJsonLd, serializeJsonLd } from "@/common/libs/jsonLd";
 import { CSPostHogProvider } from "@/common/libs/posthog";
@@ -137,7 +137,7 @@ const RootLayout = async ({
         />
       </head>
       <body
-        className={`${plusJakartaSans.variable} font-sans antialiased`}
+        className={`${plusJakartaSans.variable} ${manrope.variable} ${dmSans.variable} font-sans antialiased`}
       >
         <NextTopLoader
           color="#3b82f6"
