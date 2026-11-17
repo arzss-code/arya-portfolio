@@ -14,8 +14,22 @@ import EmptyState from "@/common/components/elements/EmptyState";
 import { fetcher } from "@/services/fetcher";
 import { ProjectItem } from "@/common/types/projects";
 
-const Projects = () => {
-  const { data, isLoading, error } = useSWR<ProjectItem[]>("/api/projects", fetcher);
+interface ProjectsProps {
+  initialData?: ProjectItem[];
+}
+
+const Projects = ({ initialData }: ProjectsProps) => {
+  const hasInitialData = Boolean(initialData && initialData.length > 0);
+
+  const { data, isLoading, error } = useSWR<ProjectItem[]>(
+    "/api/projects",
+    fetcher,
+    {
+      fallbackData: hasInitialData ? initialData : undefined,
+      revalidateOnFocus: false,
+      revalidateOnMount: !hasInitialData,
+    },
+  );
   const t = useTranslations("ProjectsPage");
   const searchParams = useSearchParams();
 
@@ -32,7 +46,7 @@ const Projects = () => {
       data
         .filter((item) => item?.is_show && item?.project_type)
         .map((item) => item.project_type?.trim())
-        .filter(Boolean) as string[]
+        .filter(Boolean) as string[],
     );
     return Array.from(unique).sort((a, b) => a.localeCompare(b));
   }, [data]);
@@ -43,7 +57,7 @@ const Projects = () => {
       data
         .filter((item) => item?.is_show && item?.status)
         .map((item) => item.status?.trim())
-        .filter(Boolean) as string[]
+        .filter(Boolean) as string[],
     );
     return Array.from(unique).sort((a, b) => a.localeCompare(b));
   }, [data]);
@@ -57,7 +71,7 @@ const Projects = () => {
         (item) =>
           item.title.toLowerCase().includes(search) ||
           item.description.toLowerCase().includes(search) ||
-          item.stacks?.some((s) => s.toLowerCase().includes(search))
+          item.stacks?.some((s) => s.toLowerCase().includes(search)),
       );
     }
 
@@ -94,11 +108,11 @@ const Projects = () => {
 
   const totalData = data?.filter((item) => item?.is_show).length || 0;
 
-  if (error) {
+  if (error && !data) {
     return <EmptyState message={t("error")} />;
   }
 
-  if (isLoading) {
+  if (isLoading && !data) {
     return (
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         {[...Array(4)].map((_, i) => (
@@ -126,9 +140,9 @@ const Projects = () => {
           {filteredProjects.map((project, index) => (
             <motion.div
               key={project.id || index}
-              initial={{ opacity: 0, scale: 0.8 }}
+              initial={false}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.3, delay: Math.min(index * 0.1, 1) }} // cap delay at 1s for long lists
+              transition={{ duration: 0.3, delay: Math.min(index * 0.05, 0.5) }} // cap delay for long lists
             >
               <ProjectCard {...project} />
             </motion.div>

@@ -14,14 +14,14 @@ export const manrope = Manrope({
   weight: ["300", "400", "500", "600", "700", "800"],
 });
 
+// Variable font mode (without explicit weight array) avoids dynamic `?kit=...&skey=...`
+// Google Font URLs that break Next.js 16 Turbopack builds on Vercel.
 export const dmSans = DM_Sans({
   variable: "--font-dm-sans",
   subsets: ["latin"],
   display: "swap",
-  weight: ["300", "400", "500", "600", "700"],
 });
 
 // Legacy exports for backward compatibility
 export const soraSans = plusJakartaSans;
 export const onestSans = plusJakartaSans;
-

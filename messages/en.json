@@ -1,5 +1,7 @@
 {
   "HomePage": {
+    "seoTitle": "Atsiila Arya Nabiih — Frontend Developer & UI/UX Designer",
+    "seoDescription": "Official portfolio of Atsiila Arya Nabiih, a Frontend Developer & UI/UX Designer in Semarang crafting modern web apps with Next.js, React, and Figma.",
     "intro": "Hi, I'm <name>Atsiila Arya Nabiih</name>",
     "location": "Based in Semarang, Central Java, Indonesia 🇮🇩",
     "location_type": "Hybrid",
@@ -53,6 +55,7 @@
   "AboutPage": {
     "title": "About",
     "description": "A brief introduction to who I am.",
+    "seoDescription": "Learn about Atsiila Arya Nabiih, a Computer Engineering Technology student at Politeknik Negeri Semarang experienced in Frontend Development and UI/UX.",
     "resume": {
       "paragraf_1": "Hello there! Thank you for visiting my personal website. I'm Atsiila Arya Nabiih, a student majoring in Computer Engineering Technology at Politeknik Negeri Semarang.",
       "paragraf_2": "I focus on creating web applications that not only provide precise experiences but are also user-friendly. My interests include UI/UX design, frontend development, and software engineering. I enjoy transforming complex problems into simple solutions through thoughtful design.",
@@ -72,6 +75,7 @@
   "AchievementsPage": {
     "title": "Achievements",
     "description": "A curated collection of certificates and badges I’ve earned throughout my professional and academic journey.",
+    "seoDescription": "Curated professional certifications, awards, and academic milestones earned by Atsiila Arya Nabiih across software engineering, cloud, and UI/UX design.",
     "error": "An error occurred on the server.",
     "no_data": "No data available.",
     "show_credential": "Show Credentials",
@@ -91,6 +95,7 @@
   "ProjectsPage": {
     "title": "Projects",
     "description": "A showcase of both private, group and open-source projects I’ve built or contributed to.",
+    "seoDescription": "Explore web, mobile, and UI/UX case studies built by Atsiila Arya Nabiih using Next.js, React, TypeScript, Laravel, Flutter, Tailwind CSS, and Supabase.",
     "view_project": "View Project",
     "tech_stack": "Skills",
     "role": "Role",
@@ -117,6 +122,7 @@
   "DashboardPage": {
     "title": "Dashboard",
     "description": "My personal dashboard visualizing contributions and stats.",
+    "seoDescription": "Developer activity dashboard of Atsiila Arya Nabiih featuring open-source GitHub contribution metrics, coding consistency, and live portfolio analytics.",
     "error": "An error occurred on the server.",
     "analytics": {
       "title": "Analytics",
@@ -150,6 +156,7 @@
   "ContactPage": {
     "title": "Contact",
     "description": "Let's get in touch",
+    "seoDescription": "Get in touch with Atsiila Arya Nabiih for freelance web development, UI/UX design collaborations, or career opportunities via email, LinkedIn, and GitHub.",
     "social_media": {
       "title": "Find me on social media",
       "gmail": {

@@ -29,10 +29,16 @@ const MDXComponent = ({ children }: MarkdownRendererProps) => {
           <a
             className="cursor-pointer text-blue-600 hover:text-blue-400 hover:underline"
             target="_blank"
+            rel="noopener noreferrer"
             {...props}
           />
         ),
         p: (props) => <div {...props} className="font-sans" />,
+        h1: ({ children }) => (
+          <h2 className="font-sans text-2xl font-semibold dark:text-neutral-200">
+            {children}
+          </h2>
+        ),
         h2: (props) => (
           <h2
             className="font-sans text-xl font-medium dark:text-neutral-300"
