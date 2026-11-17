@@ -15,8 +15,13 @@ import AchievementDetailModal from "./AchievementDetailModal";
 import AchievementSkeleton from "./AchievementSkeleton";
 import FilterHeader from "./FilterHeader";
 
-const Achievements = () => {
+interface AchievementsProps {
+  initialData?: AchievementItem[];
+}
+
+const Achievements = ({ initialData }: AchievementsProps) => {
   const t = useTranslations("AchievementsPage");
+  const hasInitialData = Boolean(initialData && initialData.length > 0);
 
   const params = useSearchParams();
   const [selectedAchievement, setSelectedAchievement] =
@@ -29,8 +34,10 @@ const Achievements = () => {
     "/api/achievements",
     fetcher,
     {
+      fallbackData: hasInitialData ? initialData : undefined,
       revalidateOnFocus: false,
       revalidateOnReconnect: false,
+      revalidateOnMount: !hasInitialData,
       dedupingInterval: 60000,
     },
   );
@@ -71,12 +78,16 @@ const Achievements = () => {
       return b.id - a.id;
     });
 
-  const allVisibleAchievements = (data ?? []).filter((item: AchievementItem) => item?.is_show);
+  const allVisibleAchievements = (data ?? []).filter(
+    (item: AchievementItem) => item?.is_show,
+  );
+  const showSkeleton = isLoading && !data;
+  const showError = Boolean(error && !data);
   const hasData = filteredAchievements.length > 0;
 
   return (
     <section className="space-y-4">
-      {!isLoading && !error && allVisibleAchievements.length > 0 && (
+      {!showSkeleton && !showError && allVisibleAchievements.length > 0 && (
         <FilterHeader
           totalData={allVisibleAchievements.length}
           totalFiltered={filteredAchievements.length}
@@ -84,7 +95,7 @@ const Achievements = () => {
         />
       )}
 
-      {isLoading && (
+      {showSkeleton && (
         <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
           {[...Array(6)].map((_, i) => (
             <AchievementSkeleton key={i} />
@@ -92,23 +103,22 @@ const Achievements = () => {
         </div>
       )}
 
-      {error && <EmptyState message={t("error")} />}
+      {showError && <EmptyState message={t("error")} />}
 
-      {!isLoading && !error && !hasData && (
+      {!showSkeleton && !showError && !hasData && (
         <EmptyState message={t("no_data")} />
       )}
 
-      {!isLoading && !error && filteredAchievements.length !== 0 && (
+      {!showSkeleton && !showError && filteredAchievements.length !== 0 && (
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
           {filteredAchievements?.map((item, index) => (
             <motion.div
-              key={index}
-              initial={{ opacity: 0, scale: 0.8 }}
+              key={item.id || index}
+              initial={false}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.3, delay: index * 0.1 }}
+              transition={{ duration: 0.3, delay: Math.min(index * 0.05, 0.5) }}
             >
               <AchievementCard
-                key={index}
                 {...item}
                 onClick={() => setSelectedAchievement(item)}
               />

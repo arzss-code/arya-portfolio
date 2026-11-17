@@ -24,12 +24,7 @@ const Introduction = () => {
       {/* ── Left: Text content ── */}
       <div className="flex-1 space-y-8">
         {/* Availability badge */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="inline-flex items-center gap-2 rounded-full border border-neutral-200 bg-white px-3 py-1.5 shadow-sm dark:border-neutral-800 dark:bg-neutral-900/50 dark:backdrop-blur-md"
-        >
+        <div className="inline-flex items-center gap-2 rounded-full border border-neutral-200 bg-white px-3 py-1.5 shadow-sm dark:border-neutral-800 dark:bg-neutral-900/50 dark:backdrop-blur-md">
           <div className="relative flex h-2 w-2">
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-blue-400 opacity-75"></span>
             <span className="relative inline-flex h-2 w-2 rounded-full bg-blue-500"></span>
@@ -37,16 +32,11 @@ const Introduction = () => {
           <span className="text-xs font-semibold tracking-wide text-neutral-700 dark:text-neutral-300">
             {t("available")}
           </span>
-        </motion.div>
+        </div>
 
         {/* Name + type animation */}
         <div className="space-y-3">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-balance text-4xl font-extrabold tracking-tight text-neutral-900 dark:text-neutral-50 md:text-5xl lg:text-5xl"
-          >
+          <div className="text-balance text-4xl font-extrabold tracking-tight text-neutral-900 dark:text-neutral-50 md:text-5xl lg:text-5xl">
             <h1>
               {t.rich("intro", {
                 name: (chunks) => (
@@ -56,14 +46,9 @@ const Introduction = () => {
                 ),
               })}
             </h1>
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-xl font-semibold text-neutral-600 dark:text-neutral-400 md:text-2xl"
-          >
+          <div className="text-xl font-semibold text-neutral-600 dark:text-neutral-400 md:text-2xl">
             <TypeAnimation
               sequence={[
                 "Frontend Developer",
@@ -77,16 +62,11 @@ const Introduction = () => {
               speed={50}
               repeat={Infinity}
             />
-          </motion.div>
+          </div>
         </div>
 
         {/* Location + bio */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-          className="space-y-4"
-        >
+        <div className="space-y-4">
           <ul className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm font-medium text-neutral-600 dark:text-neutral-400">
             <li className="flex items-center gap-2">
               <span className="h-1.5 w-1.5 rounded-full bg-blue-500"></span>
@@ -100,15 +80,10 @@ const Introduction = () => {
           <p className="max-w-xl leading-relaxed text-neutral-700 dark:text-neutral-300">
             {t("resume")}
           </p>
-        </motion.div>
+        </div>
 
         {/* CTA Buttons */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-          className="flex flex-wrap items-center gap-4"
-        >
+        <div className="flex flex-wrap items-center gap-4">
           <Link href="/contact" passHref>
             <Button
               icon={<ContactIcon size={18} />}
@@ -125,26 +100,24 @@ const Introduction = () => {
             <DownloadIcon size={18} />
             {t("download_btn")}
           </a>
-        </motion.div>
+        </div>
       </div>
 
       {/* ── Right: Profile photo + stats ── */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.8, type: "spring", stiffness: 100 }}
-        className="mx-auto flex flex-col items-center gap-6"
-      >
+      <div className="mx-auto flex flex-col items-center gap-6">
         {/* Profile card */}
         <div className="relative flex h-64 w-64 items-center justify-center md:h-80 md:w-80 lg:h-96 lg:w-96">
           <TiltedCard
             imageSrc={METADATA.profile}
-            altText={METADATA.creator}
+            altText={`${METADATA.creator} — ${METADATA.role}`}
             captionText={METADATA.creator}
             containerHeight="100%"
             containerWidth="100%"
             imageHeight="100%"
             imageWidth="100%"
+            intrinsicWidth={384}
+            intrinsicHeight={384}
+            priority={true}
             rotateAmplitude={12}
             scaleOnHover={1.05}
             showMobileWarning={false}
@@ -155,17 +128,14 @@ const Introduction = () => {
 
         {/* Stats row */}
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
+          initial={false}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.55 }}
+          transition={{ duration: 0.4 }}
           className="flex w-full items-center justify-center divide-x divide-neutral-200 pt-4 dark:divide-neutral-800"
         >
-          {stats.map((stat, i) => (
-            <motion.div
+          {stats.map((stat) => (
+            <div
               key={stat.label}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6 + i * 0.08 }}
               className="flex flex-1 flex-col items-center justify-center space-y-1 px-4 text-center"
             >
               <span className="text-xl font-bold tracking-tight text-neutral-900 dark:text-neutral-50">
@@ -174,10 +144,10 @@ const Introduction = () => {
               <span className="text-[10px] font-medium uppercase text-neutral-500 dark:text-neutral-400">
                 {stat.label}
               </span>
-            </motion.div>
+            </div>
           ))}
         </motion.div>
-      </motion.div>
+      </div>
     </section>
   );
 };

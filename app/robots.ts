@@ -1,14 +1,17 @@
-import { MetadataRoute } from "next";
+import type { MetadataRoute } from "next";
+
+import { SITE_URL } from "@/common/constants/metadata";
 
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = process.env.DOMAIN || "https://atsiilaarya.web.id";
-
   return {
-    rules: {
-      userAgent: "*",
-      allow: "/",
-      disallow: ["/api/", "/dashboard/"],
-    },
-    sitemap: `${baseUrl}/sitemap.xml`,
+    rules: [
+      {
+        userAgent: "*",
+        allow: "/",
+        disallow: ["/api/", "/ingest/", "/version"],
+      },
+    ],
+    sitemap: `${SITE_URL}/sitemap.xml`,
+    host: SITE_URL,
   };
 }

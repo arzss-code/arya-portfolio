@@ -1,18 +1,21 @@
 "use client";
 
-import type { SpringOptions } from 'framer-motion';
-import { useRef, useState } from 'react';
-import { motion, useMotionValue, useSpring } from 'framer-motion';
-import './TiltedCard.css';
+import type { SpringOptions } from "framer-motion";
+import { useRef, useState } from "react";
+import { motion, useMotionValue, useSpring } from "framer-motion";
+import "./TiltedCard.css";
 
 interface TiltedCardProps {
-  imageSrc: React.ComponentProps<'img'>['src'];
+  imageSrc: React.ComponentProps<"img">["src"];
   altText?: string;
   captionText?: string;
-  containerHeight?: React.CSSProperties['height'];
-  containerWidth?: React.CSSProperties['width'];
-  imageHeight?: React.CSSProperties['height'];
-  imageWidth?: React.CSSProperties['width'];
+  containerHeight?: React.CSSProperties["height"];
+  containerWidth?: React.CSSProperties["width"];
+  imageHeight?: React.CSSProperties["height"];
+  imageWidth?: React.CSSProperties["width"];
+  intrinsicWidth?: number;
+  intrinsicHeight?: number;
+  priority?: boolean;
   scaleOnHover?: number;
   rotateAmplitude?: number;
   showMobileWarning?: boolean;
@@ -24,23 +27,26 @@ interface TiltedCardProps {
 const springValues: SpringOptions = {
   damping: 30,
   stiffness: 100,
-  mass: 2
+  mass: 2,
 };
 
 export default function TiltedCard({
   imageSrc,
-  altText = 'Tilted card image',
-  captionText = '',
-  containerHeight = '300px',
-  containerWidth = '100%',
-  imageHeight = '300px',
-  imageWidth = '300px',
+  altText = "Tilted card image",
+  captionText = "",
+  containerHeight = "300px",
+  containerWidth = "100%",
+  imageHeight = "300px",
+  imageWidth = "300px",
+  intrinsicWidth = 384,
+  intrinsicHeight = 384,
+  priority = false,
   scaleOnHover = 1.1,
   rotateAmplitude = 14,
   showMobileWarning = true,
   showTooltip = true,
   overlayContent = null,
-  displayOverlayContent = false
+  displayOverlayContent = false,
 }: TiltedCardProps) {
   const ref = useRef<HTMLElement>(null);
 
@@ -53,7 +59,7 @@ export default function TiltedCard({
   const rotateFigcaption = useSpring(0, {
     stiffness: 350,
     damping: 30,
-    mass: 1
+    mass: 1,
   });
 
   const [lastY, setLastY] = useState<number>(0);
@@ -92,20 +98,26 @@ export default function TiltedCard({
     rotateFigcaption.set(0);
   }
 
+  const priorityAttributes: Record<string, string> = priority
+    ? { fetchpriority: "high" }
+    : {};
+
   return (
     <figure
       ref={ref}
       className="tilted-card-figure"
       style={{
         height: containerHeight,
-        width: containerWidth
+        width: containerWidth,
       }}
       onMouseMove={handleMouse}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
       {showMobileWarning && (
-        <div className="tilted-card-mobile-alert text-neutral-500 dark:text-neutral-400">This effect is not optimized for mobile. Check on desktop.</div>
+        <div className="tilted-card-mobile-alert text-neutral-500 dark:text-neutral-400">
+          This effect is not optimized for mobile. Check on desktop.
+        </div>
       )}
 
       <motion.div
@@ -115,21 +127,29 @@ export default function TiltedCard({
           height: imageHeight,
           rotateX,
           rotateY,
-          scale
+          scale,
         }}
       >
-        <motion.img
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
           src={imageSrc}
           alt={altText}
+          width={intrinsicWidth}
+          height={intrinsicHeight}
+          loading={priority ? "eager" : "lazy"}
+          decoding={priority ? "sync" : "async"}
+          {...priorityAttributes}
           className="tilted-card-img"
           style={{
             width: imageWidth,
-            height: imageHeight
+            height: imageHeight,
           }}
         />
 
         {displayOverlayContent && overlayContent && (
-          <motion.div className="tilted-card-overlay">{overlayContent}</motion.div>
+          <motion.div className="tilted-card-overlay">
+            {overlayContent}
+          </motion.div>
         )}
       </motion.div>
 
@@ -140,7 +160,7 @@ export default function TiltedCard({
             x,
             y,
             opacity,
-            rotate: rotateFigcaption
+            rotate: rotateFigcaption,
           }}
         >
           {captionText}

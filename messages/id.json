@@ -1,5 +1,7 @@
 {
   "HomePage": {
+    "seoTitle": "Atsiila Arya Nabiih — Frontend Developer & UI/UX Designer",
+    "seoDescription": "Portofolio Atsiila Arya Nabiih — Frontend Developer, UI/UX Designer & jasa pembuatan website profesional di Semarang, Mranggen, Demak (Next.js, React, Laravel).",
     "intro": "Hai, saya <name>Atsiila Arya Nabiih</name>",
     "location": "Berdomisili di Semarang, Jawa Tengah, Indonesia 🇮🇩",
     "location_type": "Hybrid",
@@ -42,7 +44,7 @@
     },
     "services": {
       "title": "Mari Bekerja Sama",
-      "sub_title": "Saya selalu terbuka untuk peluang baru dan kolaborasi.",
+      "sub_title": "Terbuka untuk kolaborasi produk digital dan jasa pembuatan website modern di area Semarang, Mranggen, Demak, maupun remote.",
       "cta": {
         "title": "Tersedia untuk Freelance",
         "sub_title": "Punya proyek? Mari kita diskusikan.",
@@ -53,6 +55,7 @@
   "AboutPage": {
     "title": "Tentang",
     "description": "Perkenalan singkat tentang siapa saya.",
+    "seoDescription": "Profil Atsiila Arya Nabiih, mahasiswa Teknologi Rekayasa Komputer Politeknik Negeri Semarang dengan pengalaman Frontend Development dan UI/UX Design.",
     "resume": {
       "paragraf_1": "Halo! Terima kasih telah mengunjungi situs pribadi saya. Saya Atsiila Arya Nabiih, mahasiswa Teknologi Rekayasa Komputer di Politeknik Negeri Semarang.",
       "paragraf_2": "Saya fokus menciptakan aplikasi web yang tidak hanya memberikan pengalaman presisi tetapi juga ramah pengguna. Minat saya meliputi desain UI/UX, pengembangan frontend, dan rekayasa perangkat lunak. Saya menikmati mengubah masalah kompleks menjadi solusi sederhana melalui desain yang matang.",
@@ -72,6 +75,7 @@
   "AchievementsPage": {
     "title": "Pencapaian",
     "description": "Kumpulan sertifikat dan badge yang saya peroleh sepanjang perjalanan profesional dan akademik.",
+    "seoDescription": "Daftar sertifikasi profesional, penghargaan kompetisi, dan pencapaian akademik Atsiila Arya Nabiih di bidang rekayasa perangkat lunak serta UI/UX.",
     "error": "Terjadi kesalahan pada server.",
     "no_data": "Data tidak tersedia.",
     "show_credential": "Lihat Kredensial",
@@ -91,6 +95,7 @@
   "ProjectsPage": {
     "title": "Proyek",
     "description": "Kumpulan proyek pribadi, kelompok dan open-source yang telah saya buat atau kontribusikan.",
+    "seoDescription": "Jelajahi studi kasus proyek web, aplikasi mobile, dan desain UI/UX karya Atsiila Arya Nabiih menggunakan Next.js, React, Laravel, Flutter, dan Supabase.",
     "view_project": "Lihat Proyek",
     "tech_stack": "Keahlian",
     "role": "Peran",
@@ -117,6 +122,7 @@
   "DashboardPage": {
     "title": "Dasbor",
     "description": "Dasbor pribadi saya memvisualisasikan kontribusi dan statistik.",
+    "seoDescription": "Dasbor aktivitas pengembangan Atsiila Arya Nabiih yang menampilkan kontribusi open-source GitHub dan metrik analitik trafik portofolio secara real-time.",
     "error": "Terjadi kesalahan pada server.",
     "analytics": {
       "title": "Analytics",
@@ -150,6 +156,7 @@
   "ContactPage": {
     "title": "Kontak",
     "description": "Mari kita terhubung",
+    "seoDescription": "Hubungi Atsiila Arya Nabiih, programmer & jasa pembuatan website modern di area Mranggen, Demak, dan Semarang untuk bisnis, UMKM, maupun kolaborasi proyek.",
     "social_media": {
       "title": "Temukan saya di media sosial",
       "gmail": {
